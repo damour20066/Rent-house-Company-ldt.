@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office House Rentals | Rent House Company - Find Your Perfect Workspace</title>
+    <meta name="description" content="Browse premium office houses for rent. Find the perfect workspace for your business with our curated selection of office properties.">
+    
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #185a9d;
+            --secondary: #43cea2;
+            --accent: #a8ff78;
+            --dark: #222;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--light);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(24, 90, 157, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: #8ae05e;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--dark);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            max-width: 180px;
+            border-radius: 8px;
+        }
+        
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+        
+        .logo-text {
+            color: white;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        /* Navigation */
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .city-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            background-color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Filter Section */
+        .filters {
+            background-color: white;
+            padding: 30px 0;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .filter-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .filter-control {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .filter-actions {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        
+        /* Properties Section */
+        .section {
+            padding: 60px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .property-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+        
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .property-favorite {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.8);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .property-favorite:hover {
+            background: white;
+            color: #e74c3c;
+        }
+        
+        .property-favorite.active {
+            background: white;
+            color: #e74c3c;
+        }
+        
+        .property-details {
+            padding: 20px;
+        }
+        
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .property-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+        
+        .pagination a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background: white;
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .pagination a.active, .pagination a:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .contact-info li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #bbb;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navigation {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            
+            .navigation.active {
+                display: flex;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .filter-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section {
+                padding: 40px 0;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="./logg.jpeg" alt="Rent House Company Logo" class="header-icon">
+                <div class="logo-text">
+                    <h1>Rent House <span>Company</span></h1>
+                </div>
+            </div>
+            
+            <nav class="navigation">
+                <ul class="nav-links">
+                    <li><a href="Home.html">Home</a></li>
+                    <li><a href="#properties">Properties</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <select class="city-select" id="citySelect">
+                        <option value="">Home</option>
+                        <option value="kigali.html">Kigali</option>
+                        <option value="rubavu.html">Rubavu</option>
+                        <option value="musanze.html">Musanze</option>
+                        <option value="nyanza.html">Nyanza</option>
+                        <option value="office-houses.html" selected>Office Houses</option>
+                    </select>
+                    <a href="Sign up.html" class="btn btn-primary">LOG OUT</a>
+                </div>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container breadcrumb-content">
+            <a href="Home.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Office Houses</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Find Your Perfect Workspace</h2>
+                <p>Discover premium office houses designed to boost productivity and inspire innovation</p>
+                <a href="#properties" class="btn btn-accent">Browse Office Spaces</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters">
+        <div class="container filter-container">
+            <div class="filter-group">
+                <label for="property-type">Office Type</label>
+                <select id="property-type" class="filter-control">
+                    <option value="">All Types</option>
+                    <option value="executive">Executive Suites</option>
+                    <option value="coworking">Co-working Spaces</option>
+                    <option value="traditional">Traditional Offices</option>
+                    <option value="creative">Creative Spaces</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="price-range">Price Range</label>
+                <select id="price-range" class="filter-control">
+                    <option value="">Any Price</option>
+                    <option value="0-1000">$0 - $1,000</option>
+                    <option value="1000-2000">$1,000 - $2,000</option>
+                    <option value="2000-3000">$2,000 - $3,000</option>
+                    <option value="3000+">$3,000+</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="size">Office Size</label>
+                <select id="size" class="filter-control">
+                    <option value="">Any Size</option>
+                    <option value="small">Small (1-5 people)</option>
+                    <option value="medium">Medium (6-15 people)</option>
+                    <option value="large">Large (16-30 people)</option>
+                    <option value="xlarge">Extra Large (30+ people)</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="location">Location</label>
+                <select id="location" class="filter-control">
+                    <option value="">All Areas</option>
+                    <option value="downtown">Downtown</option>
+                    <option value="business-park">Business Park</option>
+                    <option value="suburban">Suburban</option>
+                    <option value="mixed-use">Mixed-Use Development</option>
+                </select>
+            </div>
+            
+            <div class="filter-actions">
+                <button id="apply-filters" class="btn btn-primary">Apply Filters</button>
+                <button id="reset-filters" class="btn btn-secondary">Reset</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section class="section" id="properties">
+        <div class="container">
+            <div class="section-header">
+                <h2>Premium Office Houses</h2>
+                <p>Discover our curated selection of office spaces designed for productivity and comfort</p>
+            </div>
+            
+            <div class="properties-grid">
+                <!-- Property 1 -->
+                <div class="property-card" data-property-id="1">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Modern Executive Office">
+                        <div class="property-badge">Featured</div>
+                        <div class="property-favorite">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="property-details">
+                        <div class="property-price">$2,500/month</div>
+                        <h3 class="property-title">Modern Executive Office</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Downtown Business District</span>
+                        </div>
+                        
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>10-15 People</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-door-open"></i>
+                                <span>5 Rooms</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>1,800 sqft</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary view-details" style="width: 100%; margin-top: 15px;">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Property 2 -->
+                <div class="property-card" data-property-id="2">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Creative Co-working Space">
+                        <div class="property-badge">New</div>
+                        <div class="property-favorite">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="property-details">
+                        <div class="property-price">$1,800/month</div>
+                        <h3 class="property-title">Creative Co-working Space</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Innovation Hub</span>
+                        </div>
+                        
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>20+ People</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-door-open"></i>
+                                <span>Open Layout</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>2,200 sqft</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary view-details" style="width: 100%; margin-top: 15px;">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Property 3 -->
+                <div class="property-card" data-property-id="3">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Professional Business Suite">
+                        <div class="property-badge">Premium</div>
+                        <div class="property-favorite">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="property-details">
+                        <div class="property-price">$3,200/month</div>
+                        <h3 class="property-title">Professional Business Suite</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Financial District</span>
+                        </div>
+                        
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>8-12 People</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-door-open"></i>
+                                <span>6 Rooms</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>1,500 sqft</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary view-details" style="width: 100%; margin-top: 15px;">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Property 4 -->
+                <div class="property-card" data-property-id="4">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1564069114553-7215e1ff1890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2032&q=80" alt="Tech Startup Office">
+                        <div class="property-badge">Tech-Friendly</div>
+                        <div class="property-favorite">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="property-details">
+                        <div class="property-price">$2,100/month</div>
+                        <h3 class="property-title">Tech Startup Office</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Tech Corridor</span>
+                        </div>
+                        
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>15-20 People</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-door-open"></i>
+                                <span>4 Rooms</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>1,900 sqft</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary view-details" style="width: 100%; margin-top: 15px;">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Property 5 -->
+                <div class="property-card" data-property-id="5">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80" alt="Consulting Firm Office">
+                        <div class="property-badge">Executive</div>
+                        <div class="property-favorite">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="property-details">
+                        <div class="property-price">$2,800/month</div>
+                        <h3 class="property-title">Consulting Firm Office</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Professional Plaza</span>
+                        </div>
+                        
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>6-10 People</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-door-open"></i>
+                                <span>5 Rooms</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>1,600 sqft</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary view-details" style="width: 100%; margin-top: 15px;">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Property 6 -->
+                <div class="property-card" data-property-id="6">
+                    <div class="property-image">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Creative Agency Space">
+                        <div class="property-badge">Creative</div>
+                        <div class="property-favorite">
+                            <i class="far fa-heart"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="property-details">
+                        <div class="property-price">$2,400/month</div>
+                        <h3 class="property-title">Creative Agency Space</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Arts District</span>
+                        </div>
+                        
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-users"></i>
+                                <span>12-18 People</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-door-open"></i>
+                                <span>Open Concept</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>2,000 sqft</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary view-details" style="width: 100%; margin-top: 15px;">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Rent House Company</h3>
+                    <p>Your trusted partner for finding rental properties in Rwanda. We make renting easy, secure, and affordable.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="Home.html">Home</a></li>
+                        <li><a href="#properties">Properties</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Properties</h3>
+                    <ul class="footer-links">
+                        <li><a href="kigali.html">Kigali Properties</a></li>
+                        <li><a href="rubavu.html">Rubavu Properties</a></li>
+                        <li><a href="musanze.html">Musanze Properties</a></li>
+                        <li><a href="nyanza.html">Nyanza Properties</a></li>
+                        <li><a href="office-houses.html">Office Houses</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kigali, Rwanda</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span><a href="tel:0796352921">0796 352 921</a></span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span><a href="mailto:info@renthouse.com">info@renthouse.com</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2025 Rent House Company Ltd. All rights reserved.</div>
+                <div style="margin-top: 10px;">
+                    <a href="#privacy" style="color: var(--accent); margin: 0 12px;">Privacy Policy</a>
+                    <a href="#security" style="color: var(--accent); margin: 0 12px;">Security Resources</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            // mobile menu toggle (safe)
+            var mobileBtn = document.querySelector('.mobile-menu-btn');
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', function () {
+                    var nav = document.querySelector('.navigation');
+                    if (nav) nav.classList.toggle('active');
+                });
+            }
+
+            // dynamic city select builder
+            var pages = [
+                { name: 'Home', file: 'HOME.html' },
+                { name: 'Kigali', file: 'kigali.html' },
+                { name: 'Rubavu', file: 'rubavu.html' },
+                { name: 'Musanze', file: 'musanze.html' },
+                { name: 'Nyanza', file: 'nyanza.html' },
+                { name: 'Office Houses', file: 'office-houses.html' }
+            ];
+
+            var select = document.getElementById('citySelect');
+            if (select) {
+                select.innerHTML = '';
+                pages.forEach(function (page) {
+                    var option = document.createElement('option');
+                    option.value = page.file;
+                    option.textContent = page.name;
+                    if (page.name === 'Office Houses') option.selected = true;
+                    select.appendChild(option);
+                });
+
+                select.addEventListener('change', function () {
+                    if (this.value) window.location.href = this.value;
+                });
+            }
+
+            // property favorites
+            var favorites = document.querySelectorAll('.property-favorite');
+            favorites.forEach(function (fav) {
+                fav.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var icon = this.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('far');
+                        icon.classList.toggle('fas');
+                        this.classList.toggle('active');
+                    }
+                });
+            });
+
+            // filter functionality
+            var applyBtn = document.getElementById('apply-filters');
+            var resetBtn = document.getElementById('reset-filters');
+            if (applyBtn) {
+                applyBtn.addEventListener('click', function () {
+                    alert('Filters applied! This would filter the properties in a real implementation.');
+                });
+            }
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function () {
+                    var filters = document.querySelectorAll('.filter-control');
+                    filters.forEach(function (filter) {
+                        filter.value = '';
+                    });
+                });
+            }
+
+            // view details buttons
+            var viewButtons = document.querySelectorAll('.view-details');
+            viewButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var card = this.closest('.property-card');
+                    var id = card ? card.getAttribute('data-property-id') : 'unknown';
+                    alert('Viewing details for property #' + id + '. This would open a detailed view in a real implementation.');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
