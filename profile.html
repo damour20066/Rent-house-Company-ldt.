@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings - Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2E7D32;
+            --bg-color: #f0f9f0;
+            --card-bg: #ffffff;
+            --text-main: #333;
+            --text-muted: #666;
+            --border-color: #e0f2e0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        .profile-sidebar {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            height: fit-content;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+        }
+
+        #profileAvatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            background: #eee;
+        }
+
+        .avatar-initials {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .avatar-initials.hidden {
+            display: none;
+        }
+
+        .preview-initials {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        #profileAvatar.hidden {
+            display: none;
+        }
+
+        .avatar-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            font-size: 0.8rem;
+        }
+
+        .profile-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-main {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-control[readonly] {
+            background-color: #f9f9f9;
+            cursor: not-allowed;
+        }
+
+        .bio-area {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-save {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
+        }
+
+        .btn-save:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-save:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-logout {
+            background: #f5f5f5;
+            color: #666;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-logout:hover {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .btn-upload {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-upload:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-remove {
+            background: #f5f5f5;
+            color: #666;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 8px;
+        }
+
+        .btn-remove:hover {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        #messageBanner {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 2000;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-sidebar {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .contact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .contact-item .contact-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="messageBanner"></div>
+
+    <header class="header">
+        <div class="container"
+            style="margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+            <h1 style="font-size: 1.8rem;"><i class="fas fa-leaf"></i> Tumenye Kwivura</h1>
+            <p>User Settings</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="homes.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+        <div class="profile-layout">
+            <aside class="profile-sidebar">
+                <div class="avatar-container">
+                    <img id="profileAvatar" src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                        alt="Profile">
+                    <div id="avatarInitials" class="avatar-initials hidden"></div>
+                    <div class="avatar-badge" title="Profile picture synced via Gravatar">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+                <h2 class="profile-name" id="userNameLabel">Loading...</h2>
+                <p class="profile-email" id="userEmailLabel">loading@example.com</p>
+                <div style="font-size: 0.8rem; color: #999; margin-top: 1rem;">
+                    Joined: <span id="joinDate">Feb 2026</span>
+                </div>
+                <button type="button" id="logoutBtn" class="btn-logout" style="margin-top: 1.5rem;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </aside>
+
+            <main class="settings-main">
+                <form id="profileForm">
+                    <div class="section-title">
+                        <i class="fas fa-user-edit"></i> Personal Information
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" id="fullName" name="name" class="form-control"
+                            placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address (Read-only)</label>
+                        <input type="email" id="email" name="email" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-control"
+                            placeholder="e.g., +250 7xx xxx xxx">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Biography / About You</label>
+                        <textarea id="bio" name="bio" class="form-control bio-area"
+                            placeholder="Tell us a bit about yourself..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Profile Photo</label>
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                            <img id="avatarPreview"
+                                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=100"
+                                style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color);">
+                            <div id="previewInitials" class="preview-initials"
+                                style="display: none; align-items: center; justify-content: center; width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; font-size: 2rem; font-weight: 700;">
+                            </div>
+                            <div>
+                                <p style="font-size: 0.8rem; color: #666;">Your profile photo is automatically based on
+                                    your email address (Gravatar). If no image is associated with your email, your
+                                    initial will be displayed.</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="profileImageUrl" name="profile_image" value="">
+                    </div>
+
+                    <button type="submit" id="saveBtn" class="btn-save">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000';
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileForm = document.getElementById('profileForm');
+            const messageBanner = document.getElementById('messageBanner');
+            const saveBtn = document.getElementById('saveBtn');
+
+            // Check if user is logged in
+            let userStr = localStorage.getItem('user');
+            if (!userStr) {
+                userStr = sessionStorage.getItem('user');
+            }
+            if (!userStr) {
+                window.location.href = 'login.html';
+                return;
+            }
+            let currentUser = JSON.parse(userStr);
+            console.log('Current user loaded:', currentUser);
+
+            // Load current user information
+            async function loadProfile() {
+                console.log('Loading profile for user ID:', currentUser.id);
+                try {
+                    const response = await fetch(`${API_URL}/api/user/profile/${currentUser.id}`);
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Update form
+                        document.getElementById('fullName').value = data.name || '';
+                        document.getElementById('email').value = data.email || '';
+                        document.getElementById('phone').value = data.phone || '';
+                        document.getElementById('bio').value = data.bio || '';
+                        document.getElementById('profileImageUrl').value = data.profile_image || '';
+
+                        // Update avatar preview
+                        updateAvatarPreview(data.email, data.profile_image);
+
+                        // Update sidebar avatar with initials
+                        updateAvatar(data.email, data.profile_image);
+
+                        // Update sidebar
+                        document.getElementById('userNameLabel').textContent = data.name;
+                        document.getElementById('userEmailLabel').textContent = data.email;
+
+                        const joinDate = new Date(data.created_at);
+                        document.getElementById('joinDate').textContent = joinDate.toLocaleDateString(undefined, { year: 'numeric', month: 'long' });
+
+                        // Update avatar
+                        updateAvatar(data.email, data.profile_image);
+
+                        // Show/hide remove button based on whether user has custom image
+                        if (data.profile_image) {
+                            document.getElementById('removeImageBtn').style.display = 'inline-flex';
+                            document.getElementById('avatarPreview').src = data.profile_image;
+                            document.getElementById('avatarPreview').style.display = 'block';
+                            document.getElementById('previewInitials').style.display = 'none';
+                        } else {
+                            document.getElementById('removeImageBtn').style.display = 'none';
+                            document.getElementById('avatarPreview').style.display = 'none';
+                            document.getElementById('previewInitials').style.display = 'flex';
+                        }
+
+                        // Update local storage in case name changed
+                        currentUser.name = data.name;
+                        currentUser.profile_image = data.profile_image;
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                    }
+                } catch (error) {
+                    console.error('Error loading profile:', error);
+                    showNotification('Error loading profile information.', 'error');
+                }
+            }
+
+            function updateAvatar(email, imageUrl) {
+                const profileAvatar = document.getElementById('profileAvatar');
+                const avatarInitials = document.getElementById('avatarInitials');
+                const emailHash = md5((email || '').trim().toLowerCase());
+                const gravatarUrl = `https://www.gravatar.com/avatar/${emailHash}?d=mp&s=200`;
+
+                // First check if user has custom image stored (legacy support)
+                if (imageUrl) {
+                    profileAvatar.src = imageUrl;
+                    profileAvatar.style.display = 'block';
+                    avatarInitials.style.display = 'none';
+                } else if (email) {
+                    // Check if Gravatar exists by trying to load it
+                    const img = new Image();
+                    img.onload = function () {
+                        // Gravatar exists, show it
+                        profileAvatar.src = gravatarUrl;
+                        profileAvatar.style.display = 'block';
+                        avatarInitials.style.display = 'none';
+                    };
+                    img.onerror = function () {
+                        // No Gravatar, show initials
+                        const name = document.getElementById('fullName')?.value || 'U';
+                        avatarInitials.textContent = name.charAt(0).toUpperCase();
+                        profileAvatar.style.display = 'none';
+                        avatarInitials.style.display = 'flex';
+                    };
+                    img.src = gravatarUrl;
+                } else {
+                    const name = document.getElementById('fullName')?.value || 'U';
+                    avatarInitials.textContent = name.charAt(0).toUpperCase();
+                    profileAvatar.style.display = 'none';
+                    avatarInitials.style.display = 'flex';
+                }
+            }
+
+            // Update avatar preview separately
+            function updateAvatarPreview(email, imageUrl) {
+                const avatarPreview = document.getElementById('avatarPreview');
+                const previewInitials = document.getElementById('previewInitials');
+                const emailHash = md5((email || '').trim().toLowerCase());
+                const gravatarUrl = `https://www.gravatar.com/avatar/${emailHash}?d=mp&s=100`;
+
+                // First check if user has custom image stored (legacy support)
+                if (imageUrl) {
+                    avatarPreview.src = imageUrl;
+                    avatarPreview.style.display = 'block';
+                    previewInitials.style.display = 'none';
+                } else if (email) {
+                    // Check if Gravatar exists
+                    const img = new Image();
+                    img.onload = function () {
+                        avatarPreview.src = gravatarUrl;
+                        avatarPreview.style.display = 'block';
+                        previewInitials.style.display = 'none';
+                    };
+                    img.onerror = function () {
+                        const name = document.getElementById('fullName')?.value || 'U';
+                        previewInitials.textContent = name.charAt(0).toUpperCase();
+                        avatarPreview.style.display = 'none';
+                        previewInitials.style.display = 'flex';
+                    };
+                    img.src = gravatarUrl;
+                } else {
+                    const name = document.getElementById('fullName')?.value || 'U';
+                    previewInitials.textContent = name.charAt(0).toUpperCase();
+                    avatarPreview.style.display = 'none';
+                    previewInitials.style.display = 'flex';
+                }
+            }
+
+            // Handle local image selection - disabled, now only using Gravatar
+            function handleImageSelect(event) {
+                // Image upload disabled - using Gravatar based on email only
+                showNotification('Profile photo is automatically based on your email address.', 'info');
+            }
+
+            // Remove profile image - disabled
+            function removeProfileImage() {
+                // Image removal disabled - using Gravatar based on email only
+                showNotification('Profile photo is automatically based on your email address.', 'info');
+            }
+
+            // Save profile changes
+            profileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+                const formData = {
+                    name: document.getElementById('fullName').value,
+                    phone: document.getElementById('phone').value,
+                    bio: document.getElementById('bio').value,
+                    profile_image: '' // Always empty - use Gravatar based on email
+                };
+
+                try {
+                    const response = await fetch(`${API_URL}/api/user/profile/${currentUser.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (response.ok) {
+                        showNotification('Profile updated successfully!', 'success');
+                        // Update sidebar and avatar - always use Gravatar
+                        document.getElementById('userNameLabel').textContent = formData.name;
+                        const email = document.getElementById('email').value;
+                        updateAvatar(email, '');
+                        document.getElementById('profileAvatar').src = `https://www.gravatar.com/avatar/${md5(email.trim().toLowerCase())}?d=mp&s=200`;
+
+                        // Update local storage
+                        currentUser.name = formData.name;
+                        currentUser.profile_image = '';
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                    } else {
+                        showNotification('Failed to update profile. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    showNotification('Connection error. Server may be down.', 'error');
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+                }
+            });
+
+            function showNotification(message, type) {
+                messageBanner.textContent = message;
+                messageBanner.style.display = 'block';
+                if (type === 'success') {
+                    messageBanner.style.background = '#4CAF50';
+                } else if (type === 'info') {
+                    messageBanner.style.background = '#2196F3';
+                } else {
+                    messageBanner.style.background = '#f44336';
+                }
+
+                setTimeout(() => {
+                    messageBanner.style.display = 'none';
+                }, 4000);
+            }
+
+            // Simple MD5 implementation for Gravatar
+            function md5(string) {
+                function k(n) { return Math.abs(Math.sin(n)) * 4294967296 | 0 }
+                var a = 1732584193, b = 4023233417, c = 2562383102, d = 271733878,
+                    e = [], f, g, h, i, j = unescape(encodeURIComponent(string)),
+                    l = j.length, m = [a, b, c, d], n, o;
+                for (f = 0; f < l; e[f >> 2] |= j.charCodeAt(f) << ((f % 4) << 3), f++);
+                for (f = 0; f <= ((l + 8) >> 6); e.push(0), f++);
+                e[((l + 8) >> 6) << 4 | 14] = l * 8;
+                for (f = 0; f < e.length; f += 16) {
+                    n = m.slice();
+                    for (g = 0; g < 64; g++) {
+                        o = f + g;
+                        if (g < 16) h = (m[1] & m[2]) | (~m[1] & m[3]), i = o;
+                        else if (g < 32) h = (m[3] & m[1]) | (~m[3] & m[2]), i = (5 * o + 1) % 16;
+                        else if (g < 48) h = m[1] ^ m[2] ^ m[3], i = (3 * o + 5) % 16;
+                        else h = m[2] ^ (m[1] | ~m[3]), i = (7 * o) % 16;
+                        h = (h + m[0] + (e[f + i] || 0) + k(g + 1) | 0);
+                        m = [m[3], (m[1] + ((h << (o = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g % 4 + (g >> 4) * 4] || [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g])) | (h >>> (32 - o)))) | 0, m[1], m[2]];
+                    }
+                    for (g = 0; g < 4; m[g] = m[g] + n[g] | 0, g++);
+                }
+                for (f = 0, j = ""; f < 32; j += ((m[f >> 3] >> ((f % 8) * 4)) & 15).toString(16), f++);
+                return j;
+            }
+
+            // Initial load
+            loadProfile();
+
+            // Logout functionality
+            document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('token');
+                    window.location.href = 'dashboard.html';
+                }
+            });
+        });
+    </script>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura@gmail.com" class="contact-value">tumenyekwivura@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 796352921</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <div class="contact-label">YouTube</div>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-value"
+                            target="_blank">Visit us on YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2023 Tumenye Kwivura. All information is for
+                    educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #2E7D32;
+            --primary-light: #81C784;
+            --bg-color: #f0f9f0;
+            --card-bg: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles - Keeping original style */
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .intro-text {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        /* Header Buttons */
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* User Profile Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-btn img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            transition: transform 0.3s;
+            background: #eee;
+        }
+
+        .profile-btn:hover img {
+            transform: scale(1.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            border-radius: 12px;
+            margin-top: 0.8rem;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            background: #f9fdf9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a {
+            color: #444;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f9f0;
+            color: #2E7D32;
+            padding-left: 1.5rem;
+        }
+
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            min-height: calc(100vh - 300px);
+            padding: 2rem 0;
+        }
+
+        /* Search Bar */
+        .search-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid var(--primary-light);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            padding-left: 60px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--primary-light);
+            color: var(--primary-dark);
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Treatment Grid - Keeping original image style */
+        .page-title {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary-dark);
+            font-size: 2.5rem;
+        }
+
+        .treatment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 4rem;
+        }
+
+        .treatment-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .treatment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .treatment-image-container {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eee;
+        }
+
+        .treatment-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .treatment-info {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .treatment-info h3 {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .treatment-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .treatment-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .treatment-tag {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .zoom-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(46, 125, 50, 0.8);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 2;
+            font-size: 1.5rem;
+            pointer-events: none;
+        }
+
+        .treatment-card:hover .zoom-hint {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin: 3rem auto;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Quick Access Section */
+        .quick-access {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            margin: 2rem auto;
+        }
+
+        .quick-access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .quick-access-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .quick-access-item:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .quick-access-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .contact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .contact-item .contact-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* WhatsApp Pulsing Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: whatsapp-pulse 2s infinite;
+            transition: all 0.3s;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .whatsapp-float:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            animation: whatsapp-ripple 2s infinite;
+            z-index: -1;
+        }
+
+        .whatsapp-float:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: whatsapp-ripple 2s infinite;
+            z-index: -1;
+            animation-delay: 1s;
+        }
+
+        /* Support Modal Styles */
+        .support-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .support-modal.show {
+            display: flex;
+        }
+
+        .support-modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .support-modal-header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .support-modal-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-support-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-support-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .support-modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Support Chat Board Styles */
+        .chat-history-container {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .chat-history-container.show {
+            display: flex;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .message-user {
+            align-self: flex-end;
+            background: #4CAF50;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message-admin {
+            align-self: flex-start;
+            background: #ffffff;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            display: block;
+            text-align: right;
+        }
+
+        .chat-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .chat-tab {
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .chat-tab.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .form-group label i {
+            color: #4CAF50;
+            margin-right: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-support-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .submit-support-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .submit-support-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .whatsapp-float:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: whatsapp-ripple 2s infinite;
+            animation-delay: 0.5s;
+            z-index: -1;
+        }
+
+        .whatsapp-float i {
+            position: relative;
+            z-index: 1;
+            animation: whatsapp-icon-pulse 2s infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes whatsapp-ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes whatsapp-icon-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.8);
+        }
+
+        .whatsapp-float:hover i {
+            animation: none;
+        }
+
+        .whatsapp-tooltip {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        .whatsapp-tooltip:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .whatsapp-float:hover+.whatsapp-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-lightbox:hover {
+            color: var(--primary-light);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .header-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .treatment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-section {
+                padding: 1.5rem;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .close-lightbox {
+                top: -50px;
+                right: 0;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header - Original Style -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                    <img src="logo.png" alt="Tumenye Kwivura Logo"
+                        style="height: 60px; object-fit: contain; background-color: white; border-radius: 8px; padding: 5px;">
+                    <h1 style="font-size: 1.8rem; margin: 0; font-style: oblique;">Tumenye Kwivura. Ubugorozi</h1>
+                </div>
+
+                <div class="header-buttons">
+                    <a href="homes.html" class="header-btn">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="video.html" class="header-btn">
+                        <i class="fas fa-play-circle"></i> Video
+                    </a>
+                    <a href="treatments.html" class="header-btn active" onclick="showSection('home')">
+                        <i class="fas fa-medkit"></i> Treatments
+                    </a>
+                    <a href="#contactSection" class="header-btn">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+                    <div class="user-menu">
+                        <!-- Authenticated User Menu -->
+                        <div id="userMenu" style="display: none;">
+                            <div class="profile-dropdown">
+                                <button class="profile-btn" id="profileBtn">
+                                    <img id="userAvatar"
+                                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                                        alt="Profile">
+                                </button>
+                                <div class="dropdown-content">
+                                    <div class="dropdown-header">
+                                        <p id="dropdownUserName" style="font-weight: 600; color: var(--primary-dark);">
+                                            Guest</p>
+                                        <p id="dropdownUserEmail"
+                                            style="font-size: 0.8rem; color: var(--text-secondary);">guest@example.com
+                                        </p>
+                                    </div>
+                                    <hr style="margin: 0.5rem 0; opacity: 0.1;">
+                                    <a href="profile.html"><i class="fas fa-cog"></i> Settings</a>
+                                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Guest Login/Signup Buttons -->
+                        <div id="authButtons" style="display: block;">
+                            <a href="login.html" class="header-btn"
+                                style="background-color: rgba(255, 255, 255, 0.2); border: 1px solid white;">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-text">
+                <p>Discover how fruits can help treat various health conditions naturally. Each fruit contains unique
+                    nutrients, vitamins, and compounds that can alleviate symptoms and promote healing. Search for a
+                    specific symptom or browse fruits by category.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="container">
+            <div class="search-section">
+                <h2 style="color: var(--primary-dark); text-align: center; margin-bottom: 1.5rem;">Find Natural Remedies
+                </h2>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" placeholder="Search for treatments, symptoms, or fruits..."
+                        id="searchInput" onkeyup="filterTreatments()">
+                </div>
+
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterByCategory('all')">All Treatments</button>
+                    <button class="filter-btn" onclick="filterByCategory('digestion')">Digestion</button>
+                    <button class="filter-btn" onclick="filterByCategory('immunity')">Immunity</button>
+                    <button class="filter-btn" onclick="filterByCategory('skin')">Skin Health</button>
+                    <button class="filter-btn" onclick="filterByCategory('heart')">Heart Health</button>
+                </div>
+            </div>
+
+            <!-- Quick Access -->
+            <div class="quick-access">
+                <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">Quick Access</h3>
+                <div class="quick-access-grid">
+                    <a href="#treatments" class="quick-access-item" onclick="showSection('treatments')">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div>
+                            <h4>All Fruits</h4>
+                            <p>Browse complete list</p>
+                        </div>
+                    </a>
+                    <a href="#popular" class="quick-access-item" onclick="showSection('popular')">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div>
+                            <h4>Popular</h4>
+                            <p>Most used remedies</p>
+                        </div>
+                    </a>
+                    <a href="#recent" class="quick-access-item" onclick="showSection('recent')">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Recent</h4>
+                            <p>Latest additions</p>
+                        </div>
+                    </a>
+                    <a href="support-chat.html" class="quick-access-item">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Need Help?</h4>
+                            <p>Contact support</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-section">
+                <h2 style="margin-bottom: 1rem;">Natural Healing in Numbers</h2>
+                <p style="opacity: 0.9; max-width: 600px; margin: 0 auto 2rem;">Join thousands who have discovered the
+                    power of natural fruit remedies</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="treatmentsCount">8+</div>
+                        <div class="stat-label">Natural Treatments</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="usersCount">1000+</div>
+                        <div class="stat-label">Happy Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="yearsCount">5+</div>
+                        <div class="stat-label">Years of Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="successRate">95%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Treatment Grid -->
+            <h2 class="page-title">Fruit Treatments Gallery</h2>
+            <div class="treatment-grid" id="treatmentGrid">
+                <!-- Treatments will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Other Sections (hidden by default) -->
+        <section id="video" class="container" style="display: none; min-height: 500px;">
+            <h2 class="page-title">Video Tutorials</h2>
+            <div
+                style="background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow-md); text-align: center;">
+                <i class="fas fa-video" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">Video Section Coming Soon</h3>
+                <p>We're working on adding video tutorials for natural remedies.</p>
+                <a href="#home" class="header-btn" onclick="showSection('home')"
+                    style="margin-top: 1rem; display: inline-flex;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </section>
+
+        <section id="popular" class="container" style="display: none; min-height: 500px;">
+            <h2 class="page-title">Popular Remedies</h2>
+            <div class="treatment-grid" id="popularGrid">
+                <!-- Popular treatments will be loaded here -->
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#home" class="header-btn" onclick="showSection('home')" style="display: inline-flex;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </section>
+
+        <section id="recent" class="container" style="display: none; min-height: 500px;">
+            <h2 class="page-title">Recently Added</h2>
+            <div class="treatment-grid" id="recentGrid">
+                <!-- Recent treatments will be loaded here -->
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#homes" class="header-btn" onclick="showSection('home')" style="display: inline-flex;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contactSection">
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura.ubugorozi@gmail.com"
+                            class="contact-value">tumenyekwivura.ubugorozi@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 786853257</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Alternative Phone</div>
+                        <div class="contact-value"> (+250) 786853257</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2026 Fruit Treatment Finder. All information is for
+                    educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+            <img id="lightboxImg" src="" alt="Zoomed Treatment">
+        </div>
+    </div>
+
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/250786853257" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>
+
+    <script src="js/security.js"></script>
+    <script>
+        // Treatment Data - Will be loaded from backend API
+        let treatments = [];
+        const API_BASE_URL = 'http://localhost:3000';
+
+        // DOM Elements
+        const treatmentGrid = document.getElementById('treatmentGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const headerButtons = document.querySelectorAll('.header-btn');
+
+        // Fetch treatments from backend API
+        async function fetchTreatments(category = 'all') {
+            try {
+                const url = category === 'all'
+                    ? `${API_BASE_URL}/api/remedies`
+                    : `${API_BASE_URL}/api/remedies?category=${category}`;
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch treatments');
+                }
+
+                treatments = await response.json();
+                return treatments;
+            } catch (error) {
+                console.error('Error fetching treatments:', error);
+                // Return empty array if API fails
+                return [];
+            }
+        }
+
+        // Fetch stats from backend API
+        async function fetchStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/remedies/stats`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch stats');
+                }
+
+                const stats = await response.json();
+
+                // Update stats display
+                document.getElementById('treatmentsCount').textContent = stats.treatmentsCount + '+';
+                document.getElementById('usersCount').textContent = stats.usersCount + '+';
+                document.getElementById('yearsCount').textContent = stats.yearsCount + '+';
+                document.getElementById('successRate').textContent = stats.successRate + '%';
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        // Initialize treatments
+        async function loadTreatments(filter = 'all', targetContainerId = 'treatmentGrid') {
+            const targetGrid = document.getElementById(targetContainerId);
+            if (!targetGrid) return;
+
+            // Show loading state
+            targetGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>Loading treatments...</p></div>';
+
+            // Fetch treatments from API
+            let allTreatments = await fetchTreatments(filter === 'popular' || filter === 'recent' ? 'all' : filter);
+
+            let filteredTreatments = allTreatments;
+
+            if (filter === 'popular') {
+                filteredTreatments = allTreatments.filter(t => t.is_popular == 1);
+            } else if (filter === 'recent') {
+                // Sort by date descending
+                filteredTreatments = [...allTreatments].sort((a, b) => {
+                    const dateA = a.addedDate ? new Date(a.addedDate) : new Date(0);
+                    const dateB = b.addedDate ? new Date(b.addedDate) : new Date(0);
+                    return dateB - dateA;
+                }).slice(0, 8);
+            } else {
+                // Default: sort all treatments by newest first
+                console.log('Sorting treatments by newest first...');
+                filteredTreatments = [...allTreatments].sort((a, b) => {
+                    const dateA = a.addedDate ? new Date(a.addedDate) : new Date(0);
+                    const dateB = b.addedDate ? new Date(b.addedDate) : new Date(0);
+                    console.log(`Comparing: ${a.name} (${dateA}) vs ${b.name} (${dateB}) => ${dateB - dateA}`);
+                    return dateB - dateA;
+                });
+                console.log('First 3 treatments after sort:', filteredTreatments.slice(0, 3).map(t => t.name + ' - ' + t.addedDate));
+            }
+
+            // Clear loading state
+            targetGrid.innerHTML = '';
+
+            if (filteredTreatments.length === 0) {
+                targetGrid.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary); grid-column: 1/-1;"><i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i><p>No treatments found. Please check if the backend server is running.</p></div>';
+                return;
+            }
+
+            filteredTreatments.forEach(treatment => {
+                const card = document.createElement('div');
+                card.className = 'treatment-card';
+                card.innerHTML = `
+                    <div class="zoom-hint"><i class="fas fa-search-plus"></i></div>
+                    <div class="treatment-image-container">
+                        <img src="${treatment.image}" alt="${treatment.name} Treatment Infographic" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/><text fill=%22%23999%22 x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22>No Image</text></svg>'">
+                    </div>
+                    <div class="treatment-info">
+                        <h3>${treatment.name}</h3>
+                        <p>${treatment.description}</p>
+                        <div class="treatment-tags">
+                            ${treatment.tags && treatment.tags.map(tag => `<span class="treatment-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => openLightbox(treatment.image);
+                targetGrid.appendChild(card);
+            });
+        }
+
+        // Filter treatments by category
+        async function filterByCategory(category) {
+            // Update active filter button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            await loadTreatments(category);
+        }
+
+        // Filter treatments by search
+        function filterTreatments() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.treatment-card');
+
+            cards.forEach(card => {
+                const name = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const tags = card.querySelector('.treatment-tags').textContent.toLowerCase();
+
+                if (name.includes(searchTerm) ||
+                    description.includes(searchTerm) ||
+                    tags.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Show section
+        async function showSection(sectionId) {
+            // Hide all sections
+            const sections = ['home', 'video', 'treatments', 'contact', 'popular', 'recent'];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) section.style.display = 'none';
+            });
+
+            // Show selected section
+            const targetId = (sectionId === 'treatments') ? 'home' : sectionId;
+            const selectedSection = document.getElementById(targetId);
+
+            if (selectedSection) {
+                selectedSection.style.display = 'block';
+
+                // If switching to popular or recent, reload data into their grids
+                if (sectionId === 'popular') {
+                    await loadTreatments('popular', 'popularGrid');
+                } else if (sectionId === 'recent') {
+                    await loadTreatments('recent', 'recentGrid');
+                } else if (sectionId === 'treatments' || sectionId === 'home') {
+                    await loadTreatments('all', 'treatmentGrid');
+                }
+            }
+
+            // Update active header button
+            headerButtons.forEach(btn => {
+                const onclickAttr = btn.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(`'home'`) || (onclickAttr && onclickAttr.includes(`'treatments'`) && ['home', 'popular', 'recent', 'treatments'].includes(sectionId))) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Lightbox functions
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === "Escape") {
+                closeLightbox();
+            }
+        });
+
+        // Animate statistics
+        function animateStatistics() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const increment = target / 100;
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + (target.toString().includes('+') ? '+' : '');
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + (target.toString().includes('+') ? '+' : '');
+                    }
+                }, 20);
+            });
+        }
+
+        // Initialize
+        window.onload = async function () {
+            await fetchStats();
+            loadTreatments();
+            initUserProfile();
+            setTimeout(animateStatistics, 1000);
+        };
+
+        // ==================== USER PROFILE INITIALIZATION ====================
+        function initUserProfile() {
+            const userStr = localStorage.getItem('user');
+            const userMenu = document.getElementById('userMenu');
+            const authButtons = document.getElementById('authButtons');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (!userStr) {
+                if (userMenu) userMenu.style.display = 'none';
+                if (authButtons) authButtons.style.display = 'block';
+                return;
+            }
+
+            if (userMenu) userMenu.style.display = 'block';
+            if (authButtons) authButtons.style.display = 'none';
+
+            const currentUser = JSON.parse(userStr);
+            const userNameElement = document.getElementById('dropdownUserName');
+            const userEmailElement = document.getElementById('dropdownUserEmail');
+            const userAvatar = document.getElementById('userAvatar');
+
+            if (userNameElement) userNameElement.textContent = currentUser.name || 'User';
+            if (userEmailElement) userEmailElement.textContent = currentUser.email || '';
+
+            // Handle Logout
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('token');
+                        window.location.href = 'dashboard.html';
+                    }
+                });
+            }
+
+            // Set Profile Image (Gravatar fallback)
+            const navProfileImg = document.getElementById('userAvatar');
+            if (navProfileImg && currentUser.email) {
+                if (currentUser.profile_image) {
+                    navProfileImg.src = currentUser.profile_image;
+                } else {
+                    const email = currentUser.email.trim().toLowerCase();
+                    navProfileImg.src = `https://www.gravatar.com/avatar/${md5(email)}?d=mp&s=100`;
+                }
+            }
+        }
+
+        // Simple MD5 implementation for Gravatar
+        function md5(string) {
+            function k(n) { return Math.abs(Math.sin(n)) * 4294967296 | 0 }
+            var a = 1732584193, b = 4023233417, c = 2562383102, d = 271733878,
+                e = [], f, g, h, i, j = unescape(encodeURIComponent(string)),
+                l = j.length, m = [a, b, c, d], n, o;
+            for (f = 0; f < l; e[f >> 2] |= j.charCodeAt(f) << ((f % 4) << 3), f++);
+            for (f = 0; f <= ((l + 8) >> 6); e.push(0), f++);
+            e[((l + 8) >> 6) << 4 | 14] = l * 8;
+            for (f = 0; f < e.length; f += 16) {
+                n = m.slice();
+                for (g = 0; g < 64; g++) {
+                    o = f + g;
+                    if (g < 16) h = (m[1] & m[2]) | (~m[1] & m[3]), i = o;
+                    else if (g < 32) h = (m[3] & m[1]) | (~m[3] & m[2]), i = (5 * o + 1) % 16;
+                    else if (g < 48) h = m[1] ^ m[2] ^ m[3], i = (3 * o + 5) % 16;
+                    else h = m[2] ^ (m[1] | ~m[3]), i = (7 * o) % 16;
+                    h = (h + m[0] + (e[f + i] || 0) + k(g + 1) | 0);
+                    m = [m[3], (m[1] + ((h << (o = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g % 4 + (g >> 4) * 4] || [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g])) | (h >>> (32 - o)))) | 0, m[1], m[2]];
+                }
+                for (g = 0; g < 4; m[g] = m[g] + n[g] | 0, g++);
+            }
+            for (f = 0, j = ""; f < 32; j += ((m[f >> 3] >> ((f % 8) * 4)) & 15).toString(16), f++);
+            return j;
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura@gmail.com" class="contact-value">tumenyekwivura@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 786853257</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <div class="contact-label">YouTube</div>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-value" target="_blank">Visit us on YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2026 Tumenye Kwivura. All information is for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/security.js"></script>
+    <script>
+        initUserProfile();
+    </script>
+</body>
+
+</html>

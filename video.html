@@ -1,0 +1,3275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --bg-color: #f9f9f9;
+            --header-bg: #ffffff;
+            --text-main: #0f0f0f;
+            --text-secondary: #606060;
+            --divider: #e5e5e5;
+            --hover-bg: #f2f2f2;
+            --search-bg: #f8f8f8;
+            --search-border: #d3d3d3;
+            --search-btn-bg: #f8f8f8;
+            --chip-bg: #0000000d;
+            --chip-hover: #0000001a;
+            --chip-active-bg: #0f0f0f;
+            --chip-active-text: #ffffff;
+
+            /* New Design Tokens */
+            --success-color: #4CAF50;
+            --error-color: #f44336;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Dark Mode */
+        .dark-theme {
+            --primary: #4CAF50;
+            --primary-light: #66BB6A;
+            --bg-color: #121212;
+            --header-bg: #1e1e1e;
+            --text-main: #ffffff;
+            --text-secondary: #aaaaaa;
+            --divider: #333333;
+            --hover-bg: #2a2a2a;
+            --search-bg: #2a2a2a;
+            --search-border: #444444;
+            --chip-bg: #ffffff1a;
+            --chip-hover: #ffffff33;
+            --chip-active-bg: #ffffff;
+            --chip-active-text: #000000;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color var(--transition-normal),
+                color var(--transition-normal);
+        }
+
+
+
+
+
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 80px;
+            z-index: 1001;
+        }
+
+        /* Header - Match treatments style */
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            font-style: oblique;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            border: 2px solid rgba(255, 255, 255, 0.4) !important;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: none !important;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.35) !important;
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        .header-btn.active {
+            background-color: rgba(255, 255, 255, 0.35) !important;
+            border-color: white !important;
+        }
+
+        .intro-text {
+            margin-top: 1.2rem;
+            font-size: 1rem;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            color: white;
+        }
+
+
+        .language-btn {
+            background: var(--header-bg);
+            border: 2px solid var(--primary);
+            color: var(--text-main);
+            padding: 10px 15px;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+        }
+
+        .language-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .notification-btn {
+            position: relative;
+            background: var(--header-bg);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notification-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--error-color);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 2px solid var(--header-bg);
+            display: none;
+        }
+
+        .notification-badge.active {
+            display: block;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-btn img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            transition: transform 0.3s;
+            background: #eee;
+        }
+
+        .profile-btn:hover img {
+            transform: scale(1.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            border-radius: 12px;
+            margin-top: 0.8rem;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            background: #f9fdf9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a {
+            color: #444;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f9f0;
+            color: #2E7D32;
+            padding-left: 1.5rem;
+        }
+
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 140px;
+            z-index: 2000;
+            max-width: 350px;
+        }
+
+        .toast {
+            background: var(--header-bg);
+            border-left: 4px solid var(--primary);
+            padding: var(--radius-md);
+            margin-bottom: 8px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left-color: var(--success-color);
+        }
+
+        .toast.error {
+            border-left-color: var(--error-color);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .toast.info {
+            border-left-color: var(--info-color);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Help Chat Button */
+        .help-float {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .help-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(46, 125, 50, 0.8);
+        }
+
+        .help-tooltip {
+            position: fixed;
+            bottom: 175px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .help-float:hover+.help-tooltip {
+            opacity: 1;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: var(--bg-color);
+        }
+
+        /* Header Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: white !important;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            font-style: oblique;
+            color: white;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .intro-text {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Layout */
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+            padding: 24px 24px 0 24px;
+            max-width: 1750px;
+            margin: 0 auto;
+        }
+
+        /* Primary Column (Video) */
+        .primary-col {
+            min-width: 0;
+        }
+
+        .video-player-wrapper {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: black;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Enhanced Video Controls */
+        .video-controls {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            margin-top: -5px;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--primary-light);
+            border-radius: 2px;
+            width: 0%;
+        }
+
+        .progress-thumb {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+
+        .progress-bar:hover .progress-thumb {
+            opacity: 1;
+        }
+
+        .time-display {
+            color: white;
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            transition: background var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .volume-slider {
+            width: 80px;
+        }
+
+        .volume-slider input {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .video-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 16px 0 12px;
+            line-height: 1.4;
+        }
+
+        .video-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .channel-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .channel-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .channel-text span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .subscribe-btn {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 8px 16px;
+            height: 36px;
+            border-radius: 18px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .subscribe-btn:hover {
+            background-color: var(--text-secondary);
+            transform: translateY(-2px);
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--chip-bg);
+            border: none;
+            padding: 8px 16px;
+            height: 36px;
+            border-radius: 18px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+            color: var(--text-main);
+        }
+
+        .action-pill:hover {
+            background-color: var(--chip-hover);
+        }
+
+        .like-dislike {
+            display: flex;
+            align-items: center;
+            background-color: var(--chip-bg);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .like-btn,
+        .dislike-btn {
+            background: transparent;
+            border: none;
+            height: 36px;
+            padding: 0 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .like-btn:hover,
+        .dislike-btn:hover {
+            background-color: var(--chip-hover);
+        }
+
+        .separator {
+            width: 1px;
+            height: 24px;
+            background-color: var(--divider);
+        }
+
+        /* Video Statistics */
+        .video-statistics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+            padding: 16px;
+            background: var(--chip-bg);
+            border-radius: var(--radius-lg);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            transition: transform var(--transition-fast);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            background: var(--chip-hover);
+        }
+
+        .stat-card i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Video Transcript */
+        .video-transcript {
+            background: var(--chip-bg);
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .video-transcript h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .transcript-content {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 12px;
+            background: var(--bg-color);
+            border-radius: var(--radius-md);
+            display: none;
+        }
+
+        .transcript-content.show {
+            display: block;
+        }
+
+        .transcript-line {
+            padding: 8px;
+            border-bottom: 1px solid var(--divider);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+
+        .transcript-line:hover {
+            background: var(--hover-bg);
+        }
+
+        .transcript-line .timecode {
+            color: var(--primary);
+            font-weight: 500;
+            margin-right: 12px;
+            min-width: 40px;
+            display: inline-block;
+        }
+
+        .toggle-transcript {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Download Options */
+        .download-options {
+            background: var(--chip-bg);
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+        }
+
+        .download-options h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .download-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .download-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .download-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Description Box */
+        .description-box {
+            background-color: var(--chip-bg);
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            cursor: pointer;
+        }
+
+        .description-box:hover {
+            background-color: var(--chip-hover);
+        }
+
+        .desc-views {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .desc-text {
+            white-space: pre-wrap;
+        }
+
+        /* Enhanced Comments Section */
+        .comments-section {
+            margin-top: 24px;
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+
+        .comments-count {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .sort-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user-avatar.avatar-brown {
+            background-color: #795548;
+        }
+
+        .user-avatar.avatar-blue {
+            background-color: #607D8B;
+        }
+
+        .copyright-text {
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        .comment-input-wrapper {
+            flex: 1;
+        }
+
+        .comment-input {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid var(--divider);
+            background: transparent;
+            padding-bottom: 4px;
+            font-size: 0.95rem;
+            transition: border-bottom 0.2s;
+            color: var(--text-main);
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-bottom: 2px solid var(--text-main);
+        }
+
+        .comment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .reaction-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .reaction-btn {
+            background: var(--chip-bg);
+            border: none;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .reaction-btn:hover {
+            transform: scale(1.2);
+            background: var(--chip-hover);
+        }
+
+        .reaction-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        .cancel-btn:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .submit-comment {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+
+        .submit-comment:hover {
+            background-color: var(--primary-light);
+        }
+
+        .submit-btn {
+            background-color: var(--chip-bg);
+            color: var(--text-secondary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 18px;
+            font-weight: 500;
+            cursor: not-allowed;
+        }
+
+        .submit-btn.valid {
+            background-color: var(--primary);
+            color: white;
+            cursor: pointer;
+        }
+
+        .comments-filter {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .filter-btn {
+            background: var(--chip-bg);
+            border: none;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: var(--chip-hover);
+        }
+
+        /* Sample Comment */
+        .comment-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            transition: background var(--transition-fast);
+        }
+
+        .comment-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .comment-time {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .comment-text {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .comment-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .comment-like {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+        }
+
+        /* Related Videos */
+        .related-videos {
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--chip-bg);
+            border-radius: var(--radius-lg);
+        }
+
+        .related-videos h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .related-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .related-video {
+            display: flex;
+            gap: 12px;
+            padding: 8px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+
+        .related-video:hover {
+            background: var(--chip-hover);
+        }
+
+        .related-thumbnail {
+            position: relative;
+            width: 120px;
+            height: 68px;
+            flex-shrink: 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: black;
+        }
+
+        .related-thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-info {
+            flex: 1;
+        }
+
+        .related-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .related-info p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Secondary Column (Sidebar/Up Next) */
+        .secondary-col {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .chip-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .chip {
+            background-color: var(--chip-bg);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--text-main);
+            transition: all var(--transition-fast);
+        }
+
+        .chip.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .chip:hover:not(.active) {
+            background-color: var(--chip-hover);
+        }
+
+        .video-item {
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .video-item:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .thumbnail {
+            position: relative;
+            width: 168px;
+            height: 94px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            transition: border-radius 0.1s;
+        }
+
+        .thumbnail video,
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .duration {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 0.75rem;
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        .video-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .video-item-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        .sidebar-search {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-search input {
+            width: 100%;
+            padding: 10px 36px 10px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--divider);
+            background-color: var(--header-bg);
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .sidebar-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .sidebar-search i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .video-item-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Quality Menu */
+        .quality-menu {
+            display: none;
+            position: absolute;
+            background: var(--header-bg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            z-index: 100;
+            min-width: 100px;
+        }
+
+        .quality-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: background var(--transition-fast);
+        }
+
+        .quality-option:hover {
+            background: var(--hover-bg);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: all var(--transition-normal);
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-light);
+            transform: translateY(-4px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .contact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .contact-item .contact-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: whatsapp-pulse 2s infinite;
+            transition: all 0.3s;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .whatsapp-float:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            animation: whatsapp-ripple 2s infinite;
+            z-index: -1;
+        }
+
+        .whatsapp-float:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: whatsapp-ripple 2s infinite;
+            animation-delay: 0.5s;
+            z-index: -1;
+        }
+
+        .whatsapp-float i {
+            position: relative;
+            z-index: 1;
+            animation: whatsapp-icon-pulse 2s infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes whatsapp-ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes whatsapp-icon-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.8);
+        }
+
+        .whatsapp-float:hover i {
+            animation: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+
+            .secondary-col {
+                padding-bottom: 60px;
+            }
+
+            .video-statistics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+            }
+
+            .language-switcher {
+                top: 15px;
+                right: 70px;
+            }
+
+            .toast-container {
+                right: 120px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .download-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-top-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .control-buttons {
+                justify-content: center;
+            }
+
+            .volume-slider {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="language-btn" id="languageToggle">
+            <i class="fas fa-globe"></i>
+            <span>EN</span>
+        </button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="home.html" class="logo"
+                    style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                    <img src="logo.png" alt="Tumenye Kwivura Logo"
+                        style="height: 40px; object-fit: contain; background-color: white; border-radius: 8px; padding: 5px;">
+                    <h1 style="font-size: 1.8rem; margin: 0; color: inherit; font-style: oblique;">Tumenye Kwivura.
+                        Ubugorozi</h1>
+                </a>
+
+                <div class="header-buttons">
+                    <a href="homes.html" class="header-btn">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="video.html" class="header-btn active">
+                        <i class="fas fa-play"></i> Video
+                    </a>
+                    <a href="treatments.html" class="header-btn">
+                        <i class="fas fa-leaf"></i> Treatments
+                    </a>
+                    <button class="header-btn"
+                        onclick="document.getElementById('contactSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </button>
+                    <div class="user-menu">
+                        <!-- Notification Button with Dropdown -->
+                        <div class="notification-wrapper" style="position: relative;">
+                            <button class="notification-btn" id="notificationBtn" title="Support Messages">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge" id="notificationBadge">0</span>
+                            </button>
+                            <!-- Notification Dropdown -->
+                            <div class="notification-dropdown" id="notificationDropdown"
+                                style="display: none; position: absolute; top: 100%; right: 0; width: 350px; max-height: 450px; overflow-y: auto; background: var(--header-bg); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 1000; margin-top: 10px; border: 1px solid var(--divider);">
+                                <div
+                                    style="padding: 15px; border-bottom: 1px solid var(--divider); display: flex; justify-content: space-between; align-items: center;">
+                                    <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Messages</h3>
+                                    <a href="support-chat.html"
+                                        style="color: var(--primary); text-decoration: none; font-size: 0.85rem;">See
+                                        All</a>
+                                </div>
+                                <div id="notificationList">
+                                    <div style="padding: 30px; text-align: center; color: var(--text-secondary);">
+                                        <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                        <p>No messages yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Authenticated User Menu -->
+                        <div id="userMenu" style="display: none;">
+                            <div class="profile-dropdown">
+                                <button class="profile-btn" id="profileBtn">
+                                    <img id="userAvatar"
+                                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                                        alt="Profile">
+                                </button>
+                                <div class="dropdown-content">
+                                    <div class="dropdown-header">
+                                        <p id="dropdownUserName" style="font-weight: 600; color: var(--primary);">Guest
+                                        </p>
+                                        <p id="dropdownUserEmail"
+                                            style="font-size: 0.8rem; color: var(--text-secondary);">guest@example.com
+                                        </p>
+                                    </div>
+                                    <hr style="margin: 0.5rem 0; opacity: 0.1;">
+                                    <a href="profile.html"><i class="fas fa-cog"></i> Settings</a>
+                                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Guest Login/Signup Buttons -->
+                        <div id="authButtons" style="display: block;">
+                            <a href="login.html" class="header-btn"
+                                style="background-color: transparent; border: 1px solid white;">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                        </div>
+
+                        <button id="themeToggle" class="header-btn" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-text">
+                <p>Discover how fruits can help treat various health conditions naturally. Each fruit contains unique
+                    nutrients, vitamins, and compounds that can alleviate symptoms and promote healing.</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-container">
+
+        <!-- Primary Column -->
+        <div class="primary-col">
+            <div class="video-player-wrapper">
+                <video id="mainPlayer" controls autoplay>
+                    <!-- Source injected via JS -->
+                </video>
+                <div class="video-controls" id="videoControls">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill"></div>
+                            <div class="progress-thumb" id="progressThumb"></div>
+                        </div>
+                        <div class="time-display">
+                            <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="control-btn" id="rewindBtn" aria-label="Rewind 10 seconds">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button class="control-btn" id="playPauseBtn" aria-label="Play/Pause">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="forwardBtn" aria-label="Forward 10 seconds">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                        <button class="control-btn" id="muteBtn" aria-label="Mute/Unmute">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <div class="volume-slider">
+                            <input type="range" min="0" max="100" value="100" id="volumeSlider" aria-label="Volume">
+                        </div>
+                        <button class="control-btn" id="fullscreenBtn" aria-label="Fullscreen">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button class="control-btn" id="speedBtn" aria-label="Playback speed">
+                            1x
+                        </button>
+                        <button class="control-btn" id="captionBtn" aria-label="Closed captions">
+                            <i class="fas fa-closed-captioning"></i>
+                        </button>
+                        <button class="control-btn" id="pipBtn" aria-label="Picture in Picture">
+                            <i class="fas fa-picture-in-picture"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="video-title" id="videoTitle">Loading...</h1>
+
+            <!-- Video Statistics -->
+            <div class="video-statistics">
+                <div class="stat-card">
+                    <i class="fas fa-eye"></i>
+                    <div class="stat-value" id="videoViews">0</div>
+                    <div class="stat-label">Views</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <div class="stat-value" id="videoLikes">0</div>
+                    <div class="stat-label">Likes</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-share"></i>
+                    <div class="stat-value" id="videoShares">0</div>
+                    <div class="stat-label">Shares</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-comment"></i>
+                    <div class="stat-value" id="videoComments">0</div>
+                    <div class="stat-label">Comments</div>
+                </div>
+            </div>
+
+            <div class="video-top-row">
+                <div class="channel-info">
+                    <div class="channel-avatar"><i class="fas fa-leaf"></i></div>
+                    <div class="channel-text">
+                        <h3>Natural Remedies</h3>
+                        <span>1.2M subscribers</span>
+                    </div>
+                    <button class="subscribe-btn">Subscribe</button>
+                </div>
+
+                <div class="actions">
+                    <div class="like-dislike">
+                        <button class="like-btn" onclick="toggleLike(this)">
+                            <i class="far fa-thumbs-up"></i> <span id="likeCount">12K</span>
+                        </button>
+                        <div class="separator"></div>
+                        <button class="dislike-btn" title="Dislike"><i class="far fa-thumbs-down"></i></button>
+                    </div>
+                    <button class="action-pill"><i class="fas fa-share"></i> Share</button>
+                    <button class="action-pill"><i class="fas fa-download"></i> Download</button>
+                    <button class="action-pill" title="More options"><i class="fas fa-ellipsis-h"></i></button>
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="download-options">
+                <h3><i class="fas fa-download"></i> Download Options</h3>
+                <div class="download-buttons">
+                    <button class="download-btn" data-quality="360p">
+                        <i class="fas fa-download"></i> 360p (SD)
+                    </button>
+                    <button class="download-btn" data-quality="720p">
+                        <i class="fas fa-download"></i> 720p (HD)
+                    </button>
+                    <button class="download-btn" data-quality="1080p">
+                        <i class="fas fa-download"></i> 1080p (Full HD)
+                    </button>
+                    <button class="download-btn" data-quality="audio">
+                        <i class="fas fa-music"></i> Audio Only
+                    </button>
+                </div>
+            </div>
+
+            <!-- Video Transcript -->
+            <div class="video-transcript">
+                <h3><i class="fas fa-file-alt"></i> Transcript</h3>
+                <div class="transcript-content" id="transcriptContent">
+                    <!-- Transcript will be loaded here -->
+                </div>
+                <button class="toggle-transcript" id="toggleTranscript">
+                    Show Transcript <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="description-box" onclick="this.classList.toggle('expanded')">
+                <div class="desc-views">
+                    <span id="videoViewsText">50K views</span> • <span id="videoDate">3 months ago</span>
+                </div>
+                <div class="desc-text" id="videoDesc">
+                    <!-- Description injected JS -->
+                </div>
+            </div>
+
+            <!-- Related Videos -->
+            <section class="related-videos">
+                <h3><i class="fas fa-film"></i> Related Videos</h3>
+                <div class="related-grid" id="relatedVideos">
+                    <!-- Related videos will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <div class="comments-header">
+                    <div class="comments-count" id="commentsCount">245 Comments</div>
+                    <button class="sort-btn"><i class="fas fa-sort-amount-down"></i> Sort by</button>
+                </div>
+
+                <div class="comments-filter">
+                    <button class="filter-btn active" data-filter="top">Top Comments</button>
+                    <button class="filter-btn" data-filter="newest">Newest First</button>
+                    <button class="filter-btn" data-filter="oldest">Oldest First</button>
+                </div>
+
+                <div class="add-comment">
+                    <div class="user-avatar" id="commentAvatar">U</div>
+                    <div class="comment-input-wrapper">
+                        <textarea class="comment-input" id="commentText" placeholder="Add a comment..."></textarea>
+                        <div class="comment-actions">
+                            <div class="reaction-buttons">
+                                <button class="reaction-btn" data-reaction="👍">👍</button>
+                                <button class="reaction-btn" data-reaction="❤️">❤️</button>
+                                <button class="reaction-btn" data-reaction="😮">😮</button>
+                                <button class="reaction-btn" data-reaction="😢">😢</button>
+                                <button class="reaction-btn" data-reaction="😡">😡</button>
+                            </div>
+                            <button class="submit-comment" id="submitComment">Comment</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Static Sample Comments -->
+                <div class="comment-item">
+                    <div class="user-avatar avatar-brown">J</div>
+                    <div class="comment-content">
+                        <div class="comment-author">Jean Paul <span class="comment-time">2 days ago</span></div>
+                        <div class="comment-text">This remedy really helped my cough! Thank you so much for sharing.
+                        </div>
+                        <div class="comment-meta">
+                            <div class="comment-like"><i class="far fa-thumbs-up"></i> 12</div>
+                            <div class="comment-like"><i class="far fa-thumbs-down"></i></div>
+                            <span>Reply</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-item">
+                    <div class="user-avatar avatar-blue">M</div>
+                    <div class="comment-content">
+                        <div class="comment-author">Marie Claire <span class="comment-time">1 week ago</span></div>
+                        <div class="comment-text">Can I mix this with honey? The taste is a bit strong for me.</div>
+                        <div class="comment-meta">
+                            <div class="comment-like"><i class="far fa-thumbs-up"></i> 5</div>
+                            <div class="comment-like"><i class="far fa-thumbs-down"></i></div>
+                            <span>Reply</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Column (Up Next) -->
+        <div class="secondary-col">
+            <div class="sidebar-search">
+                <input type="text" id="searchInput" placeholder="Search videos...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="chip-bar">
+                <button class="chip active">All</button>
+                <button class="chip">Immunity</button>
+                <button class="chip">Digestion</button>
+                <button class="chip">Skin Care</button>
+                <button class="chip">Respiratory</button>
+                <button class="chip">Energy</button>
+            </div>
+
+            <div id="playlist">
+                <!-- Javascript will inject items here -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer id="contactSection">
+        <div class="footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura.ubugorozi@gmail.com" class="contact-value">tumenyekwivura.ubugorozi@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 786853257</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <div class="contact-label">YouTube</div>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-value" target="_blank">Visit us on YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2026 Tumenye Kwivura. All information is for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/250786853257" class="whatsapp-float" target="_blank" rel="noopener" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div style="text-align: center; padding: 20px; opacity: 0.7; font-size: 0.8em;">
+        <a href="homes.html" style="color: inherit; text-decoration: none;">Back to Home</a>
+    </div>
+
+    <script src="js/security.js"></script>
+    <script>
+        // Data - Embedded from seed_videos.js
+        let videos = [
+            { file: "1 (1).mp4", title: "Inama zireba umugore utwite", desc: "Introduction to natural healing methods and basic ingredients." },
+            { file: "1 (10).mp4", title: "Akamaro kamazi", desc: "Advanced techniques for herbal preparations." },
+            { file: "1 (11).mp4", title: "Ijambo ryahindura ubuzima", desc: "Understanding dosage and safety for home remedies." },
+            { file: "1 (12).mp4", title: "Ukowavura umutima", desc: "Stay healthy during flu season." },
+            { file: "1 (13).mp4", title: "umuti wa mara,igifu,umwijima...", desc: "Top fruits for immune system." },
+            { file: "1 (14).mp4", title: "umuti uvura umutwe", desc: "Gut health is key to overall wellness." },
+            { file: "1 (15).mp4", title: "icyo wakora warwaye emoloide(akarizo)", desc: "Natural masks and diet for skin." },
+            { file: "1 (16).mp4", title: "Bikoreshe ukire...", desc: "No more coffee needed." },
+            { file: "1 (17).mp4", title: "icyo wakora warwaye emoloide(akarizo)", desc: "How to detox safely." },
+            { file: "1 (18).mp4", title: "Umuti wa sinezite", desc: "Building healthy habits." },
+            { file: "1 (2).mp4", title: "Akaga duterwa nisukari mvaruganda", desc: "Focus on ginger and lemon benefits." },
+            { file: "1 (3).mp4", title: "Uko wagabanya ibiro byinshi.", desc: "Uses of honey in medicine." },
+            { file: "1 (4).mp4", title: "Kwivura intandamyi (Trichomonas)", desc: "Garlic benefits." },
+            { file: "1 (5).mp4", title: "Umuti wubuzima", desc: "Anti-inflammatory properties." },
+            { file: "Find 'imiti nzungu GAD' on TikTok - TikTok Search_4.mp4", title: "Akaga kinzoga", desc: "Short tip from Gad." },
+            { file: "Find 'imiti nzungu GAD' on TikTok - TikTok Search_5.mp4", title: "Umuti w'imvuvu.", desc: "More insights." }
+        ];
+        let currentVideoIndex = 0;
+        const player = document.getElementById('mainPlayer');
+        const playlistEl = document.getElementById('playlist');
+        const videoControls = document.getElementById('videoControls');
+        let isPlaying = false;
+
+        // Fetch videos from backend
+        async function fetchVideos() {
+            try {
+                const response = await fetch('http://localhost:3000/api/videos');
+                if (!response.ok) throw new Error('Failed to fetch videos');
+                videos = await response.json();
+
+                // Sort videos from new to old (newest first based on uploaded_at)
+                videos.sort((a, b) => {
+                    const dateA = new Date(a.uploaded_at || a.uploaded || 0);
+                    const dateB = new Date(b.uploaded_at || b.uploaded || 0);
+                    return dateB - dateA; // Descending order (newest first)
+                });
+
+                // Sync data for Admin Dashboard
+                localStorage.setItem('adminVideos', JSON.stringify(videos));
+                console.log('Videos data synced to localStorage');
+
+                renderPlaylist();
+                if (videos.length > 0) {
+                    loadVideo(0);
+                }
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+                showToast('Error loading videos from server', 'error');
+            }
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${getToastIcon(type)}"></i>
+                <span>${message}</span>
+            `;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        function getToastIcon(type) {
+            switch (type) {
+                case 'success': return 'check-circle';
+                case 'error': return 'exclamation-circle';
+                case 'warning': return 'exclamation-triangle';
+                default: return 'info-circle';
+            }
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+                showToast('Dark mode enabled', 'success');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+                showToast('Light mode enabled', 'success');
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Language Switcher
+        const languageToggle = document.getElementById('languageToggle');
+        languageToggle.addEventListener('click', () => {
+            const currentLang = languageToggle.querySelector('span').textContent;
+            const newLang = currentLang === 'EN' ? 'RW' : 'EN';
+            languageToggle.querySelector('span').textContent = newLang;
+            showToast(`Language changed to ${newLang === 'EN' ? 'English' : 'Kinyarwanda'}`, 'info');
+        });
+
+        // Enhanced Video Player Controls
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const muteBtn = document.getElementById('muteBtn');
+        const speedBtn = document.getElementById('speedBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const pipBtn = document.getElementById('pipBtn');
+
+        function initVideoPlayer() {
+            // Set initial volume
+            player.volume = volumeSlider.value / 100;
+
+            // Update time display
+            player.addEventListener('timeupdate', updateProgress);
+            player.addEventListener('loadedmetadata', () => {
+                durationEl.textContent = formatTime(player.duration);
+                updateVideoStats();
+            });
+
+            // Play/Pause toggle
+            playPauseBtn.addEventListener('click', () => {
+                if (player.paused) {
+                    player.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    playPauseBtn.setAttribute('aria-label', 'Pause');
+                    isPlaying = true;
+                } else {
+                    player.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    playPauseBtn.setAttribute('aria-label', 'Play');
+                    isPlaying = false;
+                }
+            });
+
+            // Volume control
+            volumeSlider.addEventListener('input', (e) => {
+                player.volume = e.target.value / 100;
+                muteBtn.innerHTML = player.volume === 0
+                    ? '<i class="fas fa-volume-mute"></i>'
+                    : '<i class="fas fa-volume-up"></i>';
+            });
+
+            // Mute toggle
+            muteBtn.addEventListener('click', () => {
+                player.muted = !player.muted;
+                muteBtn.innerHTML = player.muted
+                    ? '<i class="fas fa-volume-mute"></i>'
+                    : '<i class="fas fa-volume-up"></i>';
+            });
+
+            // Progress bar interaction
+            progressBar.addEventListener('click', (e) => {
+                const rect = progressBar.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                player.currentTime = percent * player.duration;
+            });
+
+            // Fullscreen toggle
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                } else {
+                    document.exitFullscreen();
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                }
+            });
+
+            // Rewind/Forward
+            rewindBtn.addEventListener('click', () => {
+                player.currentTime = Math.max(0, player.currentTime - 10);
+                showToast('Rewinded 10 seconds');
+            });
+
+            forwardBtn.addEventListener('click', () => {
+                player.currentTime = Math.min(player.duration, player.currentTime + 10);
+                showToast('Forwarded 10 seconds');
+            });
+
+            // Playback speed
+            const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
+            let speedIndex = 2;
+            speedBtn.addEventListener('click', () => {
+                speedIndex = (speedIndex + 1) % speeds.length;
+                player.playbackRate = speeds[speedIndex];
+                speedBtn.textContent = `${speeds[speedIndex]}x`;
+                showToast(`Playback speed: ${speeds[speedIndex]}x`);
+            });
+
+            // Picture-in-Picture
+            if ('pictureInPictureEnabled' in document) {
+                pipBtn.style.display = 'flex';
+                pipBtn.addEventListener('click', async () => {
+                    try {
+                        if (document.pictureInPictureElement) {
+                            await document.exitPictureInPicture();
+                        } else {
+                            await player.requestPictureInPicture();
+                        }
+                    } catch (error) {
+                        showToast('Picture-in-Picture not supported', 'error');
+                    }
+                });
+            } else {
+                pipBtn.style.display = 'none';
+            }
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                switch (e.key) {
+                    case 'm':
+                        e.preventDefault();
+                        muteBtn.click();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        fullscreenBtn.click();
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        rewindBtn.click();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        forwardBtn.click();
+                        break;
+                    case '>':
+                    case '.':
+                        e.preventDefault();
+                        speedBtn.click();
+                        break;
+                }
+            });
+        }
+
+        function updateProgress() {
+            const percent = (player.currentTime / player.duration) * 100;
+            progressFill.style.width = `${percent}%`;
+            currentTimeEl.textContent = formatTime(player.currentTime);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Transcript functionality
+        const transcriptToggle = document.getElementById('toggleTranscript');
+        const transcriptContent = document.getElementById('transcriptContent');
+
+        transcriptToggle.addEventListener('click', () => {
+            const isHidden = !transcriptContent.classList.contains('show');
+            transcriptContent.classList.toggle('show');
+            const icon = transcriptToggle.querySelector('i');
+            if (isHidden) {
+                transcriptToggle.innerHTML = 'Hide Transcript <i class="fas fa-chevron-up"></i>';
+                loadTranscript();
+            } else {
+                transcriptToggle.innerHTML = 'Show Transcript <i class="fas fa-chevron-down"></i>';
+            }
+        });
+
+        function loadTranscript() {
+            // Mock transcript data
+            const transcript = [
+                { time: '0:00', text: 'Introduction to natural remedies' },
+                { time: '0:30', text: 'Benefits of using fruits for healing' },
+                { time: '1:15', text: 'Step-by-step preparation guide' },
+                { time: '2:45', text: 'Dosage and safety precautions' }
+            ];
+
+            transcriptContent.innerHTML = transcript.map(item => `
+                <div class="transcript-line" data-time="${item.time}">
+                    <span class="timecode">${item.time}</span>
+                    <span class="text">${item.text}</span>
+                </div>
+            `).join('');
+
+            // Make transcript clickable
+            document.querySelectorAll('.transcript-line').forEach(line => {
+                line.addEventListener('click', () => {
+                    const time = line.dataset.time.split(':');
+                    const seconds = parseInt(time[0]) * 60 + parseInt(time[1]);
+                    player.currentTime = seconds;
+                    player.play();
+                    showToast(`Jumped to ${line.dataset.time}`);
+                });
+            });
+        }
+
+        // Enhanced comments
+        const commentText = document.getElementById('commentText');
+        const submitComment = document.getElementById('submitComment');
+        const reactionBtns = document.querySelectorAll('.reaction-btn');
+        const commentAvatar = document.getElementById('commentAvatar');
+
+        // Set user avatar
+        const userName = localStorage.getItem('userName') || 'User';
+        commentAvatar.textContent = userName.charAt(0).toUpperCase();
+
+        submitComment.addEventListener('click', async () => {
+            const text = commentText.value.trim();
+            if (text) {
+                const video = videos[currentVideoIndex];
+                if (!video) return;
+
+                try {
+                    const response = await fetch(`http://localhost:3000/api/videos/${video.id}/comments`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            user_name: userName,
+                            comment_text: text
+                        })
+                    });
+
+                    if (response.ok) {
+                        addComment(text);
+                        commentText.value = '';
+                        showToast('Comment added successfully', 'success');
+
+                        // Update comment count in video object and stat card
+                        video.comment_count = (video.comment_count || 0) + 1;
+                        updateStatCard('videoComments', video.comment_count);
+
+                        // Reload comments from backend
+                        loadComments(video.id);
+                    } else {
+                        showToast('Error posting comment', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error posting comment:', error);
+                    showToast('Error posting comment', 'error');
+                }
+            }
+        });
+
+        reactionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const reaction = btn.dataset.reaction;
+                addReaction(reaction);
+                btn.classList.add('active');
+                setTimeout(() => btn.classList.remove('active'), 300);
+                showToast(`Reacted with ${reaction}`);
+            });
+        });
+
+        function addComment(text) {
+            const commentsSection = document.querySelector('.comments-section');
+            const comment = document.createElement('div');
+            comment.className = 'comment-item';
+
+            const timestamp = new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const avatarHtml = user.profile_image
+                ? `<img src="${user.profile_image}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`
+                : (user.email
+                    ? `<img src="https://www.gravatar.com/avatar/${md5(user.email.trim().toLowerCase())}?d=mp&s=40" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`
+                    : userName.charAt(0).toUpperCase());
+
+            comment.innerHTML = `
+                <div class="user-avatar" style="overflow: hidden; display: flex; align-items: center; justify-content: center;">${avatarHtml}</div>
+                <div class="comment-content">
+                    <div class="comment-author">${userName} <span class="comment-time">${timestamp}</span></div>
+                    <div class="comment-text">${text}</div>
+                    <div class="comment-meta">
+                        <button class="comment-like"><i class="far fa-thumbs-up"></i> 0</button>
+                        <button class="comment-reply">Reply</button>
+                    </div>
+                </div>
+            `;
+
+            commentsSection.appendChild(comment);
+
+            // Update comment count
+            const commentCount = document.getElementById('commentsCount');
+            const currentCount = parseInt(commentCount.textContent.match(/\d+/)[0]) + 1;
+            commentCount.textContent = `${currentCount} Comments`;
+        }
+
+        // Download functionality
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const quality = btn.dataset.quality;
+                initiateDownload(quality);
+            });
+        });
+
+        function initiateDownload(quality) {
+            const video = videos[currentVideoIndex];
+            if (!video) return;
+
+            const filename = video.video_url || video.filename || video.file;
+            if (!filename) {
+                showToast('No video file available to download', 'error');
+                return;
+            }
+
+            showToast(`Preparing download...`, 'info');
+
+            // Directly link to the backend video streaming endpoint / static file
+            const videoSrc = `http://localhost:3000/videos/${encodeURIComponent(filename)}`;
+
+            fetch(videoSrc)
+                .then(response => {
+                    if (!response.ok) throw new Error('File not found on server');
+                    return response.blob();
+                })
+                .then(blob => {
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(blobUrl);
+                    showToast('Download started!', 'success');
+                })
+                .catch(err => {
+                    console.error('Download error:', err);
+                    // Fallback: open directly
+                    const link = document.createElement('a');
+                    link.href = videoSrc;
+                    link.download = filename;
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showToast('Opening video for download...', 'info');
+                });
+
+            // Update download count
+            const downloads = parseInt(localStorage.getItem('downloads') || '0') + 1;
+            localStorage.setItem('downloads', downloads.toString());
+        }
+
+        // Video statistics from database
+        function updateVideoStats() {
+            const video = videos[currentVideoIndex];
+            if (!video) return;
+
+            const stats = {
+                views: video.views || 0,
+                likes: video.likes || 0,
+                shares: video.shares || 0,
+                comments: video.comment_count || 0
+            };
+
+            updateStatCard('videoViews', stats.views);
+            updateStatCard('videoLikes', stats.likes);
+            document.getElementById('videoShares').textContent = stats.shares;
+            updateStatCard('videoComments', stats.comments);
+            document.getElementById('videoViewsText').textContent =
+                stats.views > 1000 ? `${(stats.views / 1000).toFixed(1)}K views` : `${stats.views} views`;
+
+            // Update like count in button
+            const likeCount = document.getElementById('likeCount');
+            if (likeCount) {
+                likeCount.textContent = stats.likes > 1000
+                    ? `${(stats.likes / 1000).toFixed(1)}K`
+                    : stats.likes;
+            }
+        }
+
+        // Helper function to update individual stat card
+        function updateStatCard(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = value > 1000
+                    ? `${(value / 1000).toFixed(1)}K`
+                    : value;
+            }
+        }
+
+        // Related videos
+        function loadRelatedVideos() {
+            const relatedGrid = document.getElementById('relatedVideos');
+            const currentVideo = videos[currentVideoIndex];
+
+            // Filter related videos (excluding current)
+            const related = videos.filter((v, i) => i !== currentVideoIndex)
+                .slice(0, 4);
+
+            relatedGrid.innerHTML = related.map(video => `
+                <div class="related-video" data-id="${video.video_url || video.file}">
+                    <div class="related-thumbnail">
+                        <video src="${video.video_url || video.file}#t=5" preload="metadata" onerror="this.style.display='none'"></video>
+                        <div class="duration related-duration">...</div>
+                    </div>
+                    <div class="related-info">
+                        <h4>${video.title}</h4>
+                        <p>Tumenye Kwivura</p>
+                        <p>${Math.floor(Math.random() * 50) + 1}K views</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers and duration loading
+            document.querySelectorAll('.related-video').forEach(videoEl => {
+                videoEl.addEventListener('click', () => {
+                    const videoId = videoEl.dataset.id;
+                    const index = videos.findIndex(v => (v.video_url || v.file) === videoId);
+                    if (index !== -1) {
+                        loadVideo(index);
+                        showToast('Loading related video...', 'info');
+                    }
+                });
+                
+                // Load duration for related video thumbnail
+                const videoThumbnail = videoEl.querySelector('.related-thumbnail video');
+                const durationEl = videoEl.querySelector('.related-duration');
+                if (videoThumbnail && durationEl) {
+                    videoThumbnail.addEventListener('loadedmetadata', function() {
+                        if (this.duration && !isNaN(this.duration)) {
+                            durationEl.textContent = formatDuration(this.duration);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // User ID for interactions
+        const currentUserId = localStorage.getItem('userId') || 'user_' + Math.random().toString(36).substr(2, 9);
+        if (!localStorage.getItem('userId')) {
+            localStorage.setItem('userId', currentUserId);
+        }
+
+        // Subscribe functionality
+        const subscribeBtn = document.querySelector('.subscribe-btn');
+        if (subscribeBtn) {
+            // Check subscription status on load
+            checkSubscriptionStatus();
+
+            subscribeBtn.addEventListener('click', async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/api/subscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ userId: currentUserId })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.subscribed) {
+                            subscribeBtn.textContent = 'Subscribed';
+                            subscribeBtn.style.backgroundColor = '#606060';
+                            showToast('Subscribed to Natural Remedies', 'success');
+                        } else {
+                            subscribeBtn.textContent = 'Subscribe';
+                            subscribeBtn.style.backgroundColor = '';
+                            showToast('Unsubscribed', 'info');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error toggling subscription:', error);
+                    showToast('Error updating subscription', 'error');
+                }
+            });
+        }
+
+        async function checkSubscriptionStatus() {
+            try {
+                const response = await fetch(`http://localhost:3000/api/subscribe/check/${currentUserId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.subscribed && subscribeBtn) {
+                        subscribeBtn.textContent = 'Subscribed';
+                        subscribeBtn.style.backgroundColor = '#606060';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking subscription:', error);
+            }
+        }
+
+        // Like functionality with backend
+        window.toggleLike = async function (btn) {
+            const video = videos[currentVideoIndex];
+            if (!video) return;
+
+            const icon = btn.querySelector('i');
+            const count = btn.querySelector('span');
+
+            // Parse current count, handling 'K'
+            let currentCount = parseFloat(count.textContent);
+            if (count.textContent.includes('K')) currentCount *= 1000;
+
+            // Determine if currently liked
+            const wasLiked = icon.classList.contains('fas');
+
+            // IMMEDIATE UI UPDATE (Optimistic)
+            if (wasLiked) {
+                icon.classList.replace('fas', 'far');
+                btn.style.color = 'inherit';
+                currentCount--;
+                // Update stat card
+                video.likes = Math.max(0, (video.likes || 0) - 1);
+            } else {
+                icon.classList.replace('far', 'fas');
+                btn.style.color = '#065fd4';
+                currentCount++;
+                // Update stat card
+                video.likes = (video.likes || 0) + 1;
+            }
+
+            // Update count display immediately
+            count.textContent = currentCount > 1000
+                ? (currentCount / 1000).toFixed(1) + 'K'
+                : Math.round(currentCount);
+
+            // Update the stat card at the top
+            updateStatCard('videoLikes', video.likes);
+
+            // Now call backend to persist
+            try {
+                const response = await fetch(`http://localhost:3000/api/videos/${video.id}/like`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUserId })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    showToast(data.liked ? 'Liked the video' : 'Removed like', 'success');
+                } else {
+                    // Revert on error
+                    if (wasLiked) {
+                        icon.classList.replace('far', 'fas');
+                        btn.style.color = '#065fd4';
+                        currentCount++;
+                    } else {
+                        icon.classList.replace('fas', 'far');
+                        btn.style.color = 'inherit';
+                        currentCount--;
+                    }
+                    count.textContent = currentCount > 1000
+                        ? (currentCount / 1000).toFixed(1) + 'K'
+                        : Math.round(currentCount);
+                    showToast('Error updating like', 'error');
+                }
+            } catch (error) {
+                console.error('Error toggling like:', error);
+                // Revert on error
+                if (wasLiked) {
+                    icon.classList.replace('far', 'fas');
+                    btn.style.color = '#065fd4';
+                    currentCount++;
+                } else {
+                    icon.classList.replace('fas', 'far');
+                    btn.style.color = 'inherit';
+                    currentCount--;
+                }
+                count.textContent = currentCount > 1000
+                    ? (currentCount / 1000).toFixed(1) + 'K'
+                    : Math.round(currentCount);
+                showToast('Error updating like', 'error');
+            }
+        };
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.video-item');
+            items.forEach((item, index) => {
+                const title = videos[index]?.title.toLowerCase() || '';
+                item.style.display = title.includes(term) ? 'flex' : 'none';
+            });
+        });
+
+        // Main functions
+        function init() {
+            initVideoPlayer();
+            fetchVideos(); // Fetch videos from backend instead of using hardcoded data
+        }
+
+        // Format duration from seconds to mm:ss
+        function formatDuration(seconds) {
+            if (!seconds || isNaN(seconds)) return '--:--';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function renderPlaylist() {
+            playlistEl.innerHTML = '';
+            videos.forEach((video, index) => {
+                const item = document.createElement('div');
+                item.className = 'video-item';
+                item.onclick = () => {
+                    loadVideo(index);
+                    showToast('Loading video...', 'info');
+                };
+
+                item.innerHTML = `
+                    <div class="thumbnail">
+                        <video src="${video.video_url || video.file}#t=1" preload="metadata" onerror="this.style.display='none'"></video>
+                        <div class="duration" data-index="${index}">...</div>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-item-title">${video.title}</div>
+                        <div class="video-item-meta">Tumenye Kwivura</div>
+                        <div class="video-item-meta">${Math.floor(Math.random() * 50) + 1}K views • 2 weeks ago</div>
+                    </div>
+                `;
+                
+                // Get video duration after metadata loads
+                const videoEl = item.querySelector('video');
+                const durationEl = item.querySelector('.duration');
+                videoEl.addEventListener('loadedmetadata', function() {
+                    if (this.duration && !isNaN(this.duration)) {
+                        durationEl.textContent = formatDuration(this.duration);
+                    }
+                });
+                
+                playlistEl.appendChild(item);
+            });
+        }
+
+        function loadVideo(index) {
+            currentVideoIndex = index;
+            const video = videos[index];
+
+            player.src = video.video_url || video.filename || video.file;
+            player.play().catch(e => console.log("Auto-play prevented"));
+
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            playPauseBtn.setAttribute('aria-label', 'Pause');
+            isPlaying = true;
+
+            document.getElementById('videoTitle').innerText = video.title;
+            document.getElementById('videoDesc').innerText = (video.description || video.desc) + "\n\nLearn more about natural health on our channel.";
+            document.getElementById('videoDate').textContent = `${Math.floor(Math.random() * 6) + 1} months ago`;
+
+            updateVideoStats();
+            loadRelatedVideos();
+
+            // Log video view to backend
+            logVideoView();
+
+            // Load comments from backend
+            if (video.id) {
+                loadComments(video.id);
+            }
+
+            // Show notification
+            showToast(`Now playing: ${video.title}`, 'info');
+        }
+
+        async function logVideoView() {
+            const video = videos[currentVideoIndex];
+
+            // Track in localStorage
+            const history = JSON.parse(localStorage.getItem('videoHistory') || '[]');
+
+            const view = {
+                id: video.id || video.file,
+                title: video.title,
+                timestamp: Date.now(),
+                duration: player.duration || 0
+            };
+
+            history.unshift(view);
+
+            if (history.length > 50) {
+                history.pop();
+            }
+
+            localStorage.setItem('videoHistory', JSON.stringify(history));
+
+            const totalViews = parseInt(localStorage.getItem('totalVideoViews') || '0') + 1;
+            localStorage.setItem('totalVideoViews', totalViews.toString());
+
+            // Update view count in video object and stat card immediately
+            video.views = (video.views || 0) + 1;
+            updateStatCard('videoViews', video.views);
+
+            // Increment view count in backend
+            if (video.id) {
+                try {
+                    await fetch(`http://localhost:3000/api/videos/${video.id}/view`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                } catch (error) {
+                    console.error('Error logging view:', error);
+                }
+            }
+        }
+
+        // Load comments from backend
+        async function loadComments(videoId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/videos/${videoId}/comments`);
+                if (!response.ok) throw new Error('Failed to fetch comments');
+
+                const comments = await response.json();
+
+                // Clear existing comments (except the add comment section)
+                const commentsSection = document.querySelector('.comments-section');
+                const existingComments = commentsSection.querySelectorAll('.comment-item');
+                existingComments.forEach(comment => comment.remove());
+
+                // Add comments from database
+                comments.forEach(comment => {
+                    const commentEl = document.createElement('div');
+                    commentEl.className = 'comment-item';
+
+                    const timeAgo = getTimeAgo(new Date(comment.created_at));
+
+                    commentEl.innerHTML = `
+                        <div class="user-avatar">${comment.user_name.charAt(0).toUpperCase()}</div>
+                        <div class="comment-content">
+                            <div class="comment-author">${comment.user_name} <span class="comment-time">${timeAgo}</span></div>
+                            <div class="comment-text">${comment.comment_text}</div>
+                            <div class="comment-meta">
+                                <button class="comment-like"><i class="far fa-thumbs-up"></i> 0</button>
+                                <span>Reply</span>
+                            </div>
+                        </div>
+                    `;
+
+                    commentsSection.appendChild(commentEl);
+                });
+
+                // Update comment count
+                const commentCount = document.getElementById('commentsCount');
+                commentCount.textContent = `${comments.length} Comments`;
+
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+
+            let interval = seconds / 31536000;
+            if (interval > 1) return Math.floor(interval) + " years ago";
+
+            interval = seconds / 2592000;
+            if (interval > 1) return Math.floor(interval) + " months ago";
+
+            interval = seconds / 86400;
+            if (interval > 1) return Math.floor(interval) + " days ago";
+
+            interval = seconds / 3600;
+            if (interval > 1) return Math.floor(interval) + " hours ago";
+
+            interval = seconds / 60;
+            if (interval > 1) return Math.floor(interval) + " minutes ago";
+
+            return Math.floor(seconds) + " seconds ago";
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            init();
+
+            // Show welcome message
+            setTimeout(() => {
+                showToast('Welcome to our video library!', 'info');
+            }, 1000);
+
+            // Check for user login
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                showToast('Login to save favorites and comments', 'warning');
+            }
+        });
+
+        // Auto-play next video
+        player.addEventListener('ended', () => {
+            showToast('Video ended. Playing next...', 'info');
+            setTimeout(() => {
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                loadVideo(currentVideoIndex);
+            }, 2000);
+        });
+        // ==================== NOTIFICATION SYSTEM (Facebook Style) ====================
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const notificationDropdown = document.getElementById('notificationDropdown');
+        const notificationList = document.getElementById('notificationList');
+
+        function setupNotifications() {
+            const userStr = localStorage.getItem('user');
+            if (!userStr) return;
+            const currentUser = JSON.parse(userStr);
+            const userId = currentUser.id;
+
+            async function checkNotifications() {
+                try {
+                    // Try new notifications API first, fallback to old
+                    let data = { unreadCount: 0, notifications: [] };
+
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/support/notifications/new/${userId}`);
+                        const newNotifs = await response.json();
+
+                        if (newNotifs && newNotifs.length > 0) {
+                            data.unreadCount = newNotifs.filter(n => n.is_read === 0).length;
+                            data.notifications = newNotifs.map(n => ({
+                                ...n,
+                                title: n.subject || 'Support Message',
+                                message: n.message_preview || 'New message',
+                                is_read: n.is_read
+                            }));
+                        }
+                    } catch (e) {
+                        // Fallback to old API
+                        const response = await fetch(`http://localhost:3000/api/support/notifications/${userId}`);
+                        data = await response.json();
+                    }
+
+                    if (data.unreadCount > 0) {
+                        notificationBadge.textContent = data.unreadCount;
+                        notificationBadge.classList.add('active');
+                    } else {
+                        notificationBadge.textContent = '0';
+                        notificationBadge.classList.remove('active');
+                    }
+
+                    renderNotifications(data.notifications || []);
+                } catch (error) {
+                    console.error('Error checking notifications:', error);
+                }
+            }
+
+            function renderNotifications(notifications) {
+                if (!notificationList) return;
+
+                if (notifications.length === 0) {
+                    notificationList.innerHTML = `
+                        <div style="padding: 30px; text-align: center; color: var(--text-secondary);">
+                            <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>No messages yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                notifications.forEach(notif => {
+                    const isUnread = notif.notification_type === 'admin_reply';
+                    const timeAgo = formatTimeAgo(notif.created_at);
+                    const preview = notif.preview_text ? (notif.preview_text.length > 60 ? notif.preview_text.substring(0, 60) + '...' : notif.preview_text) : '';
+
+                    html += `
+                        <div class="notification-item" onclick="window.location.href='support-chat.html'" style="
+                            padding: 12px 15px;
+                            border-bottom: 1px solid var(--border-color);
+                            cursor: pointer;
+                            background: ${isUnread ? 'rgba(76, 175, 80, 0.1)' : 'transparent'};
+                            transition: background 0.2s;
+                        ">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 50%;
+                                    background: ${isUnread ? 'var(--primary-color)' : '#666'};
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    color: white;
+                                    flex-shrink: 0;
+                                ">
+                                    <i class="fas ${isUnread ? 'fa-user-shield' : 'fa-user'}"></i>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                        <strong style="color: var(--text-primary); font-size: 0.9rem;">
+                                            ${isUnread ? 'Admin Reply' : 'Your Message'}
+                                        </strong>
+                                        <span style="color: var(--text-muted); font-size: 0.75rem;">${timeAgo}</span>
+                                    </div>
+                                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
+                                        ${preview}
+                                    </p>
+                                </div>
+                                ${isUnread ? '<div style="width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%; flex-shrink: 0;"></div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                notificationList.innerHTML = html;
+            }
+
+            function formatTimeAgo(dateStr) {
+                if (!dateStr) return '';
+                const date = new Date(dateStr);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                return date.toLocaleDateString();
+            }
+
+            // Check immediately and then every 30 seconds
+            checkNotifications();
+            setInterval(checkNotifications, 30000);
+
+            if (notificationBtn) {
+                // Toggle dropdown on click
+                notificationBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const dropdown = document.getElementById('notificationDropdown');
+                    if (dropdown) {
+                        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                    }
+                    markNotificationsAsSeen();
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    const dropdown = document.getElementById('notificationDropdown');
+                    if (dropdown && !dropdown.contains(e.target) && e.target !== notificationBtn) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
+
+            async function markNotificationsAsSeen() {
+                try {
+                    // Try new API first, then fallback to old
+                    try {
+                        await fetch(`http://localhost:3000/api/support/notifications/new/${userId}/read`, {
+                            method: 'PUT'
+                        });
+                    } catch (e) {
+                        await fetch(`http://localhost:3000/api/support/notifications/${userId}/seen`, {
+                            method: 'PUT'
+                        });
+                    }
+                    checkNotifications();
+                } catch (error) {
+                    console.error('Error marking notifications seen:', error);
+                }
+            }
+        }
+
+        // Initialize notifications
+        setupNotifications();
+
+        // ==================== USER PROFILE INITIALIZATION ====================
+        function initUserProfile() {
+            const userStr = localStorage.getItem('user');
+            const userMenu = document.getElementById('userMenu');
+            const authButtons = document.getElementById('authButtons');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (!userStr) {
+                if (userMenu) userMenu.style.display = 'none';
+                if (authButtons) authButtons.style.display = 'block';
+                return;
+            }
+
+            if (userMenu) userMenu.style.display = 'block';
+            if (authButtons) authButtons.style.display = 'none';
+
+            const currentUser = JSON.parse(userStr);
+            const userNameElement = document.getElementById('dropdownUserName');
+            const userEmailElement = document.getElementById('dropdownUserEmail');
+            const userAvatar = document.getElementById('userAvatar');
+
+            if (userNameElement) userNameElement.textContent = currentUser.name || 'User';
+            if (userEmailElement) userEmailElement.textContent = currentUser.email || '';
+
+            // Handle Logout
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('token');
+                        window.location.href = 'dashboard.html';
+                    }
+                });
+            }
+
+            // Set Profile Image (Gravatar fallback)
+            const navProfileImg = document.getElementById('userAvatar');
+            if (navProfileImg && currentUser.email) {
+                if (currentUser.profile_image) {
+                    navProfileImg.src = currentUser.profile_image;
+                } else {
+                    const email = currentUser.email.trim().toLowerCase();
+                    navProfileImg.src = `https://www.gravatar.com/avatar/${md5(email)}?d=mp&s=100`;
+                }
+            }
+        }
+
+        // Simple MD5 implementation for Gravatar
+        function md5(string) {
+            function k(n) { return Math.abs(Math.sin(n)) * 4294967296 | 0 }
+            var a = 1732584193, b = 4023233417, c = 2562383102, d = 271733878,
+                e = [], f, g, h, i, j = unescape(encodeURIComponent(string)),
+                l = j.length, m = [a, b, c, d], n, o;
+            for (f = 0; f < l; e[f >> 2] |= j.charCodeAt(f) << ((f % 4) << 3), f++);
+            for (f = 0; f <= ((l + 8) >> 6); e.push(0), f++);
+            e[((l + 8) >> 6) << 4 | 14] = l * 8;
+            for (f = 0; f < e.length; f += 16) {
+                n = m.slice();
+                for (g = 0; g < 64; g++) {
+                    o = f + g;
+                    if (g < 16) h = (m[1] & m[2]) | (~m[1] & m[3]), i = o;
+                    else if (g < 32) h = (m[3] & m[1]) | (~m[3] & m[2]), i = (5 * o + 1) % 16;
+                    else if (g < 48) h = m[1] ^ m[2] ^ m[3], i = (3 * o + 5) % 16;
+                    else h = m[2] ^ (m[1] | ~m[3]), i = (7 * o) % 16;
+                    h = (h + m[0] + (e[f + i] || 0) + k(g + 1) | 0);
+                    m = [m[3], (m[1] + ((h << (o = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g % 4 + (g >> 4) * 4] || [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g])) | (h >>> (32 - o)))) | 0, m[1], m[2]];
+                }
+                for (g = 0; g < 4; m[g] = m[g] + n[g] | 0, g++);
+            }
+            for (f = 0, j = ""; f < 32; j += ((m[f >> 3] >> ((f % 8) * 4)) & 15).toString(16), f++);
+            return j;
+        }
+
+        initUserProfile();
+    </script>
+    <!-- Help Chat Button -->
+    <a href="support-chat.html" class="help-float" aria-label="Get Support">
+        <i class="fas fa-headset"></i>
+    </a>
+    <div class="help-tooltip">Need Help?</div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/250786853257" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+
+</html>

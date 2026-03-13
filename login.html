@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup - Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #f0f9f0;
+            /* Fallback */
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .intro-text {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Auth Container */
+        .auth-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+        }
+
+        .auth-box {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1.2rem;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-tab.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid white;
+        }
+
+        .auth-tab:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .auth-tab i {
+            font-size: 1.2rem;
+        }
+
+        .auth-content {
+            padding: 2.5rem;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2E7D32;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0f2e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: #f9fdf9;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            background-color: white;
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .remember-me input {
+            width: 18px;
+            height: 18px;
+            accent-color: #4CAF50;
+        }
+
+        .forgot-password {
+            color: #2E7D32;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #4CAF50;
+            text-decoration: underline;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0f2e0;
+            color: #666;
+        }
+
+        .auth-footer a {
+            color: #2E7D32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-form input#signupName,
+        .auth-form input#signupPhone {
+            text-transform: uppercase;
+        }
+
+        .auth-form input#verificationCode,
+        .auth-form input#resetVerificationCode {
+            text-transform: none;
+            letter-spacing: 8px;
+            font-weight: bold;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .terms-checkbox input {
+            margin-top: 3px;
+            accent-color: #4CAF50;
+        }
+
+        .terms-checkbox a {
+            color: #2E7D32;
+            text-decoration: none;
+        }
+
+        .terms-checkbox a:hover {
+            text-decoration: underline;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: whatsapp-pulse 2s infinite;
+            transition: all 0.3s;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .whatsapp-float:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            animation: whatsapp-ripple 2s infinite;
+            z-index: -1;
+        }
+
+        .whatsapp-float:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: whatsapp-ripple 2s infinite;
+            animation-delay: 0.5s;
+            z-index: -1;
+        }
+
+        .whatsapp-float i {
+            position: relative;
+            z-index: 1;
+            animation: whatsapp-icon-pulse 2s infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes whatsapp-ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes whatsapp-icon-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.8);
+        }
+
+        .whatsapp-float:hover i {
+            animation: none;
+        }
+
+        /* Help Chat Button */
+        .help-float {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .help-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(46, 125, 50, 0.8);
+        }
+
+        .help-tooltip {
+            position: fixed;
+            bottom: 175px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .help-float:hover+.help-tooltip {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .contact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .contact-item .contact-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .intro-text {
+                text-align: center;
+            }
+
+            .auth-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .contact-item {
+                min-width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 55px;
+                height: 55px;
+                font-size: 28px;
+                bottom: 25px;
+                right: 15px;
+            }
+
+            .help-float {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+                bottom: 90px;
+                right: 15px;
+            }
+
+            .help-tooltip {
+                right: 15px;
+                bottom: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-tab {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .auth-content {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                    <img src="logo.png" alt="Tumenye Kwivura Logo"
+                        style="height: 60px; object-fit: contain; background-color: white; border-radius: 8px; padding: 5px;">
+                    <h1 style="font-size: 1.8rem; margin: 0; font-style: oblique;">Tumenye Kwivura. Ubugorozi</h1>
+                </div>
+
+                <div class="header-buttons">
+                    <a href="dashboard.html" class="header-btn">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </div>
+            </div>
+
+            <div class="intro-text">
+                <p>Join our community to access exclusive content, save your favorite remedies, and get personalized
+                    health tips.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="loginTab">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="auth-tab" id="signupTab">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+
+            <div class="auth-content">
+                <!-- Login Form -->
+                <form class="auth-form active" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="loginPassword" class="form-control"
+                                placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" data-target="loginPassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="auth-btn">
+                        <i class="fas fa-sign-in-alt"></i> Login to Account
+                    </button>
+
+                    <div class="auth-footer">
+                        Don't have an account? <a href="#" id="switchToSignup">Sign up here</a>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form class="auth-form" id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" class="form-control" placeholder="Enter your full name"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPhone">Phone Number</label>
+                        <input type="tel" id="signupPhone" class="form-control" placeholder="Enter your phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="signupPassword" class="form-control"
+                                placeholder="Create a password" required>
+                            <button type="button" class="toggle-password" data-target="signupPassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="password-input">
+                            <input type="password" id="confirmPassword" class="form-control"
+                                placeholder="Confirm your password" required>
+                            <button type="button" class="toggle-password" data-target="confirmPassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-btn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+
+                    <div class="auth-footer">
+                        Already have an account? <a href="#" id="switchToLogin">Login here</a>
+                    </div>
+                    <div class="auth-footer" style="border-top: none; padding-top: 0; margin-top: 0.5rem;">
+                        <a href="admin login.html" style="font-size: 0.9em; opacity: 0.8;">Go to Admin Login</a>
+                    </div>
+                </form>
+
+                <!-- Verification Form -->
+                <form class="auth-form" id="verifyForm">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <i class="fas fa-envelope-open-text"
+                            style="font-size: 3rem; color: #4CAF50; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #2E7D32; margin-bottom: 0.5rem;">Verify Your Email</h3>
+                        <p style="color: #666; font-size: 0.95rem;">We've sent a verification code to <span
+                                id="verifyEmail" style="font-weight: 600;"></span></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="verificationCode">Verification Code</label>
+                        <input type="text" id="verificationCode" class="form-control" placeholder="Enter 6-digit code"
+                            maxlength="6" required style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+                    </div>
+
+                    <button type="submit" class="auth-btn">
+                        <i class="fas fa-check-circle"></i> Verify Email
+                    </button>
+
+                    <div class="divider">Didn't receive the code?</div>
+
+                    <button type="button" class="auth-btn" id="resendCodeBtn"
+                        style="background: #f5f5f5; color: #2E7D32; border: 2px solid #2E7D32;">
+                        <i class="fas fa-redo"></i> Resend Code
+                    </button>
+
+                    <div class="auth-footer">
+                        <a href="#" id="backToSignup">Back to Sign Up</a>
+                    </div>
+                </form>
+
+                <!-- Pending Approval Form -->
+                <form class="auth-form" id="pendingApprovalForm">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <i class="fas fa-clock" style="font-size: 3rem; color: #FF9800; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #2E7D32; margin-bottom: 0.5rem;">Account Created!</h3>
+                        <p style="color: #666; font-size: 0.95rem;">Hello <span id="pendingUserName"
+                                style="font-weight: 600;"></span>,</p>
+                    </div>
+
+                    <div
+                        style="background: #fff3e0; border-left: 4px solid #FF9800; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <p style="color: #e65100; font-weight: 600; margin-bottom: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Waiting for Admin Approval
+                        </p>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">
+                            Your account has been created successfully and is now waiting for administrator approval.
+                            You will be able to login once an admin approves your account.
+                        </p>
+                    </div>
+
+                    <div style="background: #e8f5e9; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <p style="color: #2E7D32; font-weight: 600; margin-bottom: 0.5rem;">
+                            <i class="fas fa-envelope"></i> Account Details
+                        </p>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">
+                            Email: <span id="pendingUserEmail" style="font-weight: 600;"></span>
+                        </p>
+                    </div>
+
+                    <p style="color: #666; font-size: 0.85rem; text-align: center; margin-bottom: 1rem;">
+                        <i class="fas fa-bell"></i> You will be notified when your account is approved.
+                    </p>
+
+                    <button type="button" class="auth-btn" onclick="showForm('login')" style="background: #4CAF50;">
+                        <i class="fas fa-sign-in-alt"></i> Go to Login
+                    </button>
+
+                    <div class="auth-footer">
+                        <p style="color: #999; font-size: 0.85rem;">
+                            Need help? Contact us at <a href="mailto:tumenyekwivura@gmail.com"
+                                style="color: #4CAF50;">tumenyekwivura@gmail.com</a>
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Forgot Password Form -->
+                <form class="auth-form" id="forgotPasswordForm">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <i class="fas fa-key" style="font-size: 3rem; color: #4CAF50; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #2E7D32; margin-bottom: 0.5rem;">Reset Password</h3>
+                        <p style="color: #666; font-size: 0.95rem;">Enter your email to receive a password reset code.
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="forgotEmail">Email Address</label>
+                        <input type="email" id="forgotEmail" class="form-control" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <div class="password-input">
+                            <input type="password" id="newPassword" class="form-control"
+                                placeholder="Enter new password" required>
+                            <button type="button" class="toggle-password" data-target="newPassword">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <small style="color: #666; font-size: 0.8rem; display: block; margin-top: 5px;">Must be at least
+                            8 characters with uppercase, lowercase, number, and special character.</small>
+                    </div>
+
+                    <button type="submit" class="auth-btn">
+                        <i class="fas fa-paper-plane"></i> Send Reset Code
+                    </button>
+
+                    <div class="auth-footer">
+                        <a href="#" id="backToLoginFromForgot">Back to Login</a>
+                    </div>
+                </form>
+
+                <!-- Reset Password Verification Form -->
+                <form class="auth-form" id="resetVerifyForm">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <i class="fas fa-shield-alt" style="font-size: 3rem; color: #4CAF50; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #2E7D32; margin-bottom: 0.5rem;">Verify Reset Code</h3>
+                        <p style="color: #666; font-size: 0.95rem;">We've sent a code to <span id="resetVerifyEmail"
+                                style="font-weight: 600;"></span></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resetVerificationCode">Verification Code</label>
+                        <input type="text" id="resetVerificationCode" class="form-control"
+                            placeholder="Enter 6-digit code" maxlength="6" required
+                            style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+                    </div>
+
+                    <button type="submit" class="auth-btn">
+                        <i class="fas fa-check-circle"></i> Verify and Reset Password
+                    </button>
+
+                    <div class="divider" style="text-align: center; margin: 1.5rem 0; color: #999; position: relative;">
+                        <span style="background: white; padding: 0 10px; position: relative; z-index: 1;">Didn't receive
+                            the code?</span>
+                        <div
+                            style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e0f2e0; z-index: 0;">
+                        </div>
+                    </div>
+
+                    <button type="button" class="auth-btn" id="resendResetCodeBtn"
+                        style="background: #f5f5f5; color: #2E7D32; border: 2px solid #2E7D32;">
+                        <i class="fas fa-redo"></i> Resend Code
+                    </button>
+
+                    <div class="auth-footer">
+                        <a href="#" class="backToLoginLabel">Back to Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura.ubugorozi@gmail.com" class="contact-value">tumenyekwivura@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 796352921</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <div class="contact-label">YouTube</div>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-value" target="_blank">Visit us on YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2023 Tumenye Kwivura. All information is for
+                    educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Help Chat Button -->
+    <a href="chatbot.html" class="help-float" aria-label="Get Help">
+        <i class="fas fa-robot"></i>
+    </a>
+    <div class="help-tooltip">Need Help?</div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/250786853257" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script src="js/security.js"></script>
+    <script>
+        // DOM Elements
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const verifyForm = document.getElementById('verifyForm');
+        const pendingApprovalForm = document.getElementById('pendingApprovalForm');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const resetVerifyForm = document.getElementById('resetVerifyForm');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+        // Switch between login and signup forms
+        function showForm(form) {
+            // Update tabs
+            loginTab.classList.toggle('active', form === 'login');
+            signupTab.classList.toggle('active', form === 'signup');
+
+            // Update forms
+            loginForm.classList.toggle('active', form === 'login');
+            signupForm.classList.toggle('active', form === 'signup');
+            verifyForm.classList.toggle('active', form === 'verify');
+            pendingApprovalForm.classList.toggle('active', form === 'pending');
+            forgotPasswordForm.classList.toggle('active', form === 'forgot');
+            resetVerifyForm.classList.toggle('active', form === 'resetVerify');
+
+            // Hide tabs when showing verify, pending, forgot, or resetVerify form
+            document.querySelector('.auth-tabs').style.display = (form === 'verify' || form === 'pending' || form === 'forgot' || form === 'resetVerify') ? 'none' : 'flex';
+        }
+
+        // Password strength validation
+        function isStrongPassword(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecial;
+        }
+
+        // Show pending approval message
+        function showPendingApprovalMessage(name, email) {
+            document.getElementById('pendingUserName').textContent = name;
+            document.getElementById('pendingUserEmail').textContent = email;
+            showForm('pending');
+        }
+
+        // Tab click handlers
+        loginTab.addEventListener('click', () => showForm('login'));
+        signupTab.addEventListener('click', () => showForm('signup'));
+
+        // Back to signup from verify
+        document.getElementById('backToSignup')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showForm('signup');
+        });
+
+        // Switch link handlers
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            showForm('signup');
+        });
+
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            showForm('login');
+        });
+
+        document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showForm('forgot');
+        });
+
+        document.getElementById('backToLoginFromForgot')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showForm('login');
+        });
+
+        document.querySelectorAll('.backToLoginLabel').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showForm('login');
+            });
+        });
+
+        // Toggle password visibility
+        togglePasswordButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // API Configuration
+        const API_URL = 'http://localhost:3000';
+
+        // Login form submission
+        loginForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // Store user info in both localStorage and sessionStorage
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'homes.html';
+                } else if (response.status === 403 && data.needsVerification) {
+                    // User needs to verify email
+                    document.getElementById('verifyEmail').textContent = data.email;
+                    showForm('verify');
+                    alert(data.message);
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Is the server running?');
+            }
+        });
+
+        // Signup form submission
+        signupForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            if (!isStrongPassword(password)) {
+                alert('Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            if (!agreeTerms) {
+                alert('Please agree to the Terms of Service');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, password })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 201 || data.success) {
+                    if (data.needsVerification) {
+                        // Show verification form
+                        document.getElementById('verifyEmail').textContent = email;
+                        showForm('verify');
+
+                        // Show verification code if in response (for testing)
+                        if (data.verificationCode) {
+                            alert('Verification code (for testing): ' + data.verificationCode);
+                        }
+                    } else {
+                        alert('Registration successful! Please login.');
+                        showForm('login');
+                    }
+                } else {
+                    alert(data.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Unable to connect to server. Please try again later.');
+            }
+        });
+
+        // Verification form submission
+        verifyForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('verifyEmail').textContent;
+            const code = document.getElementById('verificationCode').value;
+
+            try {
+                const response = await fetch(`${API_URL}/verify-email`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, code })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    if (data.user) {
+                        // Auto-login after successful verification
+                        alert('Email verified successfully! Logging you in...');
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        sessionStorage.setItem('user', JSON.stringify(data.user));
+                        window.location.href = 'homes.html';
+                    } else {
+                        alert('Email verified successfully! Please login.');
+                        showForm('login');
+                        // Clear signup form
+                        signupForm.reset();
+                    }
+                } else {
+                    alert(data.message || 'Verification failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Is the server running?');
+            }
+        });
+
+        // Resend verification code
+        document.getElementById('resendCodeBtn')?.addEventListener('click', async function () {
+            const email = document.getElementById('verifyEmail').textContent;
+
+            try {
+                const response = await fetch(`${API_URL}/resend-code`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('New verification code sent!');
+                } else {
+                    alert(data.message || 'Failed to resend code');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Is the server running?');
+            }
+        });
+
+        // Handle login when user is not verified
+        async function handleLoginError(response, data) {
+            if (data.needsVerification) {
+                document.getElementById('verifyEmail').textContent = data.email;
+                showForm('verify');
+                alert(data.message);
+            } else {
+                alert(data.message || 'Login failed');
+            }
+        }
+
+        // Forgot password form submission
+        forgotPasswordForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('forgotEmail').value;
+            const newPassword = document.getElementById('newPassword').value;
+
+            if (!isStrongPassword(newPassword)) {
+                alert('New password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.');
+                return;
+            }
+
+            try {
+                // Store password temporarily in session storage
+                sessionStorage.setItem('tempResetPassword', newPassword);
+
+                const response = await fetch(`${API_URL}/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    document.getElementById('resetVerifyEmail').textContent = email;
+                    showForm('resetVerify');
+                    alert('Password reset code sent to your email.');
+                } else {
+                    alert(data.message || 'Failed to initiate password reset');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Is the server running?');
+            }
+        });
+
+        // Reset Password Verification form submission
+        resetVerifyForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('resetVerifyEmail').textContent;
+            const code = document.getElementById('resetVerificationCode').value;
+            const newPassword = sessionStorage.getItem('tempResetPassword');
+
+            if (!newPassword) {
+                alert('Session expired. Please start the password reset process again.');
+                showForm('forgot');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/verify-password-reset`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, code, newPassword })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('Password reset successfully! You can now login.');
+                    sessionStorage.removeItem('tempResetPassword');
+                    forgotPasswordForm.reset();
+                    resetVerifyForm.reset();
+                    showForm('login');
+                } else {
+                    alert(data.message || 'Failed to verify and reset password');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Is the server running?');
+            }
+        });
+
+        // Resend reset verification code
+        document.getElementById('resendResetCodeBtn')?.addEventListener('click', async function () {
+            const email = document.getElementById('resetVerifyEmail').textContent;
+
+            try {
+                const response = await fetch(`${API_URL}/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    alert('New reset code sent!');
+                } else {
+                    alert(data.message || 'Failed to resend code');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Is the server running?');
+            }
+        });
+
+    </script>
+</body>
+
+</html>
