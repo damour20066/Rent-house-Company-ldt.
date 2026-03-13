@@ -1,0 +1,4267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js will be loaded at the bottom -->
+    <style>
+        :root {
+            /* Original Variables */
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --primary-dark: #1B5E20;
+            --secondary: #2196F3;
+            --danger: #F44336;
+            --warning: #FF9800;
+            --success: #4CAF50;
+            --info: #00BCD4;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border: #dee2e6;
+            --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --radius: 0.375rem;
+            --radius-lg: 0.5rem;
+            --sidebar-width: 250px;
+            --header-height: 70px;
+
+            /* Dark Mode Variables */
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+        }
+
+        /* Dark Theme */
+        body.dark-theme {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888888;
+            --light: #2d2d2d;
+            --dark: #f8f9fa;
+            --gray: #a0a0a0;
+            --light-gray: #2a2a2a;
+            --border: #444444;
+            --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+            --sidebar-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode specific styles */
+        body.dark-theme .sidebar {
+            background-color: var(--sidebar-bg) !important;
+        }
+
+        body.dark-theme .stat-card,
+        body.dark-theme .chart-card,
+        body.dark-theme .data-section,
+        body.dark-theme .modal,
+        body.dark-theme .form-control,
+        body.dark-theme select {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            border-color: var(--border);
+        }
+
+        body.dark-theme .data-table thead {
+            background-color: var(--light-gray);
+        }
+
+        body.dark-theme .data-table th {
+            color: var(--text-primary);
+        }
+
+        body.dark-theme .form-control {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            border-color: var(--border);
+        }
+
+        body.dark-theme .form-control:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        body.dark-theme .activity-item {
+            background-color: var(--light-gray);
+        }
+
+        /* Layout */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary-dark);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        body.dark-theme .sidebar {
+            background-color: var(--sidebar-bg);
+        }
+
+        .sidebar-header {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-header i {
+            font-size: 1.8rem;
+            color: var(--primary-light);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: var(--primary-light);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 1rem 1.5rem;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 1.5rem;
+        }
+
+        /* Top Header */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-left h1 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        body.dark-theme .header-left h1 {
+            color: var(--primary-light);
+        }
+
+        .header-left p {
+            color: var(--gray);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.5rem 1rem;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .user-info h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .user-info p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* Theme Toggle Button */
+        #themeToggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        #themeToggle:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-theme #themeToggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .stat-icon.users {
+            background-color: var(--secondary);
+        }
+
+        .stat-icon.views {
+            background-color: var(--success);
+        }
+
+        .stat-icon.treatments {
+            background-color: var(--warning);
+        }
+
+        .stat-icon.videos {
+            background-color: var(--info);
+        }
+
+        .stat-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .stat-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .stat-trend.positive {
+            color: var(--success);
+        }
+
+        .stat-trend.negative {
+            color: var(--danger);
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header h3 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+            width: 100%;
+            min-height: 250px;
+            background-color: var(--card-bg);
+        }
+
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Data Tables */
+        .data-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+
+        body.dark-theme .btn-secondary {
+            background-color: #444;
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #dae0e5;
+        }
+
+        body.dark-theme .btn-secondary:hover {
+            background-color: #555;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #388e3c;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        /* Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table thead {
+            background-color: var(--light-gray);
+        }
+
+        .data-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .data-table tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        body.dark-theme .data-table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-avatar-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .status-inactive {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .pending-badge {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .pending-info {
+            border-left: 4px solid var(--warning);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+        }
+
+        .modal {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .modal-header {
+            padding: 1.5rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        /* Message Modal Styles */
+        .message-modal-header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .message-modal-header h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-modal-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .message-modal-body {
+            padding: 1.5rem;
+        }
+
+        .message-detail-row {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .message-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .message-detail-row label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .message-detail-row label i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .message-full-text {
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: var(--radius);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .reply-section {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+        }
+
+        .reply-text {
+            background: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 0.5rem;
+            white-space: pre-wrap;
+        }
+
+        .reply-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .reply-form {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px dashed var(--border);
+        }
+
+        .reply-form h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .reply-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+
+        /* Toggle Sidebar Button */
+        .toggle-sidebar {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1100;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            background-color: var(--light-gray);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.user {
+            background-color: var(--secondary);
+        }
+
+        .activity-icon.view {
+            background-color: var(--success);
+        }
+
+        .activity-icon.video {
+            background-color: var(--info);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-content p {
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .activity-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--card-bg); /* Use card background for consistency */
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: var(--primary);
+        }
+
+        .contact-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: none;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .toggle-sidebar {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header-right {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .section-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Weekly Summary Styles */
+        .weekly-summary-section {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .weekly-stat-card {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .weekly-stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .weekly-trend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .weekly-stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .weekly-stats-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Messages Notification Banner */
+        .messages-notification-banner {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            margin-bottom: 1rem;
+        }
+
+        .messages-notification-banner.show {
+            display: flex !important;
+        }
+
+        .messages-notification-banner .notification-icon {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .messages-notification-banner .notification-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .messages-notification-banner .notification-text h4 {
+            color: white;
+        }
+
+        .messages-notification-banner .notification-text p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .messages-notification-banner .notification-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .messages-notification-banner .btn-success {
+            background: white;
+            color: #2196F3;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .messages-notification-banner .btn-success:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+        }
+
+        .messages-notification-banner .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .messages-notification-banner .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .messages-notification-banner {
+                flex-direction: column;
+            }
+
+            .messages-notification-banner .notification-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .messages-notification-banner .notification-icon {
+                margin: 0 auto 1rem;
+            }
+
+            .messages-notification-banner .notification-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Pending Users Notification Banner */
+        .pending-notification-banner {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 4px 20px rgba(255, 152, 0, 0.3);
+            animation: slideDownBounce 0.5s ease;
+            flex-wrap: wrap;
+            z-index: 100;
+            position: relative;
+        }
+
+        .pending-notification-banner.show {
+            display: flex !important;
+        }
+
+        @keyframes slideDownBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            50% {
+                transform: translateY(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pending-notification-banner .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .pending-notification-banner .notification-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .pending-notification-banner .notification-text h4 {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .pending-notification-banner .notification-text p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .pending-notification-banner .notification-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .pending-notification-banner .btn-success {
+            background: white;
+            color: #F57C00;
+            border: none;
+            font-weight: 600;
+        }
+
+        .pending-notification-banner .btn-success:hover {
+            background: #f5f5f5;
+            transform: scale(1.05);
+        }
+
+        .pending-notification-banner .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .pending-notification-banner .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Action Notification Banner (Success/Error feedback) */
+        .action-banner {
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 2rem;
+            margin: 0 1.5rem 1.5rem 1.5rem;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            animation: slideDownBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 1rem;
+            z-index: 1100;
+        }
+
+        .action-banner.show {
+            display: flex;
+        }
+
+        .action-banner.success {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.95), rgba(46, 125, 50, 0.95));
+            color: white;
+            border-left: 5px solid #1B5E20;
+        }
+
+        .action-banner.error {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.95), rgba(211, 47, 47, 0.95));
+            color: white;
+            border-left: 5px solid #B71C1C;
+        }
+
+        .action-banner.info {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.95), rgba(25, 118, 210, 0.95));
+            color: white;
+            border-left: 5px solid #0D47A1;
+        }
+
+        .action-banner.warning {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.95), rgba(245, 124, 0, 0.95));
+            color: white;
+            border-left: 5px solid #E65100;
+        }
+
+        .action-banner .banner-content {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .action-banner .banner-icon {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .action-banner .banner-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .action-banner .banner-close {
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .action-banner .banner-close:hover {
+            background: rgba(255, 255, 255, 0.45);
+            transform: rotate(90deg);
+        }
+
+        @keyframes slideDownBounce {
+            0% {
+                transform: translateY(-100%) scale(0.9);
+                opacity: 0;
+            }
+
+            70% {
+                transform: translateY(10%) scale(1.02);
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Pending Users Modal */
+        .pending-users-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pending-users-modal.show {
+            display: flex;
+        }
+
+        .pending-users-modal .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .pending-users-modal .modal-header {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .pending-users-modal .modal-header h3 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pending-users-modal .modal-header .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .pending-users-modal .modal-header .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .pending-users-modal .modal-body {
+            padding: 1.5rem;
+        }
+
+        .pending-users-modal .user-card {
+            background: var(--light-gray);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--warning);
+        }
+
+        .pending-users-modal .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pending-users-modal .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .pending-users-modal .user-details h4 {
+            margin: 0 0 0.25rem 0;
+            color: var(--text-primary);
+        }
+
+        .pending-users-modal .user-details p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .pending-users-modal .user-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pending-users-modal .no-users {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .pending-users-modal .no-users i {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .pending-notification-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .pending-notification-banner .notification-content {
+                flex-direction: column;
+            }
+
+            .pending-notification-banner .notification-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Toggle Sidebar Button (Mobile) -->
+    <button class="toggle-sidebar" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-leaf"></i>
+                <h2>Admin Dashboard</h2>
+            </div>
+
+            <div class="sidebar-menu">
+                <a href="#dashboard" class="menu-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="#users" class="menu-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+
+                <a href="#treatments" class="menu-item" data-section="treatments">
+                    <i class="fas fa-leaf"></i>
+                    <span>Treatments</span>
+                </a>
+
+                <a href="#fruits" class="menu-item" data-section="fruits">
+                    <i class="fas fa-apple-alt"></i>
+                    <span>Fruits (Home)</span>
+                </a>
+
+                <a href="#videos" class="menu-item" data-section="videos">
+                    <i class="fas fa-video"></i>
+                    <span>Videos</span>
+                </a>
+
+                <a href="admin-support.html" class="menu-item">
+                    <i class="fas fa-headset"></i>
+                    <span>Support Chat</span>
+                </a>
+
+                <a href="#analytics" class="menu-item" data-section="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+
+                <a href="#messages" class="menu-item" data-section="messages">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="pending-badge" id="unreadMessagesCount"
+                        style="margin-left: auto; background: var(--secondary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span>
+                </a>
+
+                <a href="#pending" class="menu-item" data-section="pending">
+                    <i class="fas fa-user-clock"></i>
+                    <span>Pending Approvals</span>
+                    <span class="pending-badge" id="pendingCount"
+                        style="margin-left: auto; background: var(--danger); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; display: none;">0</span>
+                </a>
+
+                <div class="menu-divider"></div>
+
+                <a href="#settings" class="menu-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+
+                <a href="#" class="menu-item" onclick="backToSite(); return false;">
+                    <i class="fas fa-home"></i>
+                    <span>Back to Site</span>
+                </a>
+
+                <a href="dashboard.html" class="menu-item"
+                    onclick="return confirm('Are you sure you want to logout?');">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <p>© 2023 Tumenye Kwivura</p>
+                <p>Admin Dashboard v2.0</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Header -->
+            <div class="top-header">
+                <div class="header-left">
+                    <h1>Admin Dashboard</h1>
+                    <p>Welcome back, Administrator</p>
+                </div>
+
+                <div class="header-right">
+                    <!-- Support Messages Notification Bell -->
+                    <a href="admin-support.html" id="supportNotifBtn"
+                        style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #00c853 0%, #00e676 100%); color: #000; text-decoration: none; margin-right: 10px;"
+                        title="Support Messages">
+                        <i class="fas fa-headset"></i>
+                        <span id="supportNotifBadge"
+                            style="position: absolute; top: -5px; right: -5px; background: #dc3545; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 11px; display: none; align-items: center; justify-content: center;">0</span>
+                    </a>
+
+                    <!-- Theme Toggle Button -->
+                    <button id="themeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <div class="user-info">
+                            <h4>Administrator</h4>
+                            <p>Admin Account</p>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="refreshData">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- Unread Messages Notification Banner -->
+            <div id="messagesNotificationBanner" class="messages-notification-banner" style="display: none;">
+                <div class="notification-content">
+                    <div class="notification-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="notification-text">
+                        <h4><span id="messagesNotificationCount">0</span> New Message(s) Waiting</h4>
+                        <p>You have new support messages from users that need your attention.</p>
+                    </div>
+                </div>
+                <div class="notification-actions">
+                    <button class="btn btn-success" onclick="scrollToMessagesSection()">
+                        <i class="fas fa-eye"></i> View Now
+                    </button>
+                    <button class="btn btn-secondary" onclick="dismissMessagesNotification()">
+                        <i class="fas fa-times"></i> Dismiss
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Success/Error Banner -->
+            <div id="actionBanner" class="action-banner">
+                <div class="banner-content">
+                    <div class="banner-icon" id="actionBannerIcon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="banner-text" id="actionBannerText">
+                        Action completed successfully!
+                    </div>
+                </div>
+                <button class="banner-close" onclick="dismissActionBanner()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="dashboard-section">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalUsers">0</h3>
+                            <p>Total Users</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i> <span>12% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon views">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalViews">0</h3>
+                            <p>Total Views</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i> <span>24% from last week</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon treatments">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalTreatments">0</h3>
+                            <p>Treatments</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i> <span>8% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon videos">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalVideos">0</h3>
+                            <p>Videos</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i> <span>5% from last week</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: var(--primary);">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalMessages">0</h3>
+                            <p>Messages</p>
+                            <div class="stat-trend positive" id="unreadCount">
+                                <i class="fas fa-bell"></i> <span>0 unread</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalActiveUsers">0</h3>
+                            <p>Active Users</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-circle" style="color: #00b894;"></i> <span>All verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Summary Section -->
+                <div class="weekly-summary-section"
+                    style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem; color: white;">
+                    <div class="section-header"
+                        style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                        <h3 style="color: white; font-size: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-calendar-week"></i> Last 7 Days Summary
+                        </h3>
+                        <span id="weekDateRange" style="opacity: 0.8; font-size: 0.9rem;"></span>
+                    </div>
+
+                    <div class="weekly-stats-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="weekly-stat-card"
+                            style="background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+                            <div class="weekly-stat-icon" style="font-size: 2rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 id="weeklyNewUsers" style="font-size: 2rem; margin-bottom: 0.25rem;">0</h4>
+                            <p style="opacity: 0.8; font-size: 0.9rem;">New Users</p>
+                            <div id="weeklyUsersTrend" class="weekly-trend"
+                                style="font-size: 0.85rem; margin-top: 0.5rem;">
+                                <i class="fas fa-arrow-up"></i> <span>0%</span> vs last week
+                            </div>
+                        </div>
+
+                        <div class="weekly-stat-card"
+                            style="background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+                            <div class="weekly-stat-icon" style="font-size: 2rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h4 id="weeklyNewTreatments" style="font-size: 2rem; margin-bottom: 0.25rem;">0</h4>
+                            <p style="opacity: 0.8; font-size: 0.9rem;">New Treatments</p>
+                            <div id="weeklyTreatmentsTrend" class="weekly-trend"
+                                style="font-size: 0.85rem; margin-top: 0.5rem;">
+                                <i class="fas fa-arrow-up"></i> <span>0%</span> vs last week
+                            </div>
+                        </div>
+
+                        <div class="weekly-stat-card"
+                            style="background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+                            <div class="weekly-stat-icon" style="font-size: 2rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <h4 id="weeklyNewVideos" style="font-size: 2rem; margin-bottom: 0.25rem;">0</h4>
+                            <p style="opacity: 0.8; font-size: 0.9rem;">New Videos</p>
+                            <div id="weeklyVideosTrend" class="weekly-trend"
+                                style="font-size: 0.85rem; margin-top: 0.5rem;">
+                                <i class="fas fa-arrow-up"></i> <span>0%</span> vs last week
+                            </div>
+                        </div>
+
+                        <div class="weekly-stat-card"
+                            style="background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+                            <div class="weekly-stat-icon" style="font-size: 2rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h4 id="weeklyViews" style="font-size: 2rem; margin-bottom: 0.25rem;">0</h4>
+                            <p style="opacity: 0.8; font-size: 0.9rem;">Total Views</p>
+                            <div id="weeklyViewsTrend" class="weekly-trend"
+                                style="font-size: 0.85rem; margin-top: 0.5rem;">
+                                <i class="fas fa-arrow-up"></i> <span>0%</span> vs last week
+                            </div>
+                        </div>
+
+                        <div class="weekly-stat-card"
+                            style="background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem; text-align: center;">
+                            <div class="weekly-stat-icon" style="font-size: 2rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h4 id="weeklyMessages" style="font-size: 2rem; margin-bottom: 0.25rem;">0</h4>
+                            <p style="opacity: 0.8; font-size: 0.9rem;">Messages</p>
+                            <div id="weeklyMessagesTrend" class="weekly-trend"
+                                style="font-size: 0.85rem; margin-top: 0.5rem;">
+                                <i class="fas fa-arrow-up"></i> <span>0%</span> vs last week
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>User Growth</h3>
+                            <select class="form-control" style="width: auto;" id="userGrowthPeriod"
+                                title="Select time period for user growth chart">
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 3 months</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="userGrowthChartCanvas"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Page Views</h3>
+                            <select class="form-control" style="width: auto;" id="pageViewsPeriod"
+                                title="Select time period for page views chart">
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="90">Last 3 months</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="pageViewsChartCanvas"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Category Distribution</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trafficSourcesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Comparison Chart -->
+                <div class="charts-section">
+                    <div class="chart-card" style="grid-column: span 2;">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-bar"></i> Weekly Comparison (This Week vs Last Week)</h3>
+                        </div>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="weeklyComparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>Recent Activity</h3>
+                    </div>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users-section" class="users-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>User Management</h3>
+                        <div class="section-actions">
+                            <button class="btn btn-primary" id="addUserBtn">
+                                <i class="fas fa-plus"></i> Add User
+                            </button>
+                            <button class="btn btn-secondary" id="exportUsersBtn">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Treatments Section -->
+            <section id="treatments-section" class="treatments-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>Treatment Management</h3>
+                        <div class="section-actions">
+                            <button class="btn btn-primary" id="addTreatmentBtn">
+                                <i class="fas fa-plus"></i> Add Treatment
+                            </button>
+                            <button class="btn btn-secondary" id="exportTreatmentsBtn">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Views</th>
+                                    <th>Added Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="treatmentsTableBody">
+                                <!-- Treatments will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fruits Section (for homes.html) -->
+            <section id="fruits-section" class="fruits-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-apple-alt"></i> Fruits Management (Home Page)</h3>
+                        <div class="section-actions">
+                            <button class="btn btn-primary" id="addFruitBtn">
+                                <i class="fas fa-plus"></i> Add Fruit
+                            </button>
+                            <button class="btn btn-secondary" id="refreshFruitsBtn">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Popularity</th>
+                                    <th>Rating</th>
+                                    <th>Views</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fruitsTableBody">
+                                <!-- Fruits will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Videos Section -->
+            <section id="videos-section" class="videos-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>Video Management</h3>
+                        <div class="section-actions">
+                            <button class="btn btn-primary" onclick="showAddVideoModal()">
+                                <i class="fas fa-plus"></i> Add Video
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Views</th>
+                                    <th>Likes</th>
+                                    <th>Upload Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="videosTableBody">
+                                <!-- Videos will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="analytics-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>Website Analytics</h3>
+                        <div class="section-actions">
+                            <select class="form-control" style="width: auto;">
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                                <option>Last 3 months</option>
+                                <option>Last year</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="margin-bottom: 2rem;">
+                        <div class="stat-card">
+                            <div class="stat-content">
+                                <h3 id="avgSessionTime">0m</h3>
+                                <p>Avg. Session Time</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-content">
+                                <h3 id="bounceRate">0%</h3>
+                                <p>Bounce Rate</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-content">
+                                <h3 id="newVisitors">0</h3>
+                                <p>New Visitors</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-content">
+                                <h3 id="returnVisitors">0</h3>
+                                <p>Return Visitors</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card" style="margin-bottom: 2rem;">
+                        <div class="chart-header">
+                            <h3>Treatment Categories</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="analyticsCategoryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Top Pages</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Page</th>
+                                        <th>Views</th>
+                                        <th>Unique Visitors</th>
+                                        <th>Avg. Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topPagesTableBody">
+                                    <!-- Top pages will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages-section" class="messages-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>Support Messages</h3>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" id="refreshMessages">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Subject</th>
+                                    <th>Message</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="messagesTableBody">
+                                <!-- Messages will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="settings-section" style="display: none;">
+                <div class="data-section">
+                    <div class="section-header">
+                        <h3>System Settings</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Site Name</label>
+                        <input type="text" class="form-control" value="Tumenye Kwivura">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Site Description</label>
+                        <textarea class="form-control" rows="3">Tumenye Kwivura. Ubugorozi</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Email</label>
+                        <input type="email" class="form-control" value="tumenyekwivura@gmail.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Phone</label>
+                        <input type="text" class="form-control" value="(+250) 796352921">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Maintenance Mode</label>
+                        <div>
+                            <input type="checkbox" id="maintenanceMode">
+                            <label for="maintenanceMode">Enable maintenance mode</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success">
+                            <i class="fas fa-save"></i> Save Settings
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-contact">
+                        <a href="mailto:tumenyekwivura@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>tumenyekwivura@gmail.com</span>
+                        </a>
+                        <a href="tel:+250786853257" class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(+250) 796352921</span>
+                        </a>
+                        <a href="https://wa.me/250786853257" class="contact-item" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-item" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                            <span>visit us on youtube</span>
+                        </a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2026 Tumenye Kwivura. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add New User</h3>
+                <button class="modal-close" id="closeAddUserModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-control" id="userRole">
+                            <option value="user">User</option>
+                            <option value="editor">Editor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="userPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" id="userConfirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelAddUser">Cancel</button>
+                <button class="btn btn-primary" id="saveUser">Save User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Confirm Deletion</h3>
+                <button class="modal-close" id="closeDeleteModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">Are you sure you want to delete this user? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelDelete">Cancel</button>
+                <button class="btn btn-danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message View Modal -->
+    <div class="modal-overlay" id="messageModal">
+        <div class="modal" style="max-width: 600px;">
+            <div id="messageModalContent">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        // Sample Data
+        const sampleUsers = [
+            { id: 1, name: "Jean Paul", email: "jean@example.com", role: "user", status: "active", joined: "2023-10-15", avatar: "J" },
+            { id: 2, name: "Marie Claire", email: "marie@example.com", role: "user", status: "active", joined: "2023-10-20", avatar: "M" },
+            { id: 3, name: "Eric Mutabazi", email: "eric@example.com", role: "editor", status: "active", joined: "2023-09-05", avatar: "E" },
+            { id: 4, name: "Alice Uwase", email: "alice@example.com", role: "user", status: "inactive", joined: "2023-11-02", avatar: "A" },
+            { id: 5, name: "David Niyonshuti", email: "david@example.com", role: "admin", status: "active", joined: "2023-08-12", avatar: "D" },
+            { id: 6, name: "Sophie Mukamana", email: "sophie@example.com", role: "user", status: "pending", joined: "2023-11-10", avatar: "S" },
+        ];
+
+        const sampleTreatments = [
+            { id: 1, name: "Umwembe (Mango)", category: "Digestion", views: 1245, added: "2023-10-15" },
+            { id: 2, name: "Strawberry Glow", category: "Skin Health", views: 987, added: "2023-10-20" },
+            { id: 3, name: "Lemon Detox", category: "Immunity", views: 2156, added: "2023-09-05" },
+            { id: 4, name: "Guava Vitality", category: "Immunity", views: 765, added: "2023-11-02" },
+            { id: 5, name: "Papaya Digestive Aid", category: "Digestion", views: 1123, added: "2023-08-12" },
+            { id: 6, name: "Blueberry Antioxidant", category: "Immunity", views: 1890, added: "2023-11-10" },
+        ];
+
+        const sampleVideos = [
+            { id: 1, title: "Inama zireba umugore utwite", views: 5234, likes: 245, uploaded: "2023-10-15" },
+            { id: 2, title: "Akamaro kamazi", views: 4123, likes: 189, uploaded: "2023-10-20" },
+            { id: 3, title: "Ijambo ryahindura ubuzima", views: 7890, likes: 456, uploaded: "2023-09-05" },
+            { id: 4, title: "Ukowavura umutima", views: 3123, likes: 167, uploaded: "2023-11-02" },
+            { id: 5, title: "umuti wa mara,igifu,umwijima...", views: 6543, likes: 321, uploaded: "2023-08-12" },
+            { id: 6, title: "umuti uvura umutwe", views: 2987, likes: 198, uploaded: "2023-11-10" },
+        ];
+
+        const sampleActivity = [
+            { type: "user", icon: "user", text: "New user registration: Alice Uwase", time: "2 hours ago" },
+            { type: "view", icon: "view", text: "Treatment 'Lemon Detox' reached 2,156 views", time: "5 hours ago" },
+            { type: "video", icon: "video", text: "New video uploaded: 'Akamaro kamazi'", time: "1 day ago" },
+            { type: "user", icon: "user", text: "User David Niyonshuti upgraded to Admin role", time: "2 days ago" },
+            { type: "view", icon: "view", text: "Homepage reached 10,000 total views", time: "3 days ago" },
+        ];
+
+        // Initialize data from localStorage or use sample data
+        let users = JSON.parse(localStorage.getItem('adminUsers')) || sampleUsers;
+
+        // Load and adapt real data from Dashboard.html (adminFruits)
+        const syncedFruits = JSON.parse(localStorage.getItem('adminFruits'));
+        let treatments = syncedFruits ? syncedFruits.map((f, i) => ({
+            id: f.id,
+            name: f.name,
+            category: f.category,
+            views: Math.floor((f.popularity || 80) * 15 + (f.rating * 100)), // Simulate views
+            added: "2023-11-15"
+        })) : (JSON.parse(localStorage.getItem('adminTreatments')) || sampleTreatments);
+
+        // Load and adapt real data from video.html (adminVideos)
+        const syncedVideos = JSON.parse(localStorage.getItem('adminVideos'));
+        let videos = syncedVideos ? syncedVideos.map((v, i) => ({
+            id: i + 1,
+            title: v.title,
+            views: v.views || Math.floor(Math.random() * 5000 + 500),
+            likes: v.likes || Math.floor(Math.random() * 500 + 10),
+            uploaded: "2023-10-20"
+        })) : (JSON.parse(localStorage.getItem('adminVideos')) || sampleVideos);
+
+        let activity = JSON.parse(localStorage.getItem('adminActivity')) || sampleActivity;
+
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.getElementById('toggleSidebar');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('section[id$="-section"]');
+        const refreshDataBtn = document.getElementById('refreshData');
+        const addUserBtn = document.getElementById('addUserBtn');
+        const addUserModal = document.getElementById('addUserModal');
+        const closeAddUserModal = document.getElementById('closeAddUserModal');
+        const cancelAddUser = document.getElementById('cancelAddUser');
+        const saveUserBtn = document.getElementById('saveUser');
+        const addUserForm = document.getElementById('addUserForm');
+        const deleteModal = document.getElementById('deleteModal');
+        const closeDeleteModal = document.getElementById('closeDeleteModal');
+        const cancelDelete = document.getElementById('cancelDelete');
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+        const deleteMessage = document.getElementById('deleteMessage');
+        const themeToggle = document.getElementById('themeToggle');
+
+        // Charts
+        let userGrowthChart, pageViewsChart, trafficSourcesChart;
+
+        // State
+        let userToDelete = null;
+        let supportMessages = [];
+        let pendingUsers = [];
+        let fruits = [];
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', async function () {
+            console.log('DOM Content Loaded - Starting initialization');
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                if (themeToggle) {
+                    const icon = themeToggle.querySelector('i');
+                    if (icon) icon.className = 'fas fa-sun';
+                }
+            }
+
+            // Always setup event listeners first to ensure UI works even if data fails
+            try {
+                console.log('Initializing event listeners...');
+                setupEventListeners();
+                console.log('Event listeners initialized');
+            } catch (err) {
+                console.error('Error setting up event listeners:', err);
+            }
+
+            // Then fetch data (charts will be initialized when analytics section is first shown)
+            try {
+                await fetchData();
+                console.log('fetchData complete');
+            } catch (err) {
+                console.warn('Non-critical error during fetchData:', err);
+            }
+
+            // Fetch weekly dashboard data for stats (charts initialize when analytics is shown)
+            try { await fetchWeeklyDashboard(); } catch (err) { console.warn('Failed to fetch weekly summary:', err); }
+
+            // Update support notifications badge immediately on page load
+            try {
+                const supportRes = await fetch('/api/support/admin/conversations');
+                if (supportRes.ok) {
+                    const conversations = await supportRes.json();
+                    const unreadCount = conversations.reduce((sum, conv) => sum + (conv.unread_count || 0), 0);
+                    const badge = document.getElementById('supportNotifBadge');
+                    if (badge) {
+                        if (unreadCount > 0) {
+                            badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                            badge.style.display = 'flex';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    }
+                }
+            } catch (err) { console.warn('Failed to fetch initial support notifications:', err); }
+
+            // Start polling for new messages every 30 seconds
+            setInterval(async () => {
+                try {
+                    // Update support notifications badge
+                    const supportRes = await fetch('/api/support/admin/conversations');
+                    if (supportRes.ok) {
+                        const conversations = await supportRes.json();
+                        const unreadCount = conversations.reduce((sum, conv) => sum + (conv.unread_count || 0), 0);
+                        const badge = document.getElementById('supportNotifBadge');
+                        if (badge) {
+                            if (unreadCount > 0) {
+                                badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                                badge.style.display = 'flex';
+                            } else {
+                                badge.style.display = 'none';
+                            }
+                        }
+                    }
+
+                    const messagesRes = await fetch('/api/support');
+                    if (messagesRes.ok) {
+                        const newMessages = await messagesRes.json();
+                        const previousUnreadCount = supportMessages.filter(m => m.status === 'unread').length;
+                        const newUnreadCount = newMessages.filter(m => m.status === 'unread').length;
+
+                        supportMessages = newMessages;
+                        renderMessagesTable();
+                        updateMessagesNotification();
+
+                        // Show notification if new messages arrived
+                        if (newUnreadCount > previousUnreadCount) {
+                            showNotification(`${newUnreadCount - previousUnreadCount} new message(s) received!`, 'info');
+                        }
+                    }
+                } catch (err) { console.warn('Polling for messages failed:', err); }
+            }, 30000); // Check every 30 seconds
+        });
+
+        async function fetchData() {
+            console.log('Fetching all dashboard data...');
+
+            // Fetch stats
+            try {
+                const statsRes = await fetch('http://localhost:3000/admin/stats');
+                if (statsRes.ok) {
+                    const statsData = await statsRes.json();
+                    loadStats(statsData);
+                }
+            } catch (err) { console.warn('Failed to fetch stats:', err); }
+
+            // Fetch users
+            try {
+                const usersRes = await fetch('http://localhost:3000/admin/users');
+                if (usersRes.ok) {
+                    users = await usersRes.json();
+                    renderUsersTable();
+                }
+            } catch (err) { console.warn('Failed to fetch users:', err); }
+
+            // Fetch treatments
+            try {
+                const treatmentsRes = await fetch('http://localhost:3000/admin/treatments');
+                if (treatmentsRes.ok) {
+                    treatments = await treatmentsRes.json();
+                    renderTreatmentsTable();
+                }
+            } catch (err) { console.warn('Failed to fetch treatments:', err); }
+
+            // Fetch videos
+            try {
+                const videosRes = await fetch('http://localhost:3000/admin/videos');
+                if (videosRes.ok) {
+                    videos = await videosRes.json();
+                    renderVideosTable();
+                }
+            } catch (err) { console.warn('Failed to fetch videos:', err); }
+
+            // Fetch activity
+            try {
+                const activityRes = await fetch('http://localhost:3000/admin/activities');
+                if (activityRes.ok) {
+                    activity = await activityRes.json();
+                    renderActivity();
+                }
+            } catch (err) { console.warn('Failed to fetch activity:', err); }
+
+            // Fetch support messages
+            try {
+                const messagesRes = await fetch('http://localhost:3000/api/support');
+                if (messagesRes.ok) {
+                    supportMessages = await messagesRes.json();
+                    renderMessagesTable();
+                    updateMessagesNotification();
+                }
+            } catch (err) { console.warn('Failed to fetch support messages:', err); }
+
+            // Fetch fruits for homes.html
+            try { await fetchFruits(); } catch (err) { console.warn('Failed to fetch fruits:', err); }
+
+            renderTopPages();
+        }
+
+
+        // Load statistics with animated counting
+        function loadStats(statsData) {
+            if (!statsData) return;
+
+            // Total users
+            animateValue("totalUsers", 0, statsData.users || 0, 1000);
+
+            // Total views
+            animateValue("totalViews", 0, statsData.views || 0, 1200);
+
+            // Total treatments
+            animateValue("totalTreatments", 0, statsData.treatments || 0, 800);
+
+            // Total videos
+            animateValue("totalVideos", 0, statsData.videos || 0, 800);
+
+            // Total messages
+            const unread = supportMessages.filter(m => m.status === 'unread').length;
+            animateValue("totalMessages", 0, supportMessages.length, 800);
+            document.getElementById('unreadCount').innerHTML = `<i class="fas fa-bell"></i> <span>${unread} unread</span>`;
+            if (unread > 0) {
+                document.getElementById('unreadCount').style.color = 'var(--danger)';
+            } else {
+                document.getElementById('unreadCount').style.color = 'var(--success)';
+            }
+
+            // Active users (all verified users)
+            animateValue("totalActiveUsers", 0, statsData.users || 0, 900);
+            const activeTrend = document.getElementById('totalActiveUsers');
+            if (activeTrend) {
+                activeTrend.parentElement.querySelector('.stat-trend').innerHTML = `<i class="fas fa-circle" style="color: #00b894;"></i> <span>All verified</span>`;
+            }
+
+            // Analytics stats
+            animateValueWithSuffix("avgSessionTime", 0, 4, 1000, "m 32s");
+            animateValueWithSuffix("bounceRate", 0, 42, 1000, "%");
+            animateValue("newVisitors", 0, 1234, 1000);
+            animateValue("returnVisitors", 0, 567, 1000);
+        }
+
+        // Animated counting function
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value.toLocaleString();
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+
+            window.requestAnimationFrame(step);
+        }
+
+        // Animated counting with suffix
+        function animateValueWithSuffix(id, start, end, duration, suffix) {
+            const element = document.getElementById(id);
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value + suffix;
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+
+            window.requestAnimationFrame(step);
+        }
+
+        // Render users table
+        function renderUsersTable() {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = '';
+
+            users.forEach(user => {
+                const avatar = user.avatar || (user.name ? user.name.charAt(0).toUpperCase() : '?');
+                const role = user.role || 'user';
+                const status = user.status || 'active';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="user-avatar-small">${avatar}</div>
+                            <div>${user.name || 'Unknown'}</div>
+                        </div>
+                    </td>
+                    <td>${user.email || 'N/A'}</td>
+                    <td><span class="status-badge ${getRoleClass(role)}">${role}</span></td>
+                    <td><span class="status-badge ${getStatusClass(status)}">${status}</span></td>
+                    <td>${formatDate(user.created_at || user.joined)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-secondary" onclick="editUser(${user.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteUserPrompt(${user.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Render treatments table
+        function renderTreatmentsTable() {
+            const tbody = document.getElementById('treatmentsTableBody');
+            tbody.innerHTML = '';
+
+            treatments.forEach(treatment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${treatment.id}</td>
+                    <td>${treatment.name}</td>
+                    <td>${treatment.category}</td>
+                    <td>${treatment.views.toLocaleString()}</td>
+                    <td>${formatDate(treatment.created_at || treatment.added)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-secondary" onclick="editTreatment(${treatment.id})" title="Edit Treatment">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteTreatment(${treatment.id})" title="Delete Treatment">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Fruits Management
+
+        async function fetchFruits() {
+            try {
+                const response = await fetch('http://localhost:3000/api/dashboard/fruits');
+                fruits = await response.json();
+                renderFruitsTable();
+            } catch (error) {
+                console.error('Error fetching fruits:', error);
+            }
+        }
+
+        function renderFruitsTable() {
+            const tbody = document.getElementById('fruitsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            fruits.forEach(fruit => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${fruit.id}</td>
+                    <td>
+                        <img src="${fruit.image || fruit.image_url}" alt="${fruit.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 8px;">
+                    </td>
+                    <td>${fruit.name}</td>
+                    <td><span class="status-badge status-active">${fruit.category || 'general'}</span></td>
+                    <td>${fruit.popularity || 50}%</td>
+                    <td>${fruit.rating || 4.0} <i class="fas fa-star" style="color: gold;"></i></td>
+                    <td>${(fruit.views || 0).toLocaleString()}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-secondary" onclick="editFruit(${fruit.id})" title="Edit Fruit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteFruit(${fruit.id})" title="Delete Fruit">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Edit fruit
+        function editFruit(fruitId) {
+            const fruit = fruits.find(f => f.id === fruitId);
+            if (!fruit) return;
+
+            showFruitModal(fruit);
+        }
+
+        // Delete fruit
+        async function deleteFruit(fruitId) {
+            if (!confirm('Are you sure you want to delete this fruit?')) return;
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/dashboard/fruits/${fruitId}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification('Fruit deleted successfully', 'success');
+                    await fetchFruits();
+                } else {
+                    showNotification(result.message || 'Error deleting fruit', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting fruit:', error);
+                showNotification('Error connecting to server', 'error');
+            }
+        }
+
+        // Show fruit modal for add/edit
+        function showFruitModal(fruit = null) {
+            const isEdit = fruit !== null;
+            // Remove any existing modals first
+            const existingModal = document.querySelector('.modal-overlay');
+            if (existingModal) existingModal.remove();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'modal-overlay';
+            overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9998;';
+
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h3>${isEdit ? 'Edit Fruit' : 'Add New Fruit'}</h3>
+                        <button class="close-modal" onclick="this.closest('.modal').remove()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="fruitForm">
+                            <div class="form-group">
+                                <label>Name *</label>
+                                <input type="text" class="form-control" id="fruitName" value="${fruit?.name || ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control" id="fruitCategory">
+                                    <option value="immunity" ${fruit?.category === 'immunity' ? 'selected' : ''}>Immunity</option>
+                                    <option value="skin" ${fruit?.category === 'skin' ? 'selected' : ''}>Skin</option>
+                                    <option value="digestion" ${fruit?.category === 'digestion' ? 'selected' : ''}>Digestion</option>
+                                    <option value="energy" ${fruit?.category === 'energy' ? 'selected' : ''}>Energy</option>
+                                    <option value="general" ${fruit?.category === 'general' || !fruit?.category ? 'selected' : ''}>General</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Image URL</label>
+                                <input type="text" class="form-control" id="fruitImage" value="${fruit?.image_url || fruit?.image || ''}">
+                            </div>
+                            <div class="form-group">
+                                <label>Benefits (one per line)</label>
+                                <textarea class="form-control" id="fruitBenefits" rows="3">${(fruit?.benefits || []).join('\n')}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Symptoms (one per line)</label>
+                                <textarea class="form-control" id="fruitSymptoms" rows="3">${(fruit?.symptoms || []).join('\n')}</textarea>
+                            </div>
+                            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Popularity (0-100)</label>
+                                    <input type="number" class="form-control" id="fruitPopularity" value="${fruit?.popularity || 50}" min="0" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label>Rating (0-5)</label>
+                                    <input type="number" class="form-control" id="fruitRating" value="${fruit?.rating || 4.0}" min="0" max="5" step="0.1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveFruit(${fruit?.id || 'null'})">${isEdit ? 'Update' : 'Add'} Fruit</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            document.body.appendChild(modal);
+
+            // Close on overlay click
+            overlay.addEventListener('click', () => {
+                overlay.remove();
+                modal.remove();
+            });
+        }
+
+        // Save fruit (add or update)
+        async function saveFruit(fruitId) {
+            const name = document.getElementById('fruitName').value.trim();
+            const category = document.getElementById('fruitCategory').value;
+            const image_url = document.getElementById('fruitImage').value.trim();
+            const benefitsText = document.getElementById('fruitBenefits').value.trim();
+            const symptomsText = document.getElementById('fruitSymptoms').value.trim();
+            const popularity = parseInt(document.getElementById('fruitPopularity').value) || 50;
+            const rating = parseFloat(document.getElementById('fruitRating').value) || 4.0;
+
+            if (!name) {
+                showNotification('Fruit name is required', 'error');
+                return;
+            }
+
+            const benefits = benefitsText ? benefitsText.split('\n').filter(b => b.trim()) : [];
+            const symptoms = symptomsText ? symptomsText.split('\n').filter(s => s.trim()) : [];
+
+            const fruitData = { name, category, image_url, benefits, symptoms, popularity, rating };
+
+            try {
+                const url = fruitId
+                    ? `http://localhost:3000/api/dashboard/fruits/${fruitId}`
+                    : 'http://localhost:3000/api/dashboard/fruits';
+                const method = fruitId ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(fruitData)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification(`Fruit ${fruitId ? 'updated' : 'added'} successfully`, 'success');
+                    document.querySelector('.modal').remove();
+                    await fetchFruits();
+                } else {
+                    showNotification(result.message || 'Error saving fruit', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving fruit:', error);
+                showNotification('Error connecting to server', 'error');
+            }
+        }
+
+        // Edit treatment
+        function editTreatment(treatmentId) {
+            const treatment = treatments.find(t => t.id === treatmentId);
+            if (!treatment) return;
+            showTreatmentModal(treatment);
+        }
+
+        // Delete treatment
+        async function deleteTreatment(treatmentId) {
+            if (!confirm('Are you sure you want to delete this treatment?')) return;
+
+            try {
+                const response = await fetch(`http://localhost:3000/admin/treatments/${treatmentId}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification('Treatment deleted successfully', 'success');
+                    await fetchData();
+                } else {
+                    showNotification(result.message || 'Error deleting treatment', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting treatment:', error);
+                showNotification('Error connecting to server', 'error');
+            }
+        }
+
+        // Show treatment modal for add/edit
+        function showTreatmentModal(treatment = null) {
+            const isEdit = treatment !== null;
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h2>${isEdit ? 'Edit Treatment' : 'Add New Treatment'}</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="treatmentName">Name *</label>
+                            <input type="text" id="treatmentName" class="form-control" value="${treatment?.name || ''}" placeholder="e.g., Apple">
+                        </div>
+                        <div class="form-group">
+                            <label for="treatmentCategory">Category *</label>
+                            <select id="treatmentCategory" class="form-control">
+                                <option value="fruits" ${treatment?.category === 'fruits' ? 'selected' : ''}>Fruits</option>
+                                <option value="vegetables" ${treatment?.category === 'vegetables' ? 'selected' : ''}>Vegetables</option>
+                                <option value="herbs" ${treatment?.category === 'herbs' ? 'selected' : ''}>Herbs</option>
+                                <option value="nuts" ${treatment?.category === 'nuts' ? 'selected' : ''}>Nuts</option>
+                                <option value="other" ${treatment?.category === 'other' ? 'selected' : ''}>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="treatmentDescription">Description</label>
+                            <textarea id="treatmentDescription" class="form-control" rows="3" placeholder="Brief description">${treatment?.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="treatmentBenefits">Benefits (comma separated)</label>
+                            <input type="text" id="treatmentBenefits" class="form-control" value="${treatment?.benefits ? (Array.isArray(treatment.benefits) ? treatment.benefits.join(', ') : treatment.benefits) : ''}" placeholder="e.g., Boosts immunity, Improves digestion">
+                        </div>
+                        <div class="form-group">
+                            <label for="treatmentSymptoms">Symptoms Treated (comma separated)</label>
+                            <input type="text" id="treatmentSymptoms" class="form-control" value="${treatment?.symptoms ? (Array.isArray(treatment.symptoms) ? treatment.symptoms.join(', ') : treatment.symptoms) : ''}" placeholder="e.g., Cold, Indigestion">
+                        </div>
+                        <div class="form-group">
+                            <label for="treatmentImage">Treatment Image</label>
+                            <input type="file" id="treatmentImage" class="form-control" accept="image/*">
+                            ${treatment?.image_url ? `<small style="color: var(--text-secondary);">Current: ${treatment.image_url}</small>` : ''}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveTreatment(${treatment?.id || 'null'})">${isEdit ? 'Update' : 'Add'} Treatment</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        // Save treatment (add or update)
+        async function saveTreatment(treatmentId) {
+            const name = document.getElementById('treatmentName').value.trim();
+            const category = document.getElementById('treatmentCategory').value;
+            const description = document.getElementById('treatmentDescription').value.trim();
+            const benefitsStr = document.getElementById('treatmentBenefits').value.trim();
+            const symptomsStr = document.getElementById('treatmentSymptoms').value.trim();
+            const imageInput = document.getElementById('treatmentImage');
+            const imageFile = imageInput.files[0];
+
+            if (!name) {
+                showNotification('Please enter a treatment name', 'error');
+                return;
+            }
+
+            const benefits = benefitsStr ? benefitsStr.split(',').map(b => b.trim()).filter(b => b) : [];
+            const symptoms = symptomsStr ? symptomsStr.split(',').map(s => s.trim()).filter(s => s) : [];
+
+            try {
+                const url = treatmentId
+                    ? `http://localhost:3000/admin/treatments/${treatmentId}`
+                    : 'http://localhost:3000/admin/treatments';
+                const method = treatmentId ? 'PUT' : 'POST';
+
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('category', category);
+                formData.append('description', description);
+                formData.append('benefits', JSON.stringify(benefits));
+                formData.append('symptoms', JSON.stringify(symptoms));
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
+
+                const response = await fetch(url, {
+                    method,
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification(`Treatment ${treatmentId ? 'updated' : 'added'} successfully`, 'success');
+                    document.querySelector('.modal').remove();
+                    await fetchData();
+                } else {
+                    showNotification(result.message || 'Error saving treatment', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving treatment:', error);
+                showNotification('Error connecting to server', 'error');
+            }
+        }
+
+        // Render videos table
+        function renderVideosTable() {
+            const tbody = document.getElementById('videosTableBody');
+            tbody.innerHTML = '';
+
+            videos.forEach(video => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${video.id}</td>
+                    <td>${video.title}</td>
+                    <td>${video.views.toLocaleString()}</td>
+                    <td>${video.likes}</td>
+                    <td>${formatDate(video.uploaded_at || video.uploaded)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-secondary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteVideo(${video.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Render messages table
+        function renderMessagesTable() {
+            const tbody = document.getElementById('messagesTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            supportMessages.forEach(msg => {
+                const row = document.createElement('tr');
+                row.className = msg.status === 'unread' ? 'unread-row' : '';
+                row.innerHTML = `
+                    <td>${msg.id}</td>
+                    <td>
+                        <div style="font-weight: 600;">${msg.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">${msg.email}</div>
+                    </td>
+                    <td>${msg.subject || 'No Subject'}</td>
+                    <td>
+                        <div class="message-preview" title="${msg.message}">
+                            ${msg.message.length > 50 ? msg.message.substring(0, 50) + '...' : msg.message}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge ${msg.status === 'unread' ? 'status-pending' : 'status-active'}">
+                            ${msg.status}
+                        </span>
+                    </td>
+                    <td>${formatDate(msg.created_at)}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-primary" onclick="viewMessage(${msg.id})" title="View Message">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${msg.status === 'unread' ? `
+                                <button class="btn btn-sm btn-success" onclick="markAsRead(${msg.id})" title="Mark as Read">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        async function markAsRead(id) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/support/${id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'read' })
+                });
+
+                if (response.ok) {
+                    // Update local state
+                    const msg = supportMessages.find(m => m.id === id);
+                    if (msg) {
+                        msg.status = 'read';
+                    }
+                    updateMessagesNotification();
+                    renderMessagesTable();
+                    showNotification('Message marked as read', 'success');
+                }
+            } catch (error) {
+                showNotification('Error updating message', 'error');
+            }
+        }
+
+        function viewMessage(id) {
+            const msg = supportMessages.find(m => m.id === id);
+            if (!msg) return;
+
+            // Show message modal
+            const modal = document.getElementById('messageModal');
+            const modalContent = document.getElementById('messageModalContent');
+
+            modalContent.innerHTML = `
+                <div class="message-modal-header">
+                    <h3><i class="fas fa-envelope-open"></i> Message Details</h3>
+                    <button class="close-modal-btn" onclick="closeMessageModal()">&times;</button>
+                </div>
+                <div class="message-modal-body">
+                    <div class="message-detail-row">
+                        <label><i class="fas fa-user"></i> From:</label>
+                        <span>${msg.name} (${msg.email})</span>
+                    </div>
+                    <div class="message-detail-row">
+                        <label><i class="fas fa-tag"></i> Subject:</label>
+                        <span>${msg.subject || 'No Subject'}</span>
+                    </div>
+                    <div class="message-detail-row">
+                        <label><i class="fas fa-calendar"></i> Date:</label>
+                        <span>${formatDate(msg.created_at)}</span>
+                    </div>
+                    <div class="message-detail-row">
+                        <label><i class="fas fa-comment"></i> Message:</label>
+                        <div class="message-full-text">${msg.message}</div>
+                    </div>
+                    ${msg.reply ? `
+                        <div class="message-detail-row reply-section">
+                            <label><i class="fas fa-reply"></i> Your Reply:</label>
+                            <div class="reply-text">${msg.reply}</div>
+                            <div class="reply-date">Replied on: ${formatDate(msg.replied_at)}</div>
+                        </div>
+                    ` : `
+                        <div class="reply-form">
+                            <h4><i class="fas fa-reply"></i> Reply to this message</h4>
+                            <textarea id="replyText" placeholder="Type your reply here..." rows="4"></textarea>
+                            <button class="btn btn-primary" onclick="sendReply(${msg.id})">
+                                <i class="fas fa-paper-plane"></i> Send Reply
+                            </button>
+                        </div>
+                    `}
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+
+            if (msg.status === 'unread') {
+                markAsRead(id);
+            }
+        }
+
+        function closeMessageModal() {
+            const modal = document.getElementById('messageModal');
+            modal.style.display = 'none';
+        }
+
+        async function sendReply(id) {
+            const replyText = document.getElementById('replyText').value.trim();
+
+            if (!replyText) {
+                showNotification('Please enter a reply', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/support/${id}/reply`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ reply: replyText })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification('Reply sent successfully!', 'success');
+                    closeMessageModal();
+                    await fetchData();
+                } else {
+                    showNotification(result.message || 'Error sending reply', 'error');
+                }
+            } catch (error) {
+                showNotification('Error sending reply', 'error');
+            }
+        }
+
+
+        // Update messages notification banner
+        function updateMessagesNotification() {
+            const banner = document.getElementById('messagesNotificationBanner');
+            const bannerCount = document.getElementById('messagesNotificationCount');
+            const badge = document.getElementById('unreadMessagesCount');
+
+            if (!banner || !bannerCount) return;
+
+            // Count unread messages
+            const unreadMessages = supportMessages.filter(m => m.status === 'unread');
+            const unreadCount = unreadMessages.length;
+
+            // Update badge in sidebar
+            if (badge) {
+                if (unreadCount > 0) {
+                    badge.textContent = unreadCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            if (unreadCount > 0) {
+                bannerCount.textContent = unreadCount;
+                banner.classList.add('show');
+                banner.style.display = 'flex';
+            } else {
+                banner.classList.remove('show');
+                banner.style.display = 'none';
+            }
+        }
+
+        // Dismiss messages notification
+        function dismissMessagesNotification() {
+            const banner = document.getElementById('messagesNotificationBanner');
+            if (banner) {
+                banner.style.display = 'none';
+            }
+        }
+
+        // Scroll to messages section
+        function scrollToMessagesSection() {
+            showSection('messages');
+            document.getElementById('messages-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+        // Render recent activity
+        function renderActivity() {
+            const container = document.getElementById('recentActivity');
+            container.innerHTML = '';
+
+            activity.forEach(item => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <div class="activity-icon ${item.icon}">
+                        <i class="fas fa-${item.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>${item.text}</p>
+                        <div class="activity-time">${formatDate(item.created_at) === 'Invalid Date' ? item.time : formatDate(item.created_at)}</div>
+                    </div>
+                `;
+                container.appendChild(activityItem);
+            });
+        }
+
+        // Render top pages table
+        function renderTopPages() {
+            const tbody = document.getElementById('topPagesTableBody');
+            if (!tbody) {
+                console.warn('Top pages table body not found');
+                return;
+            }
+            tbody.innerHTML = '';
+
+            const topPages = [
+                { page: "Home", views: 15678, visitors: 12456, time: "3m 45s" },
+                { page: "Treatments", views: 9876, visitors: 7654, time: "5m 12s" },
+                { page: "Videos", views: 8765, visitors: 6543, time: "7m 34s" },
+                { page: "About", views: 2345, visitors: 1987, time: "2m 15s" },
+                { page: "Contact", views: 1876, visitors: 1543, time: "1m 58s" },
+            ];
+
+            topPages.forEach(page => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${page.page}</td>
+                    <td>${page.views.toLocaleString()}</td>
+                    <td>${page.visitors.toLocaleString()}</td>
+                    <td>${page.time}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Fetch and display weekly dashboard data
+        let weeklyComparisonChart = null;
+
+        async function fetchWeeklyDashboard() {
+            console.log('Fetching weekly dashboard data...');
+            try {
+                const response = await fetch('/admin/analytics/weekly-dashboard');
+                const data = await response.json();
+                console.log('Weekly dashboard data:', data);
+                updateWeeklySummary(data);
+                initializeWeeklyComparisonChart(data);
+            } catch (error) {
+                console.error('Error fetching weekly dashboard:', error);
+                // Use sample data if backend is not available
+                const sampleData = generateSampleWeeklyData();
+                console.log('Using sample data:', sampleData);
+                updateWeeklySummary(sampleData);
+                initializeWeeklyComparisonChart(sampleData);
+            }
+        }
+
+        function generateSampleWeeklyData() {
+            return {
+                users: { thisWeek: Math.floor(Math.random() * 20) + 5, lastWeek: Math.floor(Math.random() * 15) + 3, trend: 0 },
+                treatments: { thisWeek: Math.floor(Math.random() * 10) + 2, lastWeek: Math.floor(Math.random() * 8) + 1, trend: 0 },
+                videos: { thisWeek: Math.floor(Math.random() * 8) + 1, lastWeek: Math.floor(Math.random() * 6) + 1, trend: 0 },
+                views: { thisWeek: Math.floor(Math.random() * 5000) + 1000, lastWeek: Math.floor(Math.random() * 4000) + 800, trend: 0 },
+                messages: { thisWeek: Math.floor(Math.random() * 15) + 3, lastWeek: Math.floor(Math.random() * 10) + 2, trend: 0 },
+                dailyStats: [],
+                topTreatments: [],
+                topVideos: [],
+                recentActivities: []
+            };
+        }
+
+        function updateWeeklySummary(data) {
+            // Calculate trends if not provided
+            const calculateTrend = (thisWeek, lastWeek) => {
+                if (lastWeek === 0) return thisWeek > 0 ? 100 : 0;
+                return Math.round(((thisWeek - lastWeek) / lastWeek) * 100);
+            };
+
+            // Update Users
+            document.getElementById('weeklyNewUsers').textContent = data.users.thisWeek;
+            const usersTrend = data.users.trend || calculateTrend(data.users.thisWeek, data.users.lastWeek);
+            updateTrendDisplay('weeklyUsersTrend', usersTrend, data.users.lastWeek);
+
+            // Update Treatments
+            document.getElementById('weeklyNewTreatments').textContent = data.treatments.thisWeek;
+            const treatmentsTrend = data.treatments.trend || calculateTrend(data.treatments.thisWeek, data.treatments.lastWeek);
+            updateTrendDisplay('weeklyTreatmentsTrend', treatmentsTrend, data.treatments.lastWeek);
+
+            // Update Videos
+            document.getElementById('weeklyNewVideos').textContent = data.videos.thisWeek;
+            const videosTrend = data.videos.trend || calculateTrend(data.videos.thisWeek, data.videos.lastWeek);
+            updateTrendDisplay('weeklyVideosTrend', videosTrend, data.videos.lastWeek);
+
+            // Update Views
+            document.getElementById('weeklyViews').textContent = data.views.thisWeek.toLocaleString();
+            const viewsTrend = data.views.trend || calculateTrend(data.views.thisWeek, data.views.lastWeek);
+            updateTrendDisplay('weeklyViewsTrend', viewsTrend, data.views.lastWeek);
+
+            // Update Messages
+            document.getElementById('weeklyMessages').textContent = data.messages.thisWeek;
+            const messagesTrend = data.messages.trend || calculateTrend(data.messages.thisWeek, data.messages.lastWeek);
+            updateTrendDisplay('weeklyMessagesTrend', messagesTrend, data.messages.lastWeek);
+
+            // Update date range
+            const today = new Date();
+            const lastWeek = new Date(today);
+            lastWeek.setDate(lastWeek.getDate() - 7);
+            const options = { month: 'short', day: 'numeric' };
+            document.getElementById('weekDateRange').textContent =
+                `${lastWeek.toLocaleDateString('en-US', options)} - ${today.toLocaleDateString('en-US', options)}, ${today.getFullYear()}`;
+        }
+
+        function updateTrendDisplay(elementId, trend, lastWeekValue) {
+            const element = document.getElementById(elementId);
+            const icon = trend >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+            const color = trend >= 0 ? '#4CAF50' : '#F44336';
+            const sign = trend >= 0 ? '+' : '';
+
+            element.innerHTML = `<i class="fas ${icon}" style="color: ${color}"></i> <span style="color: ${color}">${sign}${trend}%</span> vs last week`;
+        }
+
+        function initializeWeeklyComparisonChart(data) {
+            console.log('Initializing weekly comparison chart with data:', data);
+            const ctx = document.getElementById('weeklyComparisonChart');
+            if (!ctx) {
+                console.error('Weekly comparison chart canvas not found');
+                return;
+            }
+            console.log('Weekly comparison canvas found');
+
+            // Destroy existing chart if it exists
+            if (weeklyComparisonChart) {
+                weeklyComparisonChart.destroy();
+            }
+
+            const labels = ['Users', 'Treatments', 'Videos', 'Views (÷100)', 'Messages'];
+            const thisWeekData = [
+                data.users.thisWeek,
+                data.treatments.thisWeek,
+                data.videos.thisWeek,
+                Math.round(data.views.thisWeek / 100),
+                data.messages.thisWeek
+            ];
+            const lastWeekData = [
+                data.users.lastWeek,
+                data.treatments.lastWeek,
+                data.videos.lastWeek,
+                Math.round(data.views.lastWeek / 100),
+                data.messages.lastWeek
+            ];
+
+            console.log('Chart data - This week:', thisWeekData);
+            console.log('Chart data - Last week:', lastWeekData);
+
+            weeklyComparisonChart = new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'This Week',
+                            data: thisWeekData,
+                            backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                            borderColor: '#4CAF50',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Last Week',
+                            data: lastWeekData,
+                            backgroundColor: 'rgba(158, 158, 158, 0.5)',
+                            borderColor: '#9E9E9E',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary')
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterBody: function (context) {
+                                    const index = context[0].dataIndex;
+                                    const trends = [
+                                        data.users.trend,
+                                        data.treatments.trend,
+                                        data.videos.trend,
+                                        data.views.trend,
+                                        data.messages.trend
+                                    ];
+                                    const trend = trends[index];
+                                    const sign = trend >= 0 ? '+' : '';
+                                    return `Trend: ${sign}${trend}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary')
+                            },
+                            grid: {
+                                color: getComputedStyle(document.documentElement).getPropertyValue('--border')
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary')
+                            },
+                            grid: {
+                                color: getComputedStyle(document.documentElement).getPropertyValue('--border')
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize charts
+        async function initializeCharts() {
+            console.log('initializeCharts function called at:', new Date().toLocaleTimeString());
+
+            // Check if Chart.js is loaded
+            if (typeof Chart === 'undefined') {
+                console.error('CRITICAL: Chart.js is not loaded! Check CDN connection in <head>.');
+                showNotification('Chart.js library failed to load. Please check your internet connection and refresh.', 'error');
+                return;
+            }
+            console.log('Chart.js verified: version', Chart.version);
+
+            // Get theme-aware text color
+            const getChartTextColor = () => {
+                const color = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim();
+                return color || (document.body.classList.contains('dark-theme') ? '#ffffff' : '#333333');
+            };
+            const getChartBorderColor = () => {
+                const color = getComputedStyle(document.documentElement).getPropertyValue('--border').trim();
+                return color || (document.body.classList.contains('dark-theme') ? '#444444' : '#dee2e6');
+            };
+
+            const chartTextColor = getChartTextColor();
+            const chartGridColor = getChartBorderColor();
+            console.log('Using chart colors:', { chartTextColor, chartGridColor });
+
+            // Fetch analytics data from backend
+            let userGrowthData = [];
+            let pageViewsData = [];
+            let categoryData = [];
+
+            try {
+                console.log('Fetching analytics data for charts...');
+                // Fetch user growth data
+                const userGrowthRes = await fetch('/admin/analytics/user-growth');
+                if (userGrowthRes.ok) userGrowthData = await userGrowthRes.json();
+
+                // Fetch page views data
+                const pageViewsRes = await fetch('/admin/analytics/page-views');
+                if (pageViewsRes.ok) pageViewsData = await pageViewsRes.json();
+
+                // Fetch category data
+                const categoryRes = await fetch('/admin/analytics/categories');
+                if (categoryRes.ok) categoryData = await categoryRes.json();
+
+                console.log('Analytics data fetched:', {
+                    userGrowth: userGrowthData.length,
+                    pageViews: pageViewsData.length,
+                    categories: categoryData.length
+                });
+            } catch (error) {
+                console.warn('Error fetching analytics for charts (using fallbacks):', error);
+            }
+
+            // Generate last 7 days labels
+            const days = [];
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                days.push(dayNames[date.getDay()]);
+            }
+
+            // --- 1. User Growth Chart ---
+            const userGrowthCanvas = document.getElementById('userGrowthChartCanvas');
+            if (userGrowthCanvas) {
+                const userGrowthCtx = userGrowthCanvas.getContext('2d');
+                let userGrowthChartData = days.map((day, index) => {
+                    const date = new Date();
+                    date.setDate(date.getDate() - (6 - index));
+                    const dateStr = date.toISOString().split('T')[0];
+                    const found = userGrowthData.find(d => d.date && d.date.startsWith(dateStr));
+                    return found ? found.count : 0;
+                });
+
+                if (userGrowthChartData.every(v => v === 0)) {
+                    console.log('No user growth data found, using sample data');
+                    userGrowthChartData = [2, 5, 3, 8, 4, 6, 7];
+                }
+
+                if (userGrowthChart) userGrowthChart.destroy();
+                userGrowthChart = new Chart(userGrowthCtx, {
+                    type: 'line',
+                    data: {
+                        labels: days,
+                        datasets: [{
+                            label: 'New Users',
+                            data: userGrowthChartData,
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: chartTextColor } }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: chartTextColor },
+                                grid: { color: chartGridColor }
+                            },
+                            x: {
+                                ticks: { color: chartTextColor },
+                                grid: { color: chartGridColor }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // --- 2. Page Views Chart ---
+            const pageViewsCanvas = document.getElementById('pageViewsChartCanvas');
+            if (pageViewsCanvas) {
+                const pageViewsCtx = pageViewsCanvas.getContext('2d');
+                let pageViewsChartData = days.map((day, index) => {
+                    const date = new Date();
+                    date.setDate(date.getDate() - (6 - index));
+                    const dateStr = date.toISOString().split('T')[0];
+                    const found = pageViewsData.find(d => d.date && d.date.startsWith(dateStr));
+                    return found ? found.views : 0;
+                });
+
+                if (pageViewsChartData.every(v => v === 0)) {
+                    console.log('No page views data found, using sample data');
+                    pageViewsChartData = [320, 450, 280, 520, 380, 490, 410];
+                }
+
+                if (pageViewsChart) pageViewsChart.destroy();
+                pageViewsChart = new Chart(pageViewsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: days,
+                        datasets: [{
+                            label: 'Page Views',
+                            data: pageViewsChartData,
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#388E3C',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: chartTextColor } }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: chartTextColor },
+                                grid: { color: chartGridColor }
+                            },
+                            x: {
+                                ticks: { color: chartTextColor },
+                                grid: { color: chartGridColor }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // --- 3. Category Distribution Chart ---
+            const trafficSourcesCanvas = document.getElementById('trafficSourcesChart');
+            const analyticsCategoryCanvas = document.getElementById('analyticsCategoryChart');
+
+            if (trafficSourcesCanvas || analyticsCategoryCanvas) {
+                const targetCanvas = trafficSourcesCanvas || analyticsCategoryCanvas;
+                const trafficSourcesCtx = targetCanvas.getContext('2d');
+                let categoryLabels = [], categoryCounts = [];
+
+                if (categoryData.length > 0) {
+                    categoryLabels = categoryData.map(c => c.category);
+                    categoryCounts = categoryData.map(c => c.count);
+                } else {
+                    const categoryCountsObj = {};
+                    (treatments || []).forEach(t => {
+                        const cat = t.category || 'Other';
+                        categoryCountsObj[cat] = (categoryCountsObj[cat] || 0) + 1;
+                    });
+                    categoryLabels = Object.keys(categoryCountsObj);
+                    categoryCounts = Object.values(categoryCountsObj);
+                }
+
+                if (categoryLabels.length === 0) {
+                    console.log('No category data found, using sample data');
+                    categoryLabels = ['Immunity', 'Digestion', 'Skin', 'Energy', 'Other'];
+                    categoryCounts = [35, 25, 20, 15, 5];
+                }
+
+                if (trafficSourcesChart) trafficSourcesChart.destroy();
+                trafficSourcesChart = new Chart(trafficSourcesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: categoryLabels,
+                        datasets: [{
+                            data: categoryCounts,
+                            backgroundColor: ['#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#00BCD4', '#F44336']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: chartTextColor } }
+                        }
+                    }
+                });
+            }
+
+            console.log('All charts initialization attempt complete at:', new Date().toLocaleTimeString());
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Theme toggle
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+                const icon = themeToggle.querySelector('i');
+
+                if (document.body.classList.contains('dark-theme')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+
+                // Update charts for dark mode
+                if (userGrowthChart) {
+                    userGrowthChart.update();
+                    pageViewsChart.update();
+                    trafficSourcesChart.update();
+                }
+            });
+
+            // Toggle sidebar
+            toggleSidebarBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+
+            // Menu navigation
+            menuItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const href = item.getAttribute('href');
+                    const section = item.getAttribute('data-section');
+
+                    console.log('Menu clicked:', { href, section });
+
+                    // Prevent default for hash links or items with data-section
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                    }
+
+                    // Update active menu item
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    // Show the corresponding section (only if data-section exists)
+                    if (section) {
+                        console.log('Calling showSection with:', section);
+                        showSection(section);
+                    }
+
+                    // Close sidebar on mobile after clicking
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('open');
+                    }
+                });
+            });
+
+            // Refresh data
+            refreshDataBtn.addEventListener('click', async () => {
+                refreshDataBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                await fetchData();
+                refreshDataBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                showNotification('Data refreshed successfully!', 'success');
+            });
+
+            // Refresh messages
+            const refreshMessagesBtn = document.getElementById('refreshMessages');
+            if (refreshMessagesBtn) {
+                refreshMessagesBtn.addEventListener('click', async () => {
+                    refreshMessagesBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                    await fetchData();
+                    refreshMessagesBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                    showNotification('Messages refreshed!', 'success');
+                });
+            }
+
+            // Add fruit button
+            const addFruitBtn = document.getElementById('addFruitBtn');
+            if (addFruitBtn) {
+                addFruitBtn.addEventListener('click', () => {
+                    showFruitModal();
+                });
+            }
+
+            // Refresh fruits button
+            const refreshFruitsBtn = document.getElementById('refreshFruitsBtn');
+            if (refreshFruitsBtn) {
+                refreshFruitsBtn.addEventListener('click', async () => {
+                    refreshFruitsBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                    await fetchFruits();
+                    refreshFruitsBtn.innerHTML = '<i class="fas fa-sync"></i> Refresh';
+                    showNotification('Fruits refreshed!', 'success');
+                });
+            }
+
+            // Add treatment button
+            const addTreatmentBtn = document.getElementById('addTreatmentBtn');
+            if (addTreatmentBtn) {
+                addTreatmentBtn.addEventListener('click', () => {
+                    showTreatmentModal();
+                });
+            }
+
+            // Video upload modal functions
+            function showAddVideoModal() {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content" style="max-width: 600px;">
+                        <div class="modal-header">
+                            <h2>Upload New Video</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="videoFile">Video File *</label>
+                                <input type="file" id="videoFile" class="form-control" accept="video/*" required>
+                                <small style="color: var(--text-secondary);">Supported: MP4, WebM, OGG, MOV, AVI (Max 500MB)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="videoThumbnail">Video Thumbnail (Optional)</label>
+                                <input type="file" id="videoThumbnail" class="form-control" accept="image/*">
+                                <small style="color: var(--text-secondary);">Recommended: 640x360 or 1280x720 image</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="videoTitle">Title *</label>
+                                <input type="text" id="videoTitle" class="form-control" placeholder="Enter video title">
+                            </div>
+                            <div class="form-group">
+                                <label for="videoDescription">Description</label>
+                                <textarea id="videoDescription" class="form-control" rows="3" placeholder="Enter video description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="videoCategory">Category</label>
+                                <select id="videoCategory" class="form-control">
+                                    <option value="All">All</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Nutrition">Nutrition</option>
+                                    <option value="Natural Remedies">Natural Remedies</option>
+                                    <option value="Tips">Tips</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button class="btn btn-primary" onclick="window.saveVideo()"><i class="fas fa-upload"></i> Upload Video</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                modal.style.display = 'flex';
+            }
+
+            // Make functions globally accessible
+            window.showAddVideoModal = showAddVideoModal;
+
+            // Save video (upload to server)
+            async function saveVideo() {
+                const videoFile = document.getElementById('videoFile');
+                const title = document.getElementById('videoTitle').value.trim();
+                const description = document.getElementById('videoDescription').value.trim();
+                const category = document.getElementById('videoCategory').value;
+
+                if (!videoFile.files[0]) {
+                    showNotification('Please select a video file', 'error');
+                    return;
+                }
+
+                if (!title) {
+                    showNotification('Please enter a video title', 'error');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('video', videoFile.files[0]);
+                const thumbnailFile = document.getElementById('videoThumbnail');
+                if (thumbnailFile && thumbnailFile.files[0]) {
+                    formData.append('thumbnail', thumbnailFile.files[0]);
+                }
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('category', category);
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/videos/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showNotification('Video uploaded successfully!', 'success');
+                        document.querySelector('.modal').remove();
+                        // Refresh videos table
+                        fetchVideos();
+                    } else {
+                        showNotification(result.message || 'Error uploading video', 'error');
+                    }
+                } catch (error) {
+                    console.error('Video upload error:', error);
+                    showNotification('Error uploading video: ' + error.message, 'error');
+                }
+            }
+
+            // Make saveVideo globally accessible
+            window.saveVideo = saveVideo;
+
+            // Fetch videos for admin panel
+            async function fetchVideos() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/videos');
+                    const videos = await response.json();
+
+                    const tableBody = document.getElementById('videosTableBody');
+                    if (tableBody) {
+                        tableBody.innerHTML = videos.map(video => `
+                            <tr>
+                                <td>${video.id}</td>
+                                <td>${video.title}</td>
+                                <td>${video.views || 0}</td>
+                                <td>${video.likes || 0}</td>
+                                <td>${new Date(video.created_at).toLocaleDateString()}</td>
+                                <td>
+                                    <button class="btn-icon" onclick="deleteVideo(${video.id})"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        `).join('');
+                    }
+                } catch (error) {
+                    console.error('Error fetching videos:', error);
+                }
+            }
+
+            // Delete video function
+            async function deleteVideo(videoId) {
+                if (!confirm('Are you sure you want to delete this video?')) {
+                    return;
+                }
+
+                try {
+                    console.log('Deleting video with ID:', videoId);
+                    const response = await fetch(`http://localhost:3000/api/videos/${videoId}`, {
+                        method: 'DELETE'
+                    });
+                    console.log('Delete response status:', response.status);
+                    const result = await response.json();
+                    console.log('Delete result:', result);
+
+                    if (result.success) {
+                        showNotification('Video deleted successfully!', 'success');
+                        fetchVideos();
+                    } else {
+                        showNotification(result.message || 'Error deleting video', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error deleting video:', error);
+                    showNotification('Error deleting video: ' + error.message, 'error');
+                }
+            }
+
+            // Refresh pending users
+            const refreshPendingBtn = document.getElementById('refreshPending');
+            if (refreshPendingBtn) {
+                refreshPendingBtn.addEventListener('click', async () => {
+                    refreshPendingBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                    await fetchPendingUsers();
+                    refreshPendingBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                    showNotification('Pending users refreshed!', 'success');
+                });
+            }
+
+            // Add user modal
+            addUserBtn.addEventListener('click', () => {
+                addUserModal.style.display = 'flex';
+            });
+
+            // Close add user modal
+            closeAddUserModal.addEventListener('click', () => {
+                addUserModal.style.display = 'none';
+                addUserForm.reset();
+            });
+
+            cancelAddUser.addEventListener('click', () => {
+                addUserModal.style.display = 'none';
+                addUserForm.reset();
+            });
+
+            // Save new user
+            saveUserBtn.addEventListener('click', async () => {
+                const name = document.getElementById('userName').value;
+                const email = document.getElementById('userEmail').value;
+                const role = document.getElementById('userRole').value;
+                const password = document.getElementById('userPassword').value;
+                const confirmPassword = document.getElementById('userConfirmPassword').value;
+
+                if (!name || !email || !password) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showNotification('Passwords do not match', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('http://localhost:3000/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showNotification('User added successfully!', 'success');
+                        await fetchData();
+                        addUserModal.style.display = 'none';
+                        addUserForm.reset();
+                    } else {
+                        showNotification(result.message || 'Error adding user', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error adding user:', error);
+                    showNotification('Error connecting to server', 'error');
+                }
+            });
+
+            // Delete modal
+            closeDeleteModal.addEventListener('click', () => {
+                deleteModal.style.display = 'none';
+                userToDelete = null;
+            });
+
+            cancelDelete.addEventListener('click', () => {
+                deleteModal.style.display = 'none';
+                userToDelete = null;
+            });
+
+            confirmDeleteBtn.addEventListener('click', async () => {
+                if (userToDelete) {
+                    try {
+                        const response = await fetch(`http://localhost:3000/admin/users/${userToDelete}`, {
+                            method: 'DELETE'
+                        });
+                        const result = await response.json();
+                        if (result.success) {
+                            showNotification('User deleted successfully!', 'success');
+                            await fetchData();
+                        } else {
+                            showNotification(result.message || 'Error deleting user', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting user:', error);
+                        showNotification('Error connecting to server', 'error');
+                    }
+                    deleteModal.style.display = 'none';
+                    userToDelete = null;
+                }
+            });
+        }
+
+        // Show a specific section
+        function showSection(sectionName) {
+            console.log('showSection called with:', sectionName);
+            if (!sectionName) return;
+
+            console.log('Hiding all sections, count:', sections.length);
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            const targetSection = document.getElementById(`${sectionName}-section`);
+            console.log('Looking for section:', `${sectionName}-section`, 'Found:', targetSection);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                console.log('Section shown successfully');
+            } else {
+                console.error('Section not found:', `${sectionName}-section`);
+            }
+
+            // If showing analytics section, initialize or resize charts
+            if (sectionName === 'analytics') {
+                // Initialize charts only once when analytics section is first shown
+                if (!chartsInitialized) {
+                    console.log('First time showing analytics, initializing charts...');
+                    chartsInitialized = true;
+                    initializeCharts().then(() => {
+                        fetchWeeklyDashboard();
+                    });
+                } else {
+                    // Just resize existing charts
+                    setTimeout(() => {
+                        if (userGrowthChart) userGrowthChart.resize();
+                        if (pageViewsChart) pageViewsChart.resize();
+                        if (trafficSourcesChart) trafficSourcesChart.resize();
+                        if (weeklyComparisonChart) weeklyComparisonChart.resize();
+                    }, 100);
+                }
+            }
+
+            // If showing videos section, fetch videos
+            if (sectionName === 'videos') {
+                fetchVideos();
+            }
+        }
+
+        // Track if charts have been initialized
+        let chartsInitialized = false;
+
+        // Prompt to delete a user
+        function deleteUserPrompt(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                userToDelete = userId;
+                deleteMessage.textContent = `Are you sure you want to delete user "${user.name}"? This action cannot be undone.`;
+                deleteModal.style.display = 'flex';
+            }
+        }
+
+        // Delete a user
+        function deleteUser(userId) {
+            const userIndex = users.findIndex(u => u.id === userId);
+            if (userIndex !== -1) {
+                const userName = users[userIndex].name;
+                users.splice(userIndex, 1);
+                saveData();
+
+                // Add to activity
+                activity.unshift({
+                    type: 'user',
+                    icon: 'user',
+                    text: `User deleted: ${userName}`,
+                    time: 'Just now'
+                });
+
+                // Update UI
+                renderUsersTable();
+                loadStats();
+                renderActivity();
+
+                // Show success notification
+                showNotification('User deleted successfully!', 'success');
+            }
+        }
+
+        // Edit a user (placeholder)
+        function editUser(userId) {
+            showNotification('Edit user functionality coming soon!', 'info');
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('adminUsers', JSON.stringify(users));
+            localStorage.setItem('adminTreatments', JSON.stringify(treatments));
+            localStorage.setItem('adminVideos', JSON.stringify(videos));
+            localStorage.setItem('adminActivity', JSON.stringify(activity));
+        }
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Helper functions
+        function getRoleClass(role) {
+            switch (role) {
+                case 'admin': return 'status-active';
+                case 'editor': return 'status-pending';
+                default: return '';
+            }
+        }
+
+        function getStatusClass(status) {
+            switch (status) {
+                case 'active': return 'status-active';
+                case 'inactive': return 'status-inactive';
+                case 'pending': return 'status-pending';
+                default: return '';
+            }
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        function showNotification(message, type = 'success') {
+            const banner = document.getElementById('actionBanner');
+            const icon = document.getElementById('actionBannerIcon');
+            const text = document.getElementById('actionBannerText');
+
+            if (!banner || !icon || !text) {
+                showToast(message); // Fallback
+                return;
+            }
+
+            // Set icon based on type
+            let iconClass = 'fa-check-circle';
+            if (type === 'error') iconClass = 'fa-times-circle';
+            if (type === 'warning') iconClass = 'fa-exclamation-triangle';
+            if (type === 'info') iconClass = 'fa-info-circle';
+
+            icon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+            text.textContent = message;
+
+            // Set banner class based on type
+            banner.className = `action-banner ${type} show`;
+
+            // Auto dismiss after 5 seconds
+            if (window.bannerTimeout) clearTimeout(window.bannerTimeout);
+            window.bannerTimeout = setTimeout(() => {
+                dismissActionBanner();
+            }, 5000);
+
+            // Also show toast as backup/additional feedback
+            showToast(message);
+        }
+
+        // Make showNotification globally accessible
+        window.showNotification = showNotification;
+
+        function dismissActionBanner() {
+            const banner = document.getElementById('actionBanner');
+            if (banner) {
+                banner.classList.remove('show');
+            }
+        }
+
+        // Export users function
+        document.getElementById('exportUsersBtn').addEventListener('click', function () {
+            const dataStr = JSON.stringify(users, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+            const exportFileDefaultName = 'users_export.json';
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+
+            showNotification('Users exported successfully!', 'success');
+        });
+
+        // Back to Site function - returns to user account
+        function backToSite() {
+            if (confirm('Are you sure you want to go back to the site? This will log you out from admin.')) {
+                // Clear admin session
+                sessionStorage.removeItem('adminLoggedIn');
+                sessionStorage.removeItem('adminUser');
+
+                // Check if there's a saved user session (from before admin login)
+                const savedUser = localStorage.getItem('userBeforeAdmin');
+                if (savedUser) {
+                    // Restore user session
+                    localStorage.setItem('user', savedUser);
+                    localStorage.removeItem('userBeforeAdmin');
+                }
+
+                window.location.href = 'homes.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

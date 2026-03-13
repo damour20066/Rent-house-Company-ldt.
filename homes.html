@@ -1,0 +1,2819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        /* Updated body and reset styles to use variables */
+        :root {
+            --bg-color: #f0f9f0;
+            --text-primary: #333;
+            --card-bg: #fff;
+            --border-color: #e0f2e0;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .intro-text {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        /* Header Buttons */
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* User Profile Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-btn img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            transition: transform 0.3s;
+            background: #eee;
+        }
+
+        .profile-btn:hover img {
+            transform: scale(1.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            border-radius: 12px;
+            margin-top: 0.8rem;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            background: #f9fdf9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a {
+            color: #444;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f9f0;
+            color: #2E7D32;
+            padding-left: 1.5rem;
+        }
+
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Slideshow Section */
+        .slideshow-section {
+            margin: 3rem 0;
+            padding: 2rem 0;
+        }
+
+        .slideshow-section h2 {
+            text-align: center;
+            color: #2E7D32;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .slide-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .slide-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .slideshow-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 20px;
+        }
+
+        .slideshow-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-btn:hover {
+            background-color: #3d8b40;
+            transform: scale(1.1);
+        }
+
+        .slideshow-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-indicators {
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cccccc;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator.active {
+            background-color: #4CAF50;
+            transform: scale(1.2);
+        }
+
+        .slide-counter {
+            font-weight: 600;
+            color: #2E7D32;
+            font-size: 1.1rem;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* Video Section */
+        .video-section {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .video-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .video-wrapper {
+            flex: 1;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .video-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .video-overlay i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .video-wrapper:hover .video-overlay i {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .video-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .video-overlay p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* See More Videos Arrow (on the right side, pointing right) */
+        .see-more-videos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #2E7D32;
+            text-decoration: none;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .see-more-videos:hover {
+            color: #4CAF50;
+            transform: scale(1.05);
+        }
+
+        .arrow-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: arrow-move-right 1.5s infinite;
+        }
+
+        @keyframes arrow-move-right {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .see-more-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            padding: 2rem;
+            margin: 2rem auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0f2e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        #searchBtn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #searchBtn:hover {
+            background-color: #3d8b40;
+            transform: translateY(-2px);
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background-color: #e8f5e9;
+            color: #2E7D32;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background-color: #c8e6c9;
+        }
+
+        .filter-btn.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Fruit Grid */
+        .fruits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 3rem 0;
+        }
+
+        .fruit-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+        }
+
+        .fruit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .fruit-image {
+            height: 250px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .fruit-content {
+            padding: 1.5rem;
+        }
+
+        .fruit-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2E7D32;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fruit-name i {
+            color: #FF9800;
+        }
+
+        .fruit-benefits {
+            margin: 15px 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .benefit-item i {
+            color: #4CAF50;
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        /* Warning Section */
+        .warning {
+            background-color: #fff8e1;
+            border-left: 5px solid #FFC107;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .warning h3 {
+            color: #FF8F00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* WhatsApp Pulsing Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: whatsapp-pulse 2s infinite;
+            transition: all 0.3s;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .whatsapp-float:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            animation: whatsapp-ripple 2s infinite;
+            z-index: -1;
+        }
+
+        .whatsapp-float:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: whatsapp-ripple 2s infinite;
+            animation-delay: 0.5s;
+            z-index: -1;
+        }
+
+        .whatsapp-float i {
+            position: relative;
+            z-index: 1;
+            animation: whatsapp-icon-pulse 2s infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes whatsapp-ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes whatsapp-icon-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.8);
+        }
+
+        .whatsapp-float:hover i {
+            animation: none;
+        }
+
+        /* Help Chat Button */
+        .help-float {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .help-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(46, 125, 50, 0.8);
+        }
+
+        .help-tooltip {
+            position: fixed;
+            bottom: 175px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .help-float:hover+.help-tooltip {
+            opacity: 1;
+        }
+
+        .whatsapp-tooltip {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        .whatsapp-tooltip:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .whatsapp-float:hover+.whatsapp-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: white;
+            border: 2px solid #2E7D32;
+            color: #2E7D32;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-btn:hover {
+            background: #2E7D32;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f44336;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 2px solid white;
+            display: none;
+        }
+
+        .notification-badge.active {
+            display: block;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .contact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .contact-item .contact-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .header-buttons {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .slideshow-container {
+                height: 300px;
+            }
+
+            .slide-title {
+                font-size: 1.5rem;
+            }
+
+            .slide-description {
+                font-size: 0.9rem;
+            }
+
+            .video-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .see-more-videos {
+                order: 2;
+            }
+
+            .video-wrapper {
+                order: 1;
+            }
+
+            .see-more-videos {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .arrow-icon {
+                margin-bottom: 0;
+                animation: arrow-move-right-mobile 1.5s infinite;
+            }
+
+            @keyframes arrow-move-right-mobile {
+                0% {
+                    transform: translateX(0);
+                }
+
+                50% {
+                    transform: translateX(15px);
+                }
+
+                100% {
+                    transform: translateX(0);
+                }
+            }
+
+            .fruits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            #searchBtn {
+                padding: 15px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .contact-item {
+                min-width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 55px;
+                height: 55px;
+                font-size: 28px;
+                bottom: 25px;
+                right: 15px;
+            }
+
+            .whatsapp-tooltip {
+                right: 15px;
+            }
+
+            .help-float {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+                bottom: 90px;
+                right: 15px;
+            }
+
+            .help-tooltip {
+                right: 15px;
+                bottom: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slideshow-container {
+                height: 250px;
+            }
+
+            .slide-content {
+                padding: 1rem;
+            }
+
+            .slide-title {
+                font-size: 1.2rem;
+            }
+
+            .slide-description {
+                font-size: 0.8rem;
+            }
+
+            .slideshow-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .slide-counter {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                    <img src="logo.png" alt="Tumenye Kwivura Logo"
+                        style="height: 60px; object-fit: contain; background-color: white; border-radius: 8px; padding: 5px;">
+                    <h1 style="font-size: 1.8rem; margin: 0; font-style: oblique;">Tumenye Kwivura. Ubugorozi</h1>
+                </div>
+
+                <div class="header-buttons">
+                    <a href="homes.html" class="header-btn active">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="video.html" class="header-btn">
+                        <i class="fas fa-play-circle"></i> Video
+                    </a>
+                    <a href="treatments.html" class="header-btn">
+                        <i class="fas fa-medkit"></i> Treatments
+                    </a>
+                    <a href="#contactSection" class="header-btn">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+                    <div class="user-menu">
+                        <!-- Notification Button with Dropdown -->
+                        <div class="notification-wrapper" style="position: relative;">
+                            <button class="notification-btn" id="notificationBtn" title="Support Messages">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge" id="notificationBadge">0</span>
+                            </button>
+                            <!-- Notification Dropdown (Facebook style) -->
+                            <div class="notification-dropdown" id="notificationDropdown" style="
+                                display: none;
+                                position: absolute;
+                                top: 100%;
+                                right: 0;
+                                width: 350px;
+                                max-height: 450px;
+                                overflow-y: auto;
+                                background: var(--card-bg);
+                                border-radius: 12px;
+                                box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+                                z-index: 1000;
+                                margin-top: 10px;
+                                border: 1px solid var(--border-color);
+                            ">
+                                <div style="
+                                    padding: 15px;
+                                    border-bottom: 1px solid var(--border-color);
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                ">
+                                    <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">Messages</h3>
+                                    <a href="support-chat.html" style="
+                                        color: var(--primary-color);
+                                        text-decoration: none;
+                                        font-size: 0.85rem;
+                                    ">See All</a>
+                                </div>
+                                <div id="notificationList" style="
+                                    max-height: 350px;
+                                    overflow-y: auto;
+                                ">
+                                    <!-- Messages will be loaded here -->
+                                    <div style="
+                                        padding: 30px;
+                                        text-align: center;
+                                        color: var(--text-secondary);
+                                    ">
+                                        <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                        <p>No messages yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="userMenu" style="display: none;">
+                            <div class="profile-dropdown">
+                                <button class="profile-btn" id="profileBtn">
+                                    <img id="userAvatar"
+                                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                                        alt="Profile">
+                                </button>
+                                <div class="dropdown-content">
+                                    <div class="dropdown-header">
+                                        <p id="dropdownUserName" style="font-weight: 600; color: #2E7D32;">Guest
+                                        </p>
+                                        <p id="dropdownUserEmail" style="font-size: 0.8rem; color: #666;">
+                                            guest@example.com</p>
+                                    </div>
+                                    <hr style="margin: 0.5rem 0; opacity: 0.1;">
+                                    <a href="profile.html"><i class="fas fa-cog"></i> Settings</a>
+                                    <div style="border-top: 1px solid #eee; margin: 5px 0;"></div>
+                                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="authButtons" style="display: none;">
+                            <a href="login.html" class="header-btn"
+                                style="background: white; color: #2E7D32; border: none;">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="intro-text">
+                        <p>Discover how fruits can help treat various health conditions naturally. Each fruit
+                            contains
+                            unique
+                            nutrients, vitamins, and compounds that can alleviate symptoms and promote healing.
+                            Search
+                            for a
+                            specific symptom or browse fruits by category.</p>
+                    </div>
+                </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Search Section -->
+        <section class="search-section">
+            <h2>Find Fruits for Your Symptoms</h2>
+            <p class="tagline" style="color: #666; margin-bottom: 1.5rem;">Search for a symptom or filter by category
+            </p>
+
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="video-container">
+                    <!-- Video Player -->
+                    <a href="video.html" class="video-wrapper">
+                        <video muted autoplay loop>
+                            <source src="./Find 'imiti nzungu GAD' on TikTok - TikTok Search_4.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <i class="fas fa-play"></i>
+                            <h3>Learn About Fruit Treatments</h3>
+                            <p>Click to watch more healing videos</p>
+                        </div>
+                    </a>
+
+                    <!-- See More Videos Arrow (now on the right side, pointing right) -->
+                    <a href="video.html" class="see-more-videos">
+                        <div class="arrow-icon">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="see-more-text">See more videos</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Enter any fruit (e.g. apple, banana, orange)...">
+                <button id="searchBtn">Search</button>
+            </div>
+
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All Fruits</button>
+                <button class="filter-btn" data-filter="immunity">Immunity Boosters</button>
+                <button class="filter-btn" data-filter="digestion">Digestion with food</button>
+                <button class="filter-btn" data-filter="respiratory">Respiratory</button>
+                <button class="filter-btn" data-filter="skin">Skin Health</button>
+                <button class="filter-btn" data-filter="energy">Energy & Fatigue</button>
+            </div>
+        </section>
+
+        <!-- New Slideshow Section -->
+        <section class="slideshow-section">
+            <h2>Featured Healing Fruits</h2>
+            <div class="slideshow-container" id="slideshowContainer">
+                <!-- Slides will be inserted by JavaScript -->
+            </div>
+            <div class="slideshow-controls">
+                <button class="slideshow-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slide-indicators" id="slideIndicators">
+                    <!-- Indicators will be inserted by JavaScript -->
+                </div>
+                <div class="slide-counter" id="slideCounter">1 / 6</div>
+                <button class="slideshow-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Fruits Grid -->
+        <section id="fruitsGrid" class="fruits-grid">
+            <!-- Fruit cards will be dynamically generated here -->
+        </section>
+
+        <!-- Warning Section -->
+        <section class="warning">
+            <h3><i class="fas fa-exclamation-triangle"></i> Important Disclaimer</h3>
+            <p>This website provides information about the potential health benefits of fruits for educational purposes
+                only. It is not intended as medical advice. Always consult with a healthcare professional for proper
+                diagnosis and treatment of medical conditions. Fruits can complement but should not replace conventional
+                medical treatments.</p>
+        </section>
+    </main>
+
+    <!-- Help Chat Button -->
+    <a href="support-chat.html" class="help-float" aria-label="Get Support">
+        <i class="fas fa-headset"></i>
+    </a>
+    <div class="help-tooltip">Need Help?</div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/250786853257" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>
+
+    <!-- Footer -->
+    <footer id="contactSection">
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura.ubugorozi@gmail.com" class="contact-value">tumenyekwivura.ubugorozi@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 786853257</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <div class="contact-label">YouTube</div>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-value" target="_blank">Visit us on YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2026 Tumenye Kwivura. All information is for educational purposes.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.8em;"><a href="dashboard.html"
+                        style="color: inherit; text-decoration: none; opacity: 0.7;">logout</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/security.js"></script>
+    <script>
+        // Fruits data loaded from backend API
+        let fruitsData = [];
+
+        // DOM elements
+        const fruitsGrid = document.getElementById('fruitsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const contactBtn = document.getElementById('contactBtn');
+        const videoWrapper = document.querySelector('.video-wrapper');
+
+        // Function to display fruits (defined before loadFruits)
+        function displayFruits(fruits) {
+            fruitsGrid.innerHTML = '';
+
+            if (fruits.length === 0) {
+                fruitsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 1.2rem; color: #666; padding: 2rem;">No fruits found matching your search. Try a different symptom or filter.</p>';
+                return;
+            }
+
+            fruits.forEach(fruit => {
+                const fruitCard = document.createElement('div');
+                fruitCard.className = 'fruit-card';
+                fruitCard.setAttribute('data-category', fruit.category);
+
+                const benefitsList = fruit.benefits.map(benefit =>
+                    `<div class="benefit-item"><i class="fas fa-check-circle"></i><span>${benefit}</span></div>`
+                ).join('');
+
+                fruitCard.innerHTML = `
+                    <div class="fruit-image" style="background-image: url('${fruit.image}')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-seedling"></i> ${fruit.name}</h3>
+                        <div class="fruit-benefits">
+                            ${benefitsList}
+                        </div>
+                        <div style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                            <i class="fas fa-tags"></i> Category: <span style="text-transform: capitalize; font-weight: 600;">${fruit.category}</span>
+                        </div>
+                    </div>
+                `;
+
+                fruitsGrid.appendChild(fruitCard);
+            });
+        }
+
+        // Function to update featured fruits
+        function updateFeaturedFruits() {
+            // Placeholder for featured fruits update logic
+            console.log('Featured fruits updated');
+        }
+
+        // Load fruits from backend API
+        async function loadFruits() {
+            try {
+                const response = await fetch('http://localhost:3000/api/home-fruits');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch fruits');
+                }
+                fruitsData = await response.json();
+                displayFruits(fruitsData);
+                updateFeaturedFruits();
+            } catch (error) {
+                console.error('Error loading fruits:', error);
+                // Fallback to empty display with error message
+                fruitsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 1.2rem; color: #666; padding: 2rem;">Unable to load fruits. Please check your connection and try again.</p>';
+            }
+        }
+
+        // Initial load of fruits from backend
+        loadFruits();
+
+        // Old hardcoded data placeholder - will be removed
+        const _oldData = [
+            {
+                id: 3,
+                name: "Lemon",
+                category: "immune",
+                image: "https://images.unsplash.com/photo-1590502593747-42a996133562?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                benefits: [
+                    "High in vitamin C, manganese, and antioxidants",
+                    "Helps soothe sore throat and cough",
+                    "Aids digestion and detoxification",
+                    "Can help with kidney stones"
+                ],
+                symptoms: ["sore throat", "cough", "cold", "immune weakness", "digestion", "detox"]
+            },
+            {
+                id: 4,
+                name: "Pineapple",
+                category: "respiratory",
+                image: "https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                benefits: [
+                    "Contains bromelain to reduce sinus inflammation",
+                    "Aids digestion and reduces bloating",
+                    "Rich in antioxidants to fight diseases",
+                    "Speeds up recovery after surgery or exercise"
+                ],
+                symptoms: ["sinusitis", "congestion", "inflammation", "bloating", "indigestion", "surgery recovery"]
+            },
+            {
+                id: 5,
+                name: "Blueberries",
+                category: "skin",
+                image: "Illustration of fresh blueberry fruit with water splash on white background _ Premium AI-generated image.jpg",
+                benefits: [
+                    "High in antioxidants for skin health",
+                    "Improves brain function and memory",
+                    "Helps lower blood pressure",
+                    "Reduces muscle damage after exercise"
+                ],
+                symptoms: ["skin aging", "memory issues", "high blood pressure", "muscle recovery", "antioxidant need"]
+            },
+            {
+                id: 6,
+                name: "Banana",
+                category: "energy",
+                image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                benefits: [
+                    "Rich in potassium for heart health",
+                    "Good source of natural energy",
+                    "Helps regulate blood sugar levels",
+                    "Supports digestive health"
+                ],
+                symptoms: ["fatigue", "low energy", "heart health", "blood sugar regulation", "digestive issues"]
+            },
+            {
+                id: 7,
+                name: "Papaya",
+                category: "digestion",
+                image: "Ripe cut papaya isolated on a white featuring papaya, pawpaw, and isolated.jpg",
+                benefits: [
+                    "Contains papain enzyme for better digestion",
+                    "Reduces inflammation in the body",
+                    "Rich in antioxidants for immune support",
+                    "Helps protect against heart disease"
+                ],
+                symptoms: ["indigestion", "bloating", "inflammation", "immune weakness", "heart health"]
+            },
+            {
+                id: 8,
+                name: "Almonds",
+                category: "skin",
+                image: "Almonds.jpg",
+                benefits: [
+                    "Good for heart health",
+                    "Strengthen bones and teeth",
+                    "Support weight management",
+                    "Improve digestion"
+                ],
+                symptoms: ["dehydration", "dry skin", "muscle soreness", "sun damage", "heart health"]
+            },
+            {
+                id: 11,
+                name: "Apple Quince",
+                category: "digestion",
+                image: "apple.jpg",
+                benefits: [
+                    "Aids digestion and prevents constipation",
+                    "Rich in antioxidants and vitamin C",
+                    "Supports immune system health",
+                    "Promotes heart health"
+                ],
+                symptoms: ["constipation", "indigestion", "immune support"]
+            },
+            {
+                id: 12,
+                name: "Brussels Sprouts",
+                category: "immunity",
+                image: "Brussels Sprouts.jpg",
+                benefits: [
+                    "Boosts immune system function",
+                    "High in fiber for digestive health",
+                    "Rich in vitamin K for bone health",
+                    "Contains antioxidants"
+                ],
+                symptoms: ["immune weakness", "bone health", "digestion"]
+            },
+            {
+                id: 13,
+                name: "Tomatoes",
+                category: "skin",
+                image: "Fresh Ripe Red Tomatoes on White Background.jpg",
+                benefits: [
+                    "Protects skin from sun damage",
+                    "Contains lycopene for heart health",
+                    "Rich in vitamin C and potassium",
+                    "May help reduce blood pressure"
+                ],
+                symptoms: ["sun damage", "heart health", "high blood pressure"]
+            },
+            {
+                id: 14,
+                name: "Strawberries",
+                category: "skin",
+                image: "Fresh Strawberries, Strawberries, Red Strawberry, Fresh Strawberry PNG Transparent Image and Clipart for Free Download.jpg",
+                benefits: [
+                    "Promotes healthy skin and complexion",
+                    "Rich in antioxidants and vitamin C",
+                    "Supports heart health",
+                    "May help regular blood sugar"
+                ],
+                symptoms: ["skin health", "immune support", "heart health"]
+            },
+            {
+                id: 15,
+                name: "Coconuts",
+                category: "energy",
+                image: "Fresh Whole and Halved Coconuts Displays Natural Tropical Aroma and Texture on White Background png.jpg",
+                benefits: [
+                    "Provides quick source of energy",
+                    "Supports hydration with electrolytes",
+                    "Promotes heart health",
+                    "Good for skin and hair health"
+                ],
+                symptoms: ["low energy", "dehydration", "skin health"]
+            },
+            {
+                id: 16,
+                name: "Garden Pea",
+                category: "digestion",
+                image: "Garden pea.jpg",
+                benefits: [
+                    "Excellent source of plant-based protein",
+                    "High in fiber for digestive health",
+                    "Supports blood sugar control",
+                    "Rich in vitamins and minerals"
+                ],
+                symptoms: ["digestive issues", "protein need", "blood sugar"]
+            },
+            {
+                id: 17,
+                name: "Radishes",
+                category: "digestion",
+                image: "Green Top Red Radishes 1 Bunch.jpg",
+                benefits: [
+                    "Supports liver detoxification",
+                    "Aids digestion and relieves bloating",
+                    "Boosts immunity with vitamin C",
+                    "Hydrating and low calorie"
+                ],
+                symptoms: ["liver detox", "bloating", "digestion", "immune weakness"]
+            },
+            {
+                id: 18,
+                name: "Cherries",
+                category: "skin",
+                image: "Hyperrealistic studio photograph of a fresh bunch of red cherries with green.jpg",
+                benefits: [
+                    "Rich in antioxidants and anti-inflammatory compounds",
+                    "Promotes healthy sleep (contain melatonin)",
+                    "Supports recovery after exercise",
+                    "Good for skin health"
+                ],
+                symptoms: ["insomnia", "inflammation", "muscle recovery", "skin health"]
+            },
+            {
+                id: 19,
+                name: "Loquat",
+                category: "immunity",
+                image: "Loquat.jpg",
+                benefits: [
+                    "Rich in vitamin A for eye health",
+                    "Supports immune system function",
+                    "May help lower blood pressure",
+                    "Contains antioxidants"
+                ],
+                symptoms: ["eye health", "immune weakness", "high blood pressure"]
+            },
+            {
+                id: 20,
+                name: "Kumquat",
+                category: "immunity",
+                image: "Nagami Kumquat (Citrus margarita).jpg",
+                benefits: [
+                    "Edible peel rich in fiber and antioxidants",
+                    "Boosts immune system with vitamin C",
+                    "Supports digestive health",
+                    "May help regulate blood sugar"
+                ],
+                symptoms: ["immune weakness", "digestion", "blood sugar"]
+            },
+            {
+                id: 21,
+                name: "Peanuts",
+                category: "energy",
+                image: "Raw Peanuts.jpg",
+                benefits: [
+                    "Good source of protein and healthy fats",
+                    "Provides sustained energy",
+                    "Supports heart health",
+                    "Rich in various vitamins and minerals"
+                ],
+                symptoms: ["low energy", "protein need", "heart health"]
+            },
+            {
+                id: 22,
+                name: "Shallots",
+                category: "immunity",
+                image: "The Comprehensive Guide to Shallots_ Nature’s Nutritional Powerhouse.jpg",
+                benefits: [
+                    "Rich in antioxidants and flavonoids",
+                    "Supports heart health and circulation",
+                    "Boosts immune system",
+                    "May have anti-inflammatory properties"
+                ],
+                symptoms: ["immune weakness", "inflammation", "poor circulation"]
+            },
+            {
+                id: 23,
+                name: "Oyster Mushrooms",
+                category: "immunity",
+                image: "White oyster mushrooms (log dowel kit).jpg",
+                benefits: [
+                    "Supports immune system function",
+                    "Contains antioxidants",
+                    "Good source of protein and fiber",
+                    "May help lower cholesterol"
+                ],
+                symptoms: ["immune weakness", "high cholesterol"]
+            },
+            {
+                id: 3,
+                name: "cauliflower",
+                category: "digestion",
+                image: "cauliflower.jpg",
+                benefits: [
+                    "Rich in nutrients",
+                    "Good for digestion",
+                    "Supports heart health",
+                    "Helps prevent cancer"
+                ],
+                symptoms: ["high blood pressure", "high cholesterol", "cold", "flu", "immune weakness", "detox"]
+            },
+            {
+                id: 24,
+                name: "Cherimoya",
+                category: "digestion",
+                image: "cherimoya.jpg",
+                benefits: [
+                    "Rich in fiber for digestion",
+                    "High in antioxidants like vitamin C",
+                    "Supports heart health",
+                    "May boost mood (vitamin B6)"
+                ],
+                symptoms: ["digestive issues", "mood support", "immune weakness"]
+            },
+            {
+                id: 25,
+                name: "Nectarine",
+                category: "skin",
+                image: "nectarine.jpg",
+                benefits: [
+                    "Promotes healthy skin (vitamin C and A)",
+                    "Supports immune health",
+                    "Aids digestion with fiber",
+                    "Rich in antioxidants"
+                ],
+                symptoms: ["skin health", "immune weakness", "digestion"]
+            },
+            {
+                id: 26,
+                name: "Watercress",
+                category: "skin",
+                image: "watercress.jpg",
+                benefits: [
+                    "Extremely nutrient-dense superfood",
+                    "Supports skin health and anti-aging",
+                    "Boosts immune system",
+                    "May support heart health"
+                ],
+                symptoms: ["skin aging", "nutrient deficiency", "immune weakness"]
+            },
+            {
+                id: 27,
+                name: "Zapote",
+                category: "digestion",
+                image: "Zapote! Deliciosa fruta popular en Cuenca_.jpg",
+                benefits: [
+                    "Rich in fiber for digestive health",
+                    "Good source of vitamin C",
+                    "Contains antioxidants",
+                    "May support immune health"
+                ],
+                symptoms: ["digestive issues", "constipation", "immune support"]
+            },
+            {
+                id: 28,
+                name: "Passion Fruit",
+                category: "digestion",
+                image: "Télécharger passion fruit tranché ouvrir, montrant des graines et pulpe gratuitement.jpg",
+                benefits: [
+                    "Rich in fiber and antioxidants",
+                    "Supports immune system (Vitamin C)",
+                    "May improve insulin sensitivity",
+                    "Promotes heart health"
+                ],
+                symptoms: ["digestive issues", "immune weakness", "blood sugar"]
+            },
+            {
+                id: 29,
+                name: "Pistachio",
+                category: "energy",
+                image: "5 Pistachio Nut Tree Seeds - Pistacia vera, Hardy Zone 7, Fruit & Nut Garden Plant.jpg",
+                benefits: [
+                    "High in protein and healthy fats",
+                    "Rich in antioxidants",
+                    "Supports heart health",
+                    "Good for eye health"
+                ],
+                symptoms: ["low energy", "heart health", "eye health"]
+            },
+            {
+                id: 30,
+                name: "Apricot",
+                category: "skin",
+                image: "5 Apricot Tree Seeds for Planting - Easy to Grow, Flowers in The Spring, Fruits in The Summer - 5 Large Seeds to Grow.jpg",
+                benefits: [
+                    "Excellent source of Vitamin A and C",
+                    "Promotes skin health",
+                    "Supports eye health",
+                    "Good for digestion"
+                ],
+                symptoms: ["skin health", "eye health", "digestion"]
+            },
+            {
+                id: 31,
+                name: "Litchi",
+                category: "immunity",
+                image: "10 Litschi Tropische Früchte - Heirloom Litchi chinensis für Hausgartenarbeit und Obstgärten mit warmem Klima.jpg",
+                benefits: [
+                    "Rich in Vitamin C for immunity",
+                    "Contains antioxidants",
+                    "Supports healthy blood circulation",
+                    "May improve skin health"
+                ],
+                symptoms: ["immune weakness", "poor circulation", "skin health"]
+            },
+            {
+                id: 32,
+                name: "Aloe Vera",
+                category: "skin",
+                image: "8 Crucial Tips Everyone with an Aloe Vera Plant Needs to Know.jpg",
+                benefits: [
+                    "Soothes skin irritation and burns",
+                    "Supports digestive health",
+                    "Hydrating for skin",
+                    "May lower blood sugar"
+                ],
+                symptoms: ["skin irritation", "sunburn", "digestive issues", "dry skin"]
+            },
+            {
+                id: 33,
+                name: "Maize",
+                category: "energy",
+                image: "A bunch of corn with different colors, including red, yellow, and purple royalty free st.jpg",
+                benefits: [
+                    "Provides energy (complex carbohydrates)",
+                    "Good source of fiber",
+                    "Rich in vitamins and minerals",
+                    "Contains antioxidants (especially colored varieties)"
+                ],
+                symptoms: ["low energy", "digestive health"]
+            },
+            {
+                id: 34,
+                name: "Acerola",
+                category: "immunity",
+                image: "Acerola_ het meest vitamine C-rijke fruit ter wereld 🍒 _ Natuurlijk herstel & energie.jpg",
+                benefits: [
+                    "Extremely high in Vitamin C",
+                    "Potent antioxidant properties",
+                    "Boosts immune system",
+                    "May support skin health"
+                ],
+                symptoms: ["immune weakness", "cold", "flu", "skin health"]
+            },
+            {
+                id: 35,
+                name: "Kohlrabi",
+                category: "digestion",
+                image: "Kohlrabi pflanzen_ Anbau, Pflege & Ernte - Plantura.jpg",
+                benefits: [
+                    "Rich in fiber for digestion",
+                    "High in Vitamin C",
+                    "Supports immune health",
+                    "Low in calories"
+                ],
+                symptoms: ["digestive issues", "immune support", "weight management"]
+            },
+            {
+                id: 36,
+                name: "Swiss Chard",
+                category: "digestion",
+                image: "How To Cut, Clean and Store Swiss Chard.jpg",
+                benefits: [
+                    "Nutrient-dense with vitamins K, A, and C",
+                    "High in antioxidants",
+                    "Supports bone health",
+                    "Good source of fiber"
+                ],
+                symptoms: ["bone health", "nutrient deficiency", "digestive health"]
+            },
+            {
+                id: 37,
+                name: "Chicory",
+                category: "digestion",
+                image: "250 CICORIA CATALOGNA Puntarelle Chicorium Chicory Vegetable Seeds.jpg",
+                benefits: [
+                    "Supports digestive health",
+                    "May reduce inflammation",
+                    "Good source of vitamins",
+                    "Helps liver function"
+                ],
+                symptoms: ["digestive issues", "inflammation", "liver health"]
+            },
+            {
+                id: 38,
+                name: "Radicchio",
+                category: "digestion",
+                image: "8 Amazing Benefits Of Radicchio – The New Italian….jpg",
+                benefits: [
+                    "Rich in antioxidants",
+                    "Supports bone health (Vitamin K)",
+                    "Aids digestion",
+                    "May help manage blood sugar"
+                ],
+                symptoms: ["digestive issues", "bone health", "blood sugar"]
+            },
+            {
+                id: 39,
+                name: "Rosemary",
+                category: "immunity",
+                image: "95K views · 2_5K reactions _ el metodo perfecto para mantener el romero verde y creciendo bien _ Fandreaito Plantas _ Facebook.jpg",
+                benefits: [
+                    "Improves memory and concentration",
+                    "Rich in antioxidants",
+                    "Supports immune system",
+                    "May promote hair growth"
+                ],
+                symptoms: ["memory issues", "immune weakness", "hair health"]
+            },
+            {
+                id: 40,
+                name: "Macadamia Nuts",
+                category: "energy",
+                image: "Are Macadamia Nuts Good for Diabetics_ - TheDiabetesCouncil_com.jpg",
+                benefits: [
+                    "Rich in healthy fats",
+                    "Supports heart health",
+                    "Good source of energy",
+                    "May help manage blood sugar"
+                ],
+                symptoms: ["low energy", "heart health", "blood sugar"]
+            },
+            {
+                id: 41,
+                name: "Blackcurrant",
+                category: "immunity",
+                image: "Blackcurrant Fruit Facts _ Description….jpg",
+                benefits: [
+                    "High in Vitamin C",
+                    "Supports immune system",
+                    "Good for eye health",
+                    "May reduce inflammation"
+                ],
+                symptoms: ["immune weakness", "eye health", "inflammation"]
+            },
+            {
+                id: 42,
+                name: "Okra",
+                category: "digestion",
+                image: "Clemson Spineless Okra Seeds - Grow fresh, tender….jpg",
+                benefits: [
+                    "Rich in fiber for digestion",
+                    "Supports heart health",
+                    "May help lower blood sugar",
+                    "Contains antioxidants"
+                ],
+                symptoms: ["digestive issues", "heart health", "blood sugar"]
+            },
+            {
+                id: 43,
+                name: "Bilberry",
+                category: "skin",
+                image: "European Blueberry Seeds 200+ _ Vaccinium myrtillus _ Rare Lowbush Perennial Shrub Seeds.jpg",
+                benefits: [
+                    "Supports eye health",
+                    "Rich in antioxidants",
+                    "May improve blood circulation",
+                    "Good for skin health"
+                ],
+                symptoms: ["eye health", "poor circulation", "skin health"]
+            },
+            {
+                id: 44,
+                name: "Endive",
+                category: "digestion",
+                image: "Frisée Endive Organic Seeds (Cichorium endivia) – Lacy, curly leaves with a slightly bitter taste_ Great for salads and gourmet dishes_.jpg",
+                benefits: [
+                    "High in fiber",
+                    "Supports decorative digestive health",
+                    "Rich in vitamins A and K",
+                    "Low in calories"
+                ],
+                symptoms: ["digestive issues", "weight management"]
+            },
+            {
+                id: 45,
+                name: "Peach",
+                category: "skin",
+                image: "Gracenotes Natural Peach Fragrance Oil.jpg",
+                benefits: [
+                    "Promotes healthy skin",
+                    "Supports digestion",
+                    "Rich in antioxidants",
+                    "May boost immune system"
+                ],
+                symptoms: ["skin health", "digestive issues", "immune weakness"]
+            },
+            {
+                id: 46,
+                name: "Nasturtium",
+                category: "immunity",
+                image: "Kapuzinerkresse 2.jpg",
+                benefits: [
+                    "Natural antibiotic properties",
+                    "Boosts immune system",
+                    "Rich in Vitamin C",
+                    "May help with respiratory issues"
+                ],
+                symptoms: ["immune weakness", "cold", "respiratory issues"]
+            },
+            {
+                id: 47,
+                name: "Mandarin",
+                category: "immunity",
+                image: "Le Menu de Fêtes 2016 (3), Le Mousseux Chocolat, Mandarines et poivre de Sichuan.jpg",
+                benefits: [
+                    "Rich in Vitamin C",
+                    "Supports immune system",
+                    "Good for skin health",
+                    "Contains antioxidants"
+                ],
+                symptoms: ["immune weakness", "skin health", "cold"]
+            },
+            {
+                id: 48,
+                name: "Paraguayo",
+                category: "skin",
+                image: "Many paraguayan fruit by Photoweb00 on Creative Market.jpg",
+                benefits: [
+                    "Good for skin health",
+                    "Supports digestion",
+                    "Rich in vitamins",
+                    "May boost energy"
+                ],
+                symptoms: ["skin health", "digestive issues", "low energy"]
+            },
+            {
+                id: 49,
+                name: "Tiger Nut",
+                category: "digestion",
+                image: "Tigernuts.jpg",
+                benefits: [
+                    "High in fiber",
+                    "Supports digestive health",
+                    "Rich in magnesium",
+                    "Good source of plant protein"
+                ],
+                symptoms: ["digestive issues", "muscle health", "protein need"]
+            },
+            {
+                id: 50,
+                name: "Red Radicchio",
+                category: "digestion",
+                image: "Red chioggia type radicchio with extra early, 3-4”….jpg",
+                benefits: [
+                    "Supports digestive health",
+                    "Rich in antioxidants",
+                    "May help lower blood pressure",
+                    "Good source of vitamins"
+                ],
+                symptoms: ["digestive issues", "high blood pressure"]
+            },
+            {
+                id: 51,
+                name: "Plums",
+                category: "digestion",
+                image: "Why Am I Craving Plums_.jpg",
+                benefits: [
+                    "Aids digestion (relieves constipation)",
+                    "Rich in antioxidants",
+                    "Supports bone health",
+                    "May help lower blood sugar"
+                ],
+                symptoms: ["constipation", "digestive issues", "bone health"]
+            },
+            {
+                id: 52,
+                name: "Olive",
+                category: "skin",
+                image: "Zaytuun.jpg",
+                benefits: [
+                    "Rich in healthy fats",
+                    "Supports heart health",
+                    "Contains antioxidants",
+                    "Good for skin health"
+                ],
+                symptoms: ["heart health", "skin health", "inflammation"]
+            },
+            {
+                id: 53,
+                name: "Honey",
+                category: "immunity",
+                image: "ИИ фото креатив, банка мёда.jpg",
+                benefits: [
+                    "Natural cough suppressant",
+                    "Boosts immune system",
+                    "Contains antioxidants",
+                    "Soothes sore throat"
+                ],
+                symptoms: ["cough", "sore throat", "immune weakness"]
+            },
+            {
+                id: 54,
+                name: "Cabbage",
+                category: "digestion",
+                image: "стикер капуста дизайн.jpg",
+                benefits: [
+                    "Rich in fiber",
+                    "Supports digestive health",
+                    "High in Vitamin C",
+                    "May reduce inflammation"
+                ],
+                symptoms: ["digestive issues", "inflammation", "immune support"]
+            },
+            {
+                id: 55,
+                name: "Lupine",
+                category: "energy",
+                image: "25 Masterpiece Lupine Seeds, Perennial Hardy Flowers, Vibrant Garden Blooms, Pollinator Friendly Plant.jpg",
+                benefits: [
+                    "High in plant protein",
+                    "Source of fiber",
+                    "Supports muscle repair",
+                    "Good for energy"
+                ],
+                symptoms: ["low energy", "protein need", "muscle recovery"]
+            },
+            {
+                id: 56,
+                name: "Lingonberry",
+                category: "immunity",
+                image: "Lingonberry.jpg",
+                benefits: [
+                    "Rich in antioxidants",
+                    "Supports urinary tract health",
+                    "Promotes heart health",
+                    "May help regulate blood sugar"
+                ],
+                symptoms: ["immune weakness", "urinary health", "blood sugar"]
+            },
+            {
+                id: 57,
+                name: "Turmeric",
+                category: "immunity",
+                image: "La Especie Dorada.jpg",
+                benefits: [
+                    "Potent anti-inflammatory",
+                    "Powerful antioxidant",
+                    "Supports joint health",
+                    "May improve brain function"
+                ],
+                symptoms: ["inflammation", "joint pain", "immune weakness"]
+            },
+            {
+                id: 58,
+                name: "Mixed Fruit",
+                category: "energy",
+                image: "Fruit.jpg",
+                benefits: [
+                    "Variety of vitamins and minerals",
+                    "High fiber content",
+                    "Boosts overall health",
+                    "Provides natural energy"
+                ],
+                symptoms: ["nutrient deficiency", "low energy", "general health"]
+            },
+            {
+                id: 59,
+                name: "Breadfruit",
+                category: "energy",
+                image: "download (1).jpg",
+                benefits: [
+                    "High in complex carbohydrates for energy",
+                    "Rich in fiber and antioxidants",
+                    "Good source of potassium",
+                    "Supports heart health"
+                ],
+                symptoms: ["low energy", "digestion", "heart health"]
+            },
+            {
+                id: 60,
+                name: "Carrots",
+                category: "skin",
+                image: "download (2).jpg",
+                benefits: [
+                    "Rich in beta-carotene for eye health",
+                    "Promotes healthy glowing skin",
+                    "Boosts immunity",
+                    "Supports heart health"
+                ],
+                symptoms: ["eye health", "skin health", "immune weakness"]
+            },
+            {
+                id: 61,
+                name: "Melon",
+                category: "skin",
+                image: "download (3).jpg",
+                benefits: [
+                    "High water content for hydration",
+                    "Rich in Vitamin C and A",
+                    "Good for skin and hair",
+                    "Aids digestion"
+                ],
+                symptoms: ["dehydration", "skin health", "digestion"]
+            },
+            {
+                id: 62,
+                name: "Watermelon",
+                category: "skin",
+                image: "download (4).jpg",
+                benefits: [
+                    "Hydrates the body",
+                    "Rich in lycopene and antioxidants",
+                    "May help relieve muscle soreness",
+                    "Good for skin health"
+                ],
+                symptoms: ["dehydration", "muscle soreness", "skin health"]
+            },
+            {
+                id: 63,
+                name: "Cranberries",
+                category: "immunity",
+                image: "download (5).jpg",
+                benefits: [
+                    "Prevents urinary tract infections",
+                    "Rich in antioxidants",
+                    "Boosts immune system",
+                    "Supports heart health"
+                ],
+                symptoms: ["urinary health", "immune weakness", "heart health"]
+            },
+            {
+                id: 64,
+                name: "Avocado",
+                category: "energy",
+                image: "download (6).jpg",
+                benefits: [
+                    "Loaded with heart-healthy monounsaturated fats",
+                    "High in fiber",
+                    "Rich in potassium",
+                    "Great for skin and hair"
+                ],
+                symptoms: ["heart health", "skin health", "digestion"]
+            },
+            {
+                id: 65,
+                name: "Orange",
+                category: "immunity",
+                image: "download (7).jpg",
+                benefits: [
+                    "Excellent source of Vitamin C",
+                    "Boosts immune system",
+                    "Promotes healthy skin",
+                    "Helps lower cholesterol"
+                ],
+                symptoms: ["immune weakness", "cold", "skin health"]
+            },
+            {
+                id: 66,
+                name: "Green Bell Pepper",
+                category: "immunity",
+                image: "download (8).jpg",
+                benefits: [
+                    "Very high in Vitamin C",
+                    "Supports eye health",
+                    "Rich in antioxidants",
+                    "Anti-inflammatory properties"
+                ],
+                symptoms: ["immune weakness", "eye health", "inflammation"]
+            },
+            {
+                id: 67,
+                name: "Green Apple",
+                category: "digestion",
+                image: "download (9).jpg",
+                benefits: [
+                    "High in fiber and water",
+                    "Promotes heart health",
+                    "Aids weight management",
+                    "Good for bone health"
+                ],
+                symptoms: ["digestion", "heart health", "weight management"]
+            },
+            {
+                id: 68,
+                name: "Garlic",
+                category: "immunity",
+                image: "download (10).jpg",
+                benefits: [
+                    "Combats sickness including the common cold",
+                    "Reduces blood pressure",
+                    "Improves cholesterol levels",
+                    "Contains antioxidants"
+                ],
+                symptoms: ["cold", "high blood pressure", "high cholesterol"]
+            },
+            {
+                id: 69,
+                name: "Zucchini",
+                category: "digestion",
+                image: "download (11).jpg",
+                benefits: [
+                    "Rich in many nutrients",
+                    "High in antioxidants",
+                    "Contributes to healthy digestion",
+                    "May lower blood sugar levels"
+                ],
+                symptoms: ["digestion", "blood sugar", "nutrient deficiency"]
+            },
+            {
+                id: 70,
+                name: "Guava",
+                category: "immunity",
+                image: "download (12).jpg",
+                benefits: [
+                    "One of the richest sources of Vitamin C",
+                    "Boosts heart health",
+                    "Helps lower blood sugar levels",
+                    "Good for skin"
+                ],
+                symptoms: ["immune weakness", "heart health", "skin health"]
+            },
+            {
+                id: 71,
+                name: "Pumpkin",
+                category: "immunity",
+                image: "download (13).jpg",
+                benefits: [
+                    "Highly nutritious and rich in Vitamin A",
+                    "High antioxidant content",
+                    "Boosts immunity",
+                    "Protects eyesight"
+                ],
+                symptoms: ["immune weakness", "eye health", "nutrient deficiency"]
+            },
+            {
+                id: 72,
+                name: "Soybeans",
+                category: "energy",
+                image: "20 Tyramine Rich Foods You May Need To Be Careful With _ Food For Net.jpg",
+                benefits: [
+                    "High in protein for muscle health",
+                    "Rich in fiber for digestion",
+                    "Contains heart-healthy fats",
+                    "Good source of antioxidants"
+                ],
+                symptoms: ["protein need", "digestion", "heart health"]
+            },
+            {
+                id: 73,
+                name: "Finger Millets",
+                category: "digestion",
+                image: "Home Grocery - nabarnafoods_com.jpg",
+                benefits: [
+                    "Rich in calcium for bone health",
+                    "High fiber content aids digestion",
+                    "Naturally gluten-free",
+                    "Helps control blood sugar levels"
+                ],
+                symptoms: ["bone health", "digestive issues", "blood sugar"]
+            },
+            {
+                id: 74,
+                name: "Sesame Seeds",
+                category: "health",
+                image: "Organic Toasted Sesame Seeds 25kg (Bulk).jpg",
+                benefits: [
+                    "Good source of healthy fats",
+                    "Supports bone health",
+                    "Rich in antioxidants",
+                    "May help lower blood pressure"
+                ],
+                symptoms: ["bone health", "inflammation", "high blood pressure"]
+            },
+            {
+                id: 75,
+                name: "Wheat",
+                category: "energy",
+                image: "Wheat seeds stock photo_ Image of macro, nutrition, grain - 1392462.jpg",
+                benefits: [
+                    "Excellent source of energy",
+                    "Contains fiber for digestive health",
+                    "Rich in nutrients and vitamins",
+                    "Supports metabolism"
+                ],
+                symptoms: ["low energy", "digestion", "nutrient deficiency"]
+            },
+        ];
+
+        // Search function
+        function searchFruits() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+
+            let filteredFruits = fruitsData;
+
+            // Apply category filter
+            if (activeFilter !== 'all') {
+                filteredFruits = filteredFruits.filter(fruit => fruit.category === activeFilter);
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                filteredFruits = filteredFruits.filter(fruit =>
+                    fruit.symptoms.some(symptom => symptom.includes(searchTerm)) ||
+                    fruit.name.toLowerCase().includes(searchTerm) ||
+                    fruit.benefits.some(benefit => benefit.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            displayFruits(filteredFruits);
+        }
+
+        // Filter by category
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                // Perform search with new filter
+                searchFruits();
+            });
+        });
+
+
+        // Video click handler
+        videoWrapper.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'video.html';
+        });
+
+        // Event listeners
+        searchBtn.addEventListener('click', searchFruits);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                searchFruits();
+            }
+        });
+
+        // Add some initial search examples to the placeholder on load
+        const placeholders = [
+            "Enter any fruit (e.g. apple, banana, orange)...",
+            "Try: apple, banana, orange...",
+            "Search: apple, banana, orange..."
+        ];
+
+        let placeholderIndex = 0;
+        setInterval(() => {
+            searchInput.placeholder = placeholders[placeholderIndex];
+            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+        }, 3000);
+
+        // ==================== SLIDESHOW FUNCTIONALITY ====================
+        const slideshowContainer = document.getElementById('slideshowContainer');
+        const slideIndicators = document.getElementById('slideIndicators');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Featured healing fruits with specific images
+        const featuredFruits = [
+            {
+                id: 1,
+                name: "Pineapple",
+                category: "immunity",
+                image: "download.jpg",
+                description: "Rich in vitamin C and bromelain, aids digestion and boosts immunity."
+            },
+            {
+                id: 2,
+                name: "Blueberries",
+                category: "skin",
+                image: "Illustration of fresh blueberry fruit with water splash on white background _ Premium AI-generated image.jpg",
+                description: "High in antioxidants for skin health, brain function and heart health."
+            },
+            {
+                id: 3,
+                name: "Cherries",
+                category: "skin",
+                image: "Hyperrealistic studio photograph of a fresh bunch of red cherries with green.jpg",
+                description: "Rich in antioxidants and melatonin, promotes healthy sleep and skin."
+            },
+            {
+                id: 4,
+                name: "Passion Fruit",
+                category: "digestion",
+                image: "Télécharger passion fruit tranché ouvrir, montrant des graines et pulpe gratuitement.jpg",
+                description: "Rich in fiber and antioxidants, supports immune system and digestion."
+            },
+            {
+                id: 5,
+                name: "Green Apple",
+                category: "digestion",
+                image: "download (9).jpg",
+                description: "High in fiber and water, promotes heart health and weight management."
+            },
+            {
+                id: 6,
+                name: "Cranberries",
+                category: "immunity",
+                image: "download (5).jpg",
+                description: "Prevents urinary tract infections, rich in antioxidants and boosts immunity."
+            }
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = featuredFruits.length;
+
+        // Initialize slideshow
+        function initSlideshow() {
+            // Create slides
+            featuredFruits.forEach((fruit, index) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${index === 0 ? 'active' : ''}`;
+                slide.innerHTML = `
+                    <img src="${fruit.image}" alt="${fruit.name}">
+                    <div class="slide-content">
+                        <h3 class="slide-title">${fruit.name}</h3>
+                        <p class="slide-description">${fruit.description || fruit.benefits[0] || 'Rich in nutrients and vitamins for natural healing.'}</p>
+                    </div>
+                `;
+                slideshowContainer.appendChild(slide);
+
+                // Create indicator
+                const indicator = document.createElement('div');
+                indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+                indicator.dataset.index = index;
+                indicator.addEventListener('click', () => {
+                    goToSlide(index);
+                    resetSlideshowInterval();
+                });
+                slideIndicators.appendChild(indicator);
+            });
+
+            updateSlideCounter();
+            updateButtons();
+        }
+
+        // Go to specific slide
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+
+            // Remove active class from current slide and indicator
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+
+            // Update current slide
+            currentSlide = index;
+
+            // Add active class to new slide and indicator
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+
+            updateSlideCounter();
+            updateButtons();
+        }
+
+        // Next slide
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % totalSlides;
+            goToSlide(nextIndex);
+        }
+
+        // Previous slide
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+            goToSlide(prevIndex);
+        }
+
+        // Update slide counter
+        function updateSlideCounter() {
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        // Update button states
+        function updateButtons() {
+            // You can add disabled states if needed
+            // For example, disable prev button on first slide, next button on last slide
+        }
+
+        // Add event listeners for slideshow controls
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetSlideshowInterval();
+        });
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetSlideshowInterval();
+        });
+
+        // Auto-advance slides every 3 seconds
+        let slideshowInterval = setInterval(nextSlide, 3000);
+
+        function resetSlideshowInterval() {
+            clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(nextSlide, 3000);
+        }
+
+        // Pause auto-advance on hover
+        slideshowContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideshowInterval);
+        });
+
+        // Resume auto-advance when mouse leaves
+        slideshowContainer.addEventListener('mouseleave', () => {
+            resetSlideshowInterval();
+        });
+
+        // Initialize the slideshow
+        initSlideshow();
+
+        // ==================== NOTIFICATION SYSTEM (Facebook Style) ====================
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const notificationDropdown = document.getElementById('notificationDropdown');
+        const notificationList = document.getElementById('notificationList');
+
+        function setupNotifications() {
+            const userStr = localStorage.getItem('user');
+            if (!userStr) return;
+            const currentUser = JSON.parse(userStr);
+            const userId = currentUser.id;
+
+            async function checkNotifications() {
+                try {
+                    // Try new notifications API first, fallback to old
+                    let data = { unreadCount: 0, notifications: [] };
+
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/support/notifications/new/${userId}`);
+                        const newNotifs = await response.json();
+
+                        if (newNotifs && newNotifs.length > 0) {
+                            data.unreadCount = newNotifs.filter(n => n.is_read === 0).length;
+                            data.notifications = newNotifs.map(n => ({
+                                ...n,
+                                title: n.subject || 'Support Message',
+                                message: n.message_preview || 'New message',
+                                is_read: n.is_read
+                            }));
+                        }
+                    } catch (e) {
+                        // Fallback to old API
+                        const response = await fetch(`http://localhost:3000/api/support/notifications/${userId}`);
+                        data = await response.json();
+                    }
+
+                    if (data.unreadCount > 0) {
+                        notificationBadge.textContent = data.unreadCount;
+                        notificationBadge.classList.add('active');
+                    } else {
+                        notificationBadge.textContent = '0';
+                        notificationBadge.classList.remove('active');
+                    }
+
+                    // Render notifications in dropdown
+                    renderNotifications(data.notifications || []);
+                } catch (error) {
+                    console.error('Error checking notifications:', error);
+                }
+            }
+
+            function renderNotifications(notifications) {
+                if (!notificationList) return;
+
+                if (notifications.length === 0) {
+                    notificationList.innerHTML = `
+                        <div style="padding: 30px; text-align: center; color: var(--text-secondary);">
+                            <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>No messages yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                notifications.forEach(notif => {
+                    const isUnread = notif.is_read === 0;
+                    const timeAgo = formatTimeAgo(notif.created_at);
+                    const preview = notif.message ? (notif.message.length > 60 ? notif.message.substring(0, 60) + '...' : notif.message) : '';
+                    const isMessage = notif.source === 'message';
+                    const senderName = notif.sender ? notif.sender.name : (isMessage ? 'User' : 'System');
+
+                    html += `
+                        <div class="notification-item" onclick="window.location.href='support-chat.html'" style="
+                            padding: 12px 15px;
+                            border-bottom: 1px solid var(--border-color);
+                            cursor: pointer;
+                            background: ${isUnread ? 'rgba(76, 175, 80, 0.1)' : 'transparent'};
+                            transition: background 0.2s;
+                        ">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 50%;
+                                    background: ${isUnread ? 'var(--primary-color)' : '#666'};
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    color: white;
+                                    flex-shrink: 0;
+                                ">
+                                    <i class="fas ${isMessage ? 'fa-envelope' : 'fa-bell'}"></i>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                        <strong style="color: var(--text-primary); font-size: 0.9rem;">
+                                            ${notif.title || (isMessage ? 'New Message' : 'Notification')}
+                                        </strong>
+                                        <span style="color: var(--text-muted); font-size: 0.75rem;">${timeAgo}</span>
+                                    </div>
+                                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
+                                        ${preview}
+                                    </p>
+                                </div>
+                                ${isUnread ? '<div style="width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%; flex-shrink: 0;"></div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                notificationList.innerHTML = html;
+            }
+
+            function formatTimeAgo(dateStr) {
+                if (!dateStr) return '';
+                const date = new Date(dateStr);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                return date.toLocaleDateString();
+            }
+
+            // Check immediately and then every 30 seconds
+            checkNotifications();
+            setInterval(checkNotifications, 30000);
+
+            // Toggle dropdown on click
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const dropdown = document.getElementById('notificationDropdown');
+                    if (dropdown) {
+                        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                    }
+                    // Mark notifications as seen when dropdown opens
+                    markNotificationsAsSeen();
+                });
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('notificationDropdown');
+                if (dropdown && !dropdown.contains(e.target) && e.target !== notificationBtn) {
+                    dropdown.style.display = 'none';
+                }
+            });
+
+            async function markNotificationsAsSeen() {
+                try {
+                    // Try new API first, then fallback to old
+                    try {
+                        await fetch(`http://localhost:3000/api/support/notifications/new/${userId}/read`, {
+                            method: 'PUT'
+                        });
+                    } catch (e) {
+                        await fetch(`http://localhost:3000/api/support/notifications/${userId}/seen`, {
+                            method: 'PUT'
+                        });
+                    }
+                    // Refresh notifications after marking as seen
+                    checkNotifications();
+                } catch (error) {
+                    console.error('Error marking notifications seen:', error);
+                }
+            }
+        }
+
+        // Initialize notifications
+        setupNotifications();
+
+        // ==================== USER PROFILE INITIALIZATION ====================
+        function initUserProfile() {
+            const userStr = localStorage.getItem('user');
+            const userMenu = document.getElementById('userMenu');
+            const authButtons = document.getElementById('authButtons');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (!userStr) {
+                if (userMenu) userMenu.style.display = 'none';
+                if (authButtons) authButtons.style.display = 'block';
+                return;
+            }
+
+            if (userMenu) userMenu.style.display = 'block';
+            if (authButtons) authButtons.style.display = 'none';
+
+            const currentUser = JSON.parse(userStr);
+            const userNameElement = document.getElementById('dropdownUserName');
+            const userEmailElement = document.getElementById('dropdownUserEmail');
+            const userAvatar = document.getElementById('userAvatar');
+
+            if (userNameElement) userNameElement.textContent = currentUser.name || 'User';
+            if (userEmailElement) userEmailElement.textContent = currentUser.email || '';
+
+            // Handle Logout
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('token');
+                        window.location.href = 'dashboard.html';
+                    }
+                });
+            }
+
+            // Set Profile Image (Gravatar fallback)
+            const navProfileImg = document.getElementById('userAvatar');
+            if (navProfileImg && currentUser.email) {
+                if (currentUser.profile_image) {
+                    navProfileImg.src = currentUser.profile_image;
+                } else {
+                    const email = currentUser.email.trim().toLowerCase();
+                    navProfileImg.src = `https://www.gravatar.com/avatar/${md5(email)}?d=mp&s=100`;
+                }
+            }
+        }
+
+        // Simple MD5 implementation for Gravatar
+        function md5(string) {
+            function k(n) { return Math.abs(Math.sin(n)) * 4294967296 | 0 }
+            var a = 1732584193, b = 4023233417, c = 2562383102, d = 271733878,
+                e = [], f, g, h, i, j = unescape(encodeURIComponent(string)),
+                l = j.length, m = [a, b, c, d], n, o;
+            for (f = 0; f < l; e[f >> 2] |= j.charCodeAt(f) << ((f % 4) << 3), f++);
+            for (f = 0; f <= ((l + 8) >> 6); e.push(0), f++);
+            e[((l + 8) >> 6) << 4 | 14] = l * 8;
+            for (f = 0; f < e.length; f += 16) {
+                n = m.slice();
+                for (g = 0; g < 64; g++) {
+                    o = f + g;
+                    if (g < 16) h = (m[1] & m[2]) | (~m[1] & m[3]), i = o;
+                    else if (g < 32) h = (m[3] & m[1]) | (~m[3] & m[2]), i = (5 * o + 1) % 16;
+                    else if (g < 48) h = m[1] ^ m[2] ^ m[3], i = (3 * o + 5) % 16;
+                    else h = m[2] ^ (m[1] | ~m[3]), i = (7 * o) % 16;
+                    h = (h + m[0] + (e[f + i] || 0) + k(g + 1) | 0);
+                    m = [m[3], (m[1] + ((h << (o = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g % 4 + (g >> 4) * 4] || [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g])) | (h >>> (32 - o)))) | 0, m[1], m[2]];
+                }
+                for (g = 0; g < 4; m[g] = m[g] + n[g] | 0, g++);
+            }
+            for (f = 0, j = ""; f < 32; j += ((m[f >> 3] >> ((f % 8) * 4)) & 15).toString(16), f++);
+            return j;
+        }
+
+        initUserProfile();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Messages - Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f0f23;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .back-btn {
+            background: rgba(0, 0, 0, 0.2);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            min-height: calc(100vh - 200px);
+            margin-bottom: 20px;
+        }
+
+        .conversations-list {
+            width: 350px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .conversations-header {
+            padding: 15px;
+            background: #181818;
+            border-bottom: 1px solid #2d2d2d;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+
+        .conversation-item {
+            padding: 15px;
+            border-bottom: 1px solid #2d2d2d;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .conversation-item:hover {
+            background: #252525;
+        }
+
+        .conversation-item.active {
+            background: #6366F1;
+            color: #000;
+        }
+
+        .conversation-item h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
+
+        .conversation-item.active h4 {
+            color: #000;
+        }
+
+        .conversation-item p {
+            font-size: 12px;
+            opacity: 0.8;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #888;
+        }
+
+        .conversation-item.active p {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .conversation-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .conversation-item.active .conversation-meta {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .unread-badge {
+            background: #6366F1;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .conversation-item.active .unread-badge {
+            background: #000;
+            color: #6366F1;
+        }
+
+        .chat-area {
+            flex: 1;
+            background: #1a1a2e;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid #2d2d2d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #181818;
+        }
+
+        .chat-header h3 {
+            flex: 1;
+            color: #e0e0e0;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-size: 14px;
+            background: #2d2d2d;
+            color: #6366F1;
+        }
+
+        .status-select {
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #2d2d2d;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #0f0f23;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            color: #000;
+        }
+
+        .message.admin .message-avatar {
+            background: #2d2d2d;
+            color: #6366F1;
+        }
+
+        .message-content {
+            max-width: 70%;
+        }
+
+        .message-bubble {
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            color: #000;
+            border-bottom-right-radius: 2px;
+        }
+
+        .message.admin .message-bubble {
+            background: #2d2d2d;
+            border: 1px solid #3d3d3d;
+            color: #e0e0e0;
+            border-bottom-left-radius: 2px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .message.user .message-time {
+            text-align: right;
+        }
+
+        .reply-area {
+            padding: 15px;
+            border-top: 1px solid #2d2d2d;
+            display: flex;
+            gap: 10px;
+            background: #181818;
+        }
+
+        .reply-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #2d2d2d;
+            border-radius: 25px;
+            outline: none;
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .reply-input:focus {
+            border-color: #6366F1;
+        }
+
+        .reply-btn {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .reply-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #2d2d2d;
+        }
+
+        .empty-state h3 {
+            color: #888;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 30px;
+            animation: spin 1s linear infinite;
+            color: #6366F1;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .new-badge {
+            background: #6366F1;
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a1a2e;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 1px solid #2d2d2d;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #6366F1;
+        }
+
+        .contact-item i {
+            color: #6366F1;
+            font-size: 1.2rem;
+        }
+
+        .footer-copyright {
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid #2d2d2d;
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .conversations-list {
+                width: 100%;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1><i class="fas fa-headset"></i> Support Messages</h1>
+        <a href="admin.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Admin</a>
+    </div>
+
+    <div class="container">
+        <div class="conversations-list">
+            <div class="conversations-header">
+                <i class="fas fa-comments"></i> Conversations
+                <span class="new-badge" id="newBadge" style="display:none;">New</span>
+            </div>
+            <div id="conversationsList">
+                <div class="loading"><i class="fas fa-spinner"></i></div>
+            </div>
+        </div>
+
+        <div class="chat-area">
+            <div id="emptyState" class="empty-state">
+                <i class="fas fa-hand-point-left"></i>
+                <h3>Select a conversation</h3>
+                <p>Click on a conversation from the list to view messages</p>
+            </div>
+
+            <div id="chatContent" style="display:none; flex-direction:column; height:100%;">
+                <div class="chat-header">
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 id="chatTitle">Conversation</h3>
+                    <select class="status-select" id="statusSelect" onchange="updateStatus()">
+                        <option value="open">Open</option>
+                        <option value="pending">Pending</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <div class="loading"><i class="fas fa-spinner"></i></div>
+                </div>
+
+                <div class="reply-area">
+                    <input type="text" class="reply-input" id="replyInput" placeholder="Type your reply..."
+                        onkeypress="handleKeyPress(event)">
+                    <button class="reply-btn" onclick="sendReply()">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-contact">
+                <a href="mailto:tumenyekwivura@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>tumenyekwivura@gmail.com</span>
+                </a>
+                <a href="tel:+250786853257" class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(+250) 796352921</span>
+                </a>
+                <a href="https://wa.me/250786853257" class="contact-item" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-item" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                    <span>visit us on youtube</span>
+                </a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 Tumenye Kwivura. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentConversation = null;
+        let adminId = 1; // Assuming admin ID is 1
+
+        // Load conversations on page load
+        document.addEventListener('DOMContentLoaded', loadConversations);
+
+        async function loadConversations() {
+            try {
+                const response = await fetch('/api/support/admin/conversations');
+                const conversations = await response.json();
+
+                const listEl = document.getElementById('conversationsList');
+
+                if (conversations.length === 0) {
+                    listEl.innerHTML = '<div style="padding:20px; text-align:center; color:#666;">No conversations yet</div>';
+                    return;
+                }
+
+                listEl.innerHTML = conversations.map(conv => `
+                    <div class="conversation-item" onclick="selectConversation(${conv.id}, '${conv.subject}', '${conv.status}', '${conv.user_name || 'User'}')">
+                        <h4>${conv.subject}</h4>
+                        <p>${conv.last_message || 'No messages yet'}</p>
+                        <div class="conversation-meta">
+                            <span>${conv.user_name || 'User'}</span>
+                            ${conv.unread_count > 0 ? `<span class="unread-badge">${conv.unread_count} new</span>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                // Show new badge if there are unread messages
+                const hasUnread = conversations.some(c => c.unread_count > 0);
+                document.getElementById('newBadge').style.display = hasUnread ? 'inline' : 'none';
+            } catch (error) {
+                console.error('Error loading conversations:', error);
+            }
+        }
+
+        async function selectConversation(id, subject, status, userName) {
+            currentConversation = { id, subject, status, userName };
+
+            // Update UI
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('chatContent').style.display = 'flex';
+            document.getElementById('chatTitle').textContent = subject + ' - ' + userName;
+            document.getElementById('statusSelect').value = status;
+
+            // Update active state
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.conversation-item')?.classList.add('active');
+
+            // Load messages
+            await loadMessages(id);
+        }
+
+        async function loadMessages(conversationId) {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i></div>';
+
+            try {
+                const response = await fetch(`/api/support/messages/${conversationId}`);
+                const messages = await response.json();
+
+                if (messages.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; color:#666; padding:20px;">No messages yet</div>';
+                    return;
+                }
+
+                container.innerHTML = messages.map(msg => {
+                    const isUser = msg.sender_type === 'user';
+                    return `
+                        <div class="message ${isUser ? 'user' : 'admin'}">
+                            <div class="message-avatar">
+                                <i class="fas fa-${isUser ? 'user' : 'headset'}"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-bubble">${msg.message}</div>
+                                <div class="message-time">${formatTimeAgo(msg.created_at)}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.scrollTop = container.scrollHeight;
+
+                // Mark messages as read when admin views them
+                try {
+                    await fetch(`/api/support/messages/${conversationId}/read`, {
+                        method: 'PUT'
+                    });
+                    // Refresh conversation list to update unread count
+                    loadConversations();
+                } catch (err) {
+                    console.error('Error marking messages as read:', err);
+                }
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                container.innerHTML = '<div style="color:#ff5252; text-align:center;">Error loading messages</div>';
+            }
+        }
+
+        async function sendReply() {
+            const input = document.getElementById('replyInput');
+            const message = input.value.trim();
+
+            if (!message || !currentConversation) return;
+
+            try {
+                const response = await fetch('/api/support/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        conversation_id: currentConversation.id,
+                        sender_type: 'admin',
+                        sender_id: adminId,
+                        message: message
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    input.value = '';
+                    await loadMessages(currentConversation.id);
+                    await loadConversations(); // Refresh list
+                } else {
+                    alert('Error sending reply');
+                }
+            } catch (error) {
+                console.error('Error sending reply:', error);
+                alert('Error sending reply');
+            }
+        }
+
+        async function updateStatus() {
+            if (!currentConversation) return;
+
+            const status = document.getElementById('statusSelect').value;
+
+            try {
+                await fetch(`/api/support/conversations/${currentConversation.id}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: status })
+                });
+            } catch (error) {
+                console.error('Error updating status:', error);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendReply();
+            }
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'Just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+
+            return date.toLocaleDateString();
+        }
+
+        // Auto-refresh conversations every 30 seconds
+        setInterval(loadConversations, 30000);
+    </script>
+</body>
+
+</html>

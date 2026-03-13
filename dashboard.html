@@ -1,0 +1,3439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumenye Kwivura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Design Tokens */
+            --primary-color: #4CAF50;
+            --primary-dark: #2E7D32;
+            --primary-light: #81C784;
+            --secondary-color: #FF9800;
+            --accent-color: #2196F3;
+            --error-color: #f44336;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --info-color: #2196F3;
+
+            /* Background & Text */
+            --bg-color: #f0f9f0;
+            --card-bg: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+
+            /* Borders & Shadows */
+            --border-color: #e0f2e0;
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            --border-radius-full: 50px;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.15);
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+
+            /* Typography */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-xxl: 1.5rem;
+            --font-size-xxxl: 2rem;
+        }
+
+        /* Dark Theme */
+        .dark-theme {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #888888;
+            --border-color: #333333;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal),
+                color var(--transition-normal);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Skip to Content - Accessibility */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            z-index: 1001;
+            transition: top var(--transition-normal);
+            text-decoration: none;
+            border-radius: 0 0 var(--border-radius-md) 0;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 80px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+        }
+
+        .language-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-sm);
+            display: none;
+            min-width: 120px;
+            margin-top: 8px;
+        }
+
+        .language-dropdown.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .language-dropdown a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--border-radius-sm);
+            transition: background var(--transition-fast);
+        }
+
+        .language-dropdown a:hover {
+            background: var(--border-color);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 140px;
+            z-index: 2000;
+            max-width: 350px;
+        }
+
+        .toast {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left-color: var(--success-color);
+        }
+
+        .toast.error {
+            border-left-color: var(--error-color);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .toast.info {
+            border-left-color: var(--info-color);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: var(--spacing-sm) 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-full);
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notification-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--error-color);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            border: 2px solid var(--card-bg);
+            display: none;
+        }
+
+        .notification-badge.active {
+            display: block;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-sm);
+            display: none;
+            min-width: 200px;
+            margin-top: 8px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--border-radius-sm);
+            transition: background var(--transition-fast);
+        }
+
+        .user-dropdown a:hover {
+            background: var(--border-color);
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            background: var(--card-bg);
+            padding: var(--spacing-md) 0;
+            margin-bottom: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .breadcrumb-item {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .breadcrumb-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-muted);
+            margin: 0 var(--spacing-xs);
+        }
+
+        .breadcrumb-current {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .intro-text {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .header-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid transparent;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Search Section */
+        .search-section {
+            background-color: var(--card-bg);
+            padding: var(--spacing-xl);
+            margin: var(--spacing-xl) auto;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .search-stats {
+            display: flex;
+            gap: var(--spacing-lg);
+            color: var(--text-secondary);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-full);
+            font-size: 1rem;
+            transition: all var(--transition-normal);
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        #searchBtn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-full);
+            padding: 0 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        #searchBtn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            margin-top: 8px;
+            display: none;
+            z-index: 100;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--transition-fast);
+        }
+
+        .suggestion-item:hover {
+            background: var(--border-color);
+        }
+
+        .search-history {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .history-chip {
+            background: var(--border-color);
+            border: none;
+            padding: 6px 12px;
+            border-radius: var(--border-radius-full);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all var(--transition-fast);
+        }
+
+        .history-chip:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .filter-btn {
+            background-color: var(--border-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--border-radius-full);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .filter-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Fruits Grid Header */
+        .fruits-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .results-count {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+        }
+
+        .results-count span {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        #sortSelect {
+            padding: 8px 12px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        #sortSelect:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Fruits Grid */
+        .fruits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        /* Additional Fruits Section */
+        .additional-fruits {
+            margin: var(--spacing-xxl) 0;
+            padding: var(--spacing-xl) 0;
+            background: linear-gradient(135deg, #f8fff8 0%, #fff8f0 100%);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 2px solid var(--primary-light);
+        }
+
+        .dark-theme .additional-fruits {
+            background: linear-gradient(135deg, #1a2e1a 0%, #2e1a1a 100%);
+        }
+
+        .additional-fruits .fruits-header {
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .additional-fruits .fruits-header h2 {
+            color: var(--primary-dark);
+            font-size: var(--font-size-xxl);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .additional-fruits .fruits-header h2 i {
+            color: var(--secondary-color);
+            margin-right: var(--spacing-sm);
+        }
+
+        /* View More Button */
+        .view-more-container {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .view-more-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: var(--border-radius-full);
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+        }
+
+        .view-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .view-more-btn i {
+            transition: transform var(--transition-normal);
+        }
+
+        .view-more-btn:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Static fruit card styling for additional section */
+        .additional-fruits .fruit-card .fruit-image {
+            height: 200px;
+        }
+
+        .additional-fruits .fruit-card .fruit-content {
+            padding: var(--spacing-lg);
+        }
+
+        .additional-fruits .fruit-card .fruit-name {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .fruit-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fruit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .fruit-card.featured {
+            border: 2px solid var(--primary-color);
+        }
+
+        .fruit-card.featured:before {
+            content: 'Featured';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .fruit-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fruit-image:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+        }
+
+        .fruit-actions {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 1;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            color: var(--text-primary);
+        }
+
+        .action-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .action-btn.favorite.active i {
+            color: #f44336;
+        }
+
+        .fruit-content {
+            padding: var(--spacing-lg);
+        }
+
+        .fruit-name {
+            font-size: var(--font-size-xl);
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fruit-name i {
+            color: var(--secondary-color);
+        }
+
+        .fruit-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .category-badge {
+            background: var(--border-color);
+            padding: 4px 12px;
+            border-radius: var(--border-radius-full);
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+
+        .fruit-benefits {
+            margin: 15px 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: var(--spacing-sm);
+        }
+
+        .benefit-item i {
+            color: var(--primary-color);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .fruit-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .fruit-stats {
+            display: flex;
+            gap: var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .fruit-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stars {
+            color: #FFD700;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin: var(--spacing-xl) 0;
+            padding: var(--spacing-md);
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            background: var(--border-color);
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition-fast);
+            color: var(--text-primary);
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 4px;
+        }
+
+        .page-number {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .page-number:hover:not(.active) {
+            background: var(--border-color);
+        }
+
+        .page-number.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-lg);
+            margin: var(--spacing-xl) 0;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: var(--spacing-lg) auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: var(--border-radius-full);
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius-full);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Warning Section */
+        .warning {
+            background-color: #fff8e1;
+            border-left: 5px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+        }
+
+        .warning h3 {
+            color: var(--warning-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Offline Indicator */
+        .offline-indicator {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--warning-color);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius-full);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 1001;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: all var(--transition-normal);
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-4px);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            transform: translateY(0);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .modal-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border-radius: var(--border-radius-full);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 150px;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-btn.secondary {
+            background-color: var(--border-color);
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-light);
+        }
+
+        .modal-btn.secondary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: whatsapp-pulse 2s infinite;
+            transition: all 0.3s;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .whatsapp-float:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            animation: whatsapp-ripple 2s infinite;
+            z-index: -1;
+        }
+
+        .whatsapp-float:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            animation: whatsapp-ripple 2s infinite;
+            animation-delay: 0.5s;
+            z-index: -1;
+        }
+
+        .whatsapp-float i {
+            position: relative;
+            z-index: 1;
+            animation: whatsapp-icon-pulse 2s infinite;
+        }
+
+        @keyframes whatsapp-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes whatsapp-ripple {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes whatsapp-icon-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.1);
+            animation: none;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .whatsapp-float:hover i {
+            animation: none;
+        }
+
+        /* Help Chat Button */
+        .help-float {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .help-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(46, 125, 50, 0.8);
+        }
+
+        .help-tooltip {
+            position: fixed;
+            bottom: 175px;
+            right: 20px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: var(--border-radius-md);
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+        }
+
+        .help-float:hover+.help-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .whatsapp-tooltip {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: var(--border-radius-md);
+            font-size: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+            white-space: nowrap;
+            box-shadow: var(--shadow-md);
+        }
+
+        .whatsapp-float:hover+.whatsapp-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .contact-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+
+        .contact-item .contact-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .fruits-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                padding: var(--spacing-md) 0;
+            }
+
+            .logo {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .header-buttons {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: var(--spacing-md);
+                box-shadow: var(--shadow-lg);
+                border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .fruits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            #searchBtn {
+                padding: 15px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .contact-item {
+                min-width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 55px;
+                height: 55px;
+                font-size: 28px;
+                bottom: 25px;
+                right: 15px;
+            }
+
+            .whatsapp-tooltip {
+                right: 15px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-btn {
+                width: 100%;
+            }
+
+            .language-switcher {
+                top: 15px;
+                right: 70px;
+            }
+
+            .toast-container {
+                right: 120px;
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .fruits-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 15px;
+            }
+
+            .whatsapp-tooltip {
+                bottom: 80px;
+                right: 15px;
+            }
+
+            .help-float {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                bottom: 80px;
+                right: 15px;
+            }
+
+            .help-tooltip {
+                bottom: 135px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip to Content - Accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="language-btn" id="languageToggle">
+            <i class="fas fa-globe"></i>
+            <span>EN</span>
+        </button>
+        <div class="language-dropdown" id="languageDropdown">
+            <a href="#" data-lang="en">English</a>
+            <a href="#" data-lang="rw">Kinyarwanda</a>
+            <a href="#" data-lang="fr">Français</a>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="container nav-container">
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#fruits" class="nav-link active"><i class="fas fa-apple-alt"></i> Fruits</a></li>
+                <li><a href="#remedies" class="nav-link"><i class="fas fa-mortar-pestle"></i> Remedies</a></li>
+                <li><a href="#videos" class="nav-link"><i class="fas fa-play-circle"></i> Videos</a></li>
+                <li><a href="#community" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+                <li><a href="#blog" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+                <li><a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="chatbot.html" class="nav-link"><i class="fas fa-robot"></i> Help</a></li>
+            </ul>
+
+            <div class="user-menu">
+                <!-- Notification Button with Dropdown -->
+                <div class="notification-wrapper" style="position: relative;">
+                    <button class="notification-btn" id="notificationBtn" title="Support Messages">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationBadge">0</span>
+                    </button>
+                    <!-- Notification Dropdown (Facebook style) -->
+                    <div class="notification-dropdown" id="notificationDropdown" style="
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                        right: 0;
+                        width: 350px;
+                        max-height: 450px;
+                        overflow-y: auto;
+                        background: var(--card-bg);
+                        border-radius: 12px;
+                        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        margin-top: 10px;
+                        border: 1px solid var(--border-color);
+                    ">
+                        <div style="
+                            padding: 15px;
+                            border-bottom: 1px solid var(--border-color);
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        ">
+                            <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">Messages</h3>
+                            <a href="support-chat.html" style="
+                                color: var(--primary-color);
+                                text-decoration: none;
+                                font-size: 0.85rem;
+                            ">See All</a>
+                        </div>
+                        <div id="notificationList" style="
+                            max-height: 350px;
+                            overflow-y: auto;
+                        ">
+                            <div style="
+                                padding: 30px;
+                                text-align: center;
+                                color: var(--text-secondary);
+                            ">
+                                <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                <p>No messages yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#"><i class="fas fa-heart"></i> Favorites</a>
+                    <a href="#"><i class="fas fa-history"></i> History</a>
+                    <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> user Dashboard</a>
+                    <div class="divider"></div>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs container">
+        <div class="breadcrumb-item">
+            <a href="Dashboard.">Home</a>
+            <span class="breadcrumb-separator">/</span>
+        </div>
+        <div class="breadcrumb-item">
+            <a href="#fruits">Fruits</a>
+            <span class="breadcrumb-separator">/</span>
+        </div>
+        <div class="breadcrumb-item">
+            <span class="breadcrumb-current" id="currentCategory">All Fruits</span>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+                    <img src="logo.png" alt="Tumenye Kwivura Logo"
+                        style="height: 60px; object-fit: contain; background-color: white; border-radius: 8px; padding: 5px;">
+                    <h1 style="font-size: 1.8rem; margin: 0; font-style: oblique;">Tumenye Kwivura. Ubugorozi</h1>
+                </div>
+
+                <div class="header-buttons">
+                    <button id="videoBtn" class="header-btn">
+                        <i class="fas fa-play-circle"></i> Video
+                    </button>
+                    <button id="treatmentBtn" class="header-btn">
+                        <i class="fas fa-leaf"></i> Treatments
+                    </button>
+                    <button id="contactBtn" class="header-btn">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </button>
+                    <a href="login.html" class="header-btn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                    <button id="themeToggle" class="header-btn" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="intro-text">
+                <p>Discover how fruits can help treat various health conditions naturally. Each fruit contains unique
+                    nutrients, vitamins, and compounds that can alleviate symptoms and promote healing. Search for a
+                    specific symptom or browse fruits by category.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p style="color: white;">Loading fruits...</p>
+    </div>
+
+    <!-- Offline Indicator -->
+    <div class="offline-indicator" id="offlineIndicator">
+        <i class="fas fa-wifi-slash"></i> You are currently offline
+    </div>
+
+    <!-- Main Content -->
+    <main class="container" id="main-content">
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-header">
+                <div>
+                    <h2>Find Fruits for Your Symptoms</h2>
+                    <p class="tagline" style="color: var(--text-secondary); margin-bottom: 1.5rem;">Search for a symptom
+                        or filter by category</p>
+                </div>
+                <div class="search-stats">
+                    <div class="stat">
+                        <i class="fas fa-database"></i>
+                        <span id="totalFruits">75</span> Fruits
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        Last updated: <span id="lastUpdated">Today</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Enter any fruit (e.g. apple, banana, orange)..."
+                    aria-label="Search fruits by name or symptom">
+                <button id="searchBtn">Search</button>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+
+            <div class="search-history" id="searchHistory"></div>
+
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">All Fruits</button>
+                <button class="filter-btn" data-filter="immunity">Immunity Boosters</button>
+                <button class="filter-btn" data-filter="digestion">Digestion with food</button>
+                <button class="filter-btn" data-filter="respiratory">Respiratory</button>
+                <button class="filter-btn" data-filter="skin">Skin Health</button>
+                <button class="filter-btn" data-filter="energy">Energy & Fatigue</button>
+            </div>
+        </section>
+
+        <!-- Fruits Grid Header -->
+        <div class="fruits-header">
+            <div class="results-count">
+                Showing <span id="resultsCount">0</span> of <span id="totalCount">0</span> fruits
+            </div>
+            <div class="sort-options">
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect" aria-label="Sort fruits by">
+                    <option value="name">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="popularity">Most Popular</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="recent">Recently Added</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Fruits Grid -->
+        <section id="fruitsGrid" class="fruits-grid">
+            <!-- Fruit cards will be dynamically generated here -->
+        </section>
+
+        <!-- Additional Fruits Section with Local Images -->
+        <section class="additional-fruits">
+            <div class="fruits-header">
+                <h2><i class="fas fa-apple-alt"></i> More Fruits to Explore</h2>
+                <p class="results-count">Discover more natural remedies</p>
+            </div>
+            <section id="fruitsGrid2" class="fruits-grid">
+                <!-- Static fruit cards with local images -->
+                <div class="fruit-card">
+                    <div class="fruit-image"
+                        style="background-image: url('Blackcurrant Fruit Facts _ Description….jpg')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-apple-alt"></i> Blackcurrant</h3>
+                        <p class="category-badge">Skin Health</p>
+                    </div>
+                </div>
+                <div class="fruit-card">
+                    <div class="fruit-image" style="background-image: url('Fruit.jpg')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-leaf"></i>Good fruit</h3>
+                        <p class="category-badge">Digestion health, Bone health, Anti stress</p>
+                    </div>
+                </div>
+                <div class="fruit-card">
+                    <div class="fruit-image" style="background-image: url('download.jpg')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-heart"></i> Fresh Fruit</h3>
+                        <p class="category-badge">Digestion</p>
+                    </div>
+                </div>
+                <div class="fruit-card">
+                    <div class="fruit-image" style="background-image: url('download (1).jpg')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-leaf"></i> Tropical Fruit</h3>
+                        <p class="category-badge">Immunity</p>
+                    </div>
+                </div>
+                <div class="fruit-card">
+                    <div class="fruit-image" style="background-image: url('download (2).jpg')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-cloud"></i> Fresh Produce</h3>
+                        <p class="category-badge">Energy</p>
+                    </div>
+                </div>
+                <div class="fruit-card">
+                    <div class="fruit-image" style="background-image: url('download (3).jpg')"></div>
+                    <div class="fruit-content">
+                        <h3 class="fruit-name"><i class="fas fa-spa"></i> Organic Fruit</h3>
+                        <p class="category-badge">Vitamin C</p>
+                    </div>
+                </div>
+            </section>
+            <div class="view-more-container">
+                <a href="#fruitsGrid" class="view-more-btn"
+                    onclick="document.getElementById('fruitsGrid').scrollIntoView({behavior: 'smooth'}); return false;">
+                    <i class="fas fa-arrow-right"></i> View More Fruits
+                </a>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <button class="page-btn prev" id="prevPage" disabled>
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <div class="page-numbers" id="pageNumbers"></div>
+            <button class="page-btn next" id="nextPage">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h3><i class="fas fa-envelope"></i> Subscribe to Our Newsletter</h3>
+            <p>Get weekly health tips, new remedy discoveries, and exclusive content</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="Enter your email" required aria-label="Email for newsletter">
+                <button type="submit">Subscribe</button>
+            </form>
+            <p style="margin-top: 1rem; opacity: 0.9; font-size: 0.9rem;">
+                We respect your privacy. Unsubscribe at any time.
+            </p>
+        </section>
+
+        <!-- Warning Section -->
+        <section class="warning">
+            <h3><i class="fas fa-exclamation-triangle"></i> Important Disclaimer</h3>
+            <p style="color: black;">This website provides information about the potential health benefits of fruits for
+                educational purposes
+                only. It is not intended as medical advice. Always consult with a healthcare professional for proper
+                diagnosis and treatment of medical conditions. Fruits can complement but should not replace conventional
+                medical treatments.</p>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Login Required Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <h2 class="modal-title">Access Premium Video Content</h2>
+            <p class="modal-message">
+                To watch our full video collection and learn detailed fruit remedy preparations,
+                please sign in to your account. Our video library includes:<br><br>
+                • Step-by-step preparation guides<br>
+                • Expert demonstrations<br>
+                • Detailed explanations of fruit benefits<br>
+                • Traditional remedy techniques<br><br>
+                Create a free account to unlock all videos.
+            </p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="goToLogin">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <button class="modal-btn secondary" id="goToSignup">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </div>
+            <p style="margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <i class="fas fa-play-circle"></i> Free account includes access to all videos and resources
+            </p>
+        </div>
+    </div>
+
+    <!-- Help Chat Button -->
+    <a href="chatbot.html" class="help-float" aria-label="Get Help">
+        <i class="fas fa-robot"></i>
+    </a>
+    <div class="help-tooltip">Need Help?</div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/250786853257" class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>
+
+    <!-- Footer -->
+    <footer id="contactSection">
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura.ubugorozi@gmail.com"
+                            class="contact-value">tumenyekwivura.ubugorozi@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 786853257</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Alternative Phone</div>
+                        <div class="contact-value"> (+250) 786853257</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2026 Fruit Treatment Finder. All information is for
+                    educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/security.js"></script>
+    <script>
+        // Design System Variables
+        const designSystem = {
+            colors: {
+                primary: '#4CAF50',
+                primaryDark: '#2E7D32',
+                primaryLight: '#81C784',
+                secondary: '#FF9800',
+                accent: '#2196F3'
+            },
+            spacing: {
+                xs: '4px',
+                sm: '8px',
+                md: '16px',
+                lg: '24px',
+                xl: '32px'
+            },
+            shadows: {
+                sm: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                md: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                lg: '0 8px 24px rgba(0, 0, 0, 0.12)'
+            }
+        };
+
+        // Fruit data will be fetched from server
+        let fruitsData = [];
+
+        // DOM elements
+        const fruitsGrid = document.getElementById('fruitsGrid');
+        const searchInput = document.getElementById('searchInput');
+
+        // Additional fruits page tracking
+        let additionalPage = 0;
+        const additionalPerPage = 6;
+        const searchBtn = document.getElementById('searchBtn');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const contactBtn = document.getElementById('contactBtn');
+        const videoBtn = document.getElementById('videoBtn');
+        const treatmentBtn = document.getElementById('treatmentBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const backToTopBtn = document.getElementById('backToTop');
+        const themeToggle = document.getElementById('themeToggle');
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const userAvatar = document.getElementById('userAvatar');
+        const userDropdown = document.getElementById('userDropdown');
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const navLinks = document.getElementById('navLinks');
+        const resultsCount = document.getElementById('resultsCount');
+        const totalCount = document.getElementById('totalCount');
+        const sortSelect = document.getElementById('sortSelect');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const searchHistoryEl = document.getElementById('searchHistory');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const currentCategory = document.getElementById('currentCategory');
+        const offlineIndicator = document.getElementById('offlineIndicator');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const pageNumbers = document.getElementById('pageNumbers');
+        const totalFruits = document.getElementById('totalFruits');
+        const lastUpdated = document.getElementById('lastUpdated');
+
+        // Modal elements
+        const loginModal = document.getElementById('loginModal');
+        const closeModal = document.getElementById('closeModal');
+        const goToLogin = document.getElementById('goToLogin');
+        const goToSignup = document.getElementById('goToSignup');
+
+        // Pagination variables
+        let currentPage = 1;
+        const itemsPerPage = 12;
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
+        let currentSort = 'name';
+
+        // Helper to check login status
+        function isUserLoggedIn() {
+            return !!localStorage.getItem('user');
+        }
+
+        // Show loading state
+        function showLoading() {
+            loadingOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info', duration = 3000) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+
+            toast.innerHTML = `
+                <i class="fas fa-${icons[type] || 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Remove toast after duration
+            setTimeout(() => {
+                toast.remove();
+            }, duration);
+        }
+
+        // Theme toggle functionality
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+
+            if (document.body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+                showToast('Dark mode enabled', 'success');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+                showToast('Light mode enabled', 'success');
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Language switcher functionality
+        languageToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('show');
+            }
+        });
+
+        languageDropdown.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const lang = e.target.dataset.lang;
+                languageToggle.querySelector('span').textContent = lang.toUpperCase();
+                showToast(`Language changed to ${e.target.textContent}`, 'success');
+                languageDropdown.classList.remove('show');
+            }
+        });
+
+        // User menu functionality
+        userAvatar.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!userAvatar.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+
+        // Mobile navigation toggle
+        mobileNavToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileNavToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileNavToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+                const icon = mobileNavToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Navigation link click handler
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = link.getAttribute('href');
+
+                // Allow normal navigation for non-hash links
+                if (!target.startsWith('#')) return;
+
+                e.preventDefault();
+
+                // Check for restricted features
+                if (target === '#videos') {
+                    if (isUserLoggedIn()) {
+                        window.location.href = 'video.html';
+                    } else {
+                        showLoginRequired('video');
+                    }
+                    return;
+                }
+
+                if (target === '#remedies' || target === '#treatments') {
+                    if (isUserLoggedIn()) {
+                        window.location.href = 'treatment.html';
+                    } else {
+                        showLoginRequired('treatment');
+                    }
+                    return;
+                }
+
+                // Update active state
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Update breadcrumb
+                if (currentCategory) {
+                    currentCategory.textContent = link.textContent.trim();
+                }
+
+                showToast(`Showing ${link.textContent.trim()}`, 'info');
+            });
+        });
+
+        // Back to top functionality
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Offline/online detection
+        window.addEventListener('online', () => {
+            offlineIndicator.style.display = 'none';
+            showToast('You are back online', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            offlineIndicator.style.display = 'flex';
+            showToast('You are offline. Some features may be limited.', 'warning');
+        });
+
+        // ==================== NOTIFICATION SYSTEM (Facebook Style) ====================
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const notificationDropdown = document.getElementById('notificationDropdown');
+        const notificationList = document.getElementById('notificationList');
+
+        function setupNotifications() {
+            // Get user from localStorage
+            const userStr = localStorage.getItem('user');
+            if (!userStr) return;
+            const currentUser = JSON.parse(userStr);
+            const userId = currentUser.id;
+
+            async function checkNotifications() {
+                try {
+                    // Try new notifications API first, fallback to old
+                    let data = { unreadCount: 0, notifications: [] };
+
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/support/notifications/new/${userId}`);
+                        const newNotifs = await response.json();
+
+                        if (newNotifs && newNotifs.length > 0) {
+                            data.unreadCount = newNotifs.filter(n => n.is_read === 0).length;
+                            data.notifications = newNotifs.map(n => ({
+                                ...n,
+                                title: n.subject || 'Support Message',
+                                message: n.message_preview || 'New message',
+                                is_read: n.is_read
+                            }));
+                        }
+                    } catch (e) {
+                        // Fallback to old API
+                        const response = await fetch(`http://localhost:3000/api/support/notifications/${userId}`);
+                        data = await response.json();
+                    }
+
+                    if (data.unreadCount > 0) {
+                        notificationBadge.textContent = data.unreadCount;
+                        notificationBadge.classList.add('active');
+                    } else {
+                        notificationBadge.textContent = '0';
+                        notificationBadge.classList.remove('active');
+                    }
+
+                    renderNotifications(data.notifications || []);
+                } catch (error) {
+                    console.error('Error checking notifications:', error);
+                }
+            }
+
+            function renderNotifications(notifications) {
+                if (!notificationList) return;
+
+                if (notifications.length === 0) {
+                    notificationList.innerHTML = `
+                        <div style="padding: 30px; text-align: center; color: var(--text-secondary);">
+                            <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>No messages yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                notifications.forEach(notif => {
+                    const isUnread = notif.is_read === 0;
+                    const timeAgo = formatTimeAgo(notif.created_at);
+                    const preview = notif.message ? (notif.message.length > 60 ? notif.message.substring(0, 60) + '...' : notif.message) : '';
+                    const isMessage = notif.source === 'message';
+                    const senderName = notif.sender ? notif.sender.name : (isMessage ? 'User' : 'System');
+
+                    html += `
+                        <div class="notification-item" onclick="window.location.href='support-chat.html'" style="
+                            padding: 12px 15px;
+                            border-bottom: 1px solid var(--border-color);
+                            cursor: pointer;
+                            background: ${isUnread ? 'rgba(76, 175, 80, 0.1)' : 'transparent'};
+                            transition: background 0.2s;
+                        ">
+                            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 50%;
+                                    background: ${isUnread ? 'var(--primary-color)' : '#666'};
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    color: white;
+                                    flex-shrink: 0;
+                                ">
+                                    <i class="fas ${isMessage ? 'fa-envelope' : 'fa-bell'}"></i>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                        <strong style="color: var(--text-primary); font-size: 0.9rem;">
+                                            ${notif.title || (isMessage ? 'New Message' : 'Notification')}
+                                        </strong>
+                                        <span style="color: var(--text-muted); font-size: 0.75rem;">${timeAgo}</span>
+                                    </div>
+                                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
+                                        ${preview}
+                                    </p>
+                                </div>
+                                ${isUnread ? '<div style="width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%; flex-shrink: 0;"></div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                notificationList.innerHTML = html;
+            }
+
+            function formatTimeAgo(dateStr) {
+                if (!dateStr) return '';
+                const date = new Date(dateStr);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+
+                if (diffMins < 1) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                return date.toLocaleDateString();
+            }
+
+            if (notificationBtn) {
+                // Check immediately and then every 30 seconds
+                checkNotifications();
+                setInterval(checkNotifications, 30000);
+
+                // Toggle dropdown on click
+                notificationBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const dropdown = document.getElementById('notificationDropdown');
+                    if (dropdown) {
+                        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                    }
+                    markNotificationsAsSeen();
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    const dropdown = document.getElementById('notificationDropdown');
+                    if (dropdown && !dropdown.contains(e.target) && e.target !== notificationBtn) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
+
+            async function markNotificationsAsSeen() {
+                try {
+                    // Try new API first, then fallback to old
+                    try {
+                        await fetch(`http://localhost:3000/api/support/notifications/new/${userId}/read`, {
+                            method: 'PUT'
+                        });
+                    } catch (e) {
+                        await fetch(`http://localhost:3000/api/support/notifications/${userId}/seen`, {
+                            method: 'PUT'
+                        });
+                    }
+                    checkNotifications();
+                } catch (error) {
+                    console.error('Error marking notifications seen:', error);
+                }
+            }
+        }
+
+        setupNotifications();
+
+        // Initialize fruit data
+        async function initDashboard() {
+            await fetchFruits();
+            lastUpdated.textContent = new Date().toLocaleDateString();
+        }
+
+        initDashboard();
+
+        // Fetch fruits from API
+        async function fetchFruits() {
+            showLoading();
+            try {
+                const searchTerm = searchInput.value || '';
+                const response = await fetch(`http://localhost:3000/api/dashboard/fruits?search=${encodeURIComponent(searchTerm)}&category=${encodeURIComponent(currentFilter)}&sort=${encodeURIComponent(currentSort)}`);
+                fruitsData = await response.json();
+
+                // Update counts
+                totalFruits.textContent = fruitsData.length;
+                totalCount.textContent = fruitsData.length;
+
+                displayFruits();
+            } catch (error) {
+                console.error('Error fetching fruits:', error);
+                showToast('Error connecting to server', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Display fruits with pagination
+        function displayFruits() {
+            const sortedFruits = fruitsData; // Already sorted by server
+
+            // Paginate
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedFruits = sortedFruits.slice(startIndex, endIndex);
+
+            fruitsGrid.innerHTML = '';
+
+            if (paginatedFruits.length === 0) {
+                fruitsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                        <i class="fas fa-search" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--text-secondary); margin-bottom: 0.5rem;">No fruits found</h3>
+                        <p style="color: var(--text-muted);">Try a different search term or filter</p>
+                    </div>
+                `;
+            } else {
+                paginatedFruits.forEach((fruit, index) => {
+                    const fruitCard = createFruitCard(fruit, index);
+                    fruitsGrid.appendChild(fruitCard);
+                });
+            }
+
+            // Update results count
+            resultsCount.textContent = sortedFruits.length;
+
+            // Update pagination
+            updatePagination(sortedFruits.length);
+
+            // Update breadcrumb
+            updateBreadcrumb();
+
+            // Initialize animations
+            initializeCardAnimations();
+        }
+
+        // Create fruit card with enhanced features
+        function createFruitCard(fruit, index) {
+            const fruitCard = document.createElement('div');
+            fruitCard.className = `fruit-card ${fruit.featured ? 'featured' : ''}`;
+            fruitCard.style.animationDelay = `${index * 0.05}s`;
+
+            // Check if fruit is in favorites
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const isFavorite = favorites.includes(fruit.id);
+
+            const benefitsList = fruit.benefits.map(benefit =>
+                `<div class="benefit-item"><i class="fas fa-check-circle"></i><span>${benefit}</span></div>`
+            ).join('');
+
+            fruitCard.innerHTML = `
+                <div class="fruit-image" style="background-image: url('${fruit.image}')">
+                    <div class="fruit-actions">
+                        <button class="action-btn favorite ${isFavorite ? 'active' : ''}" data-id="${fruit.id}" aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button class="action-btn share" data-id="${fruit.id}" aria-label="Share this fruit">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button class="action-btn print" data-id="${fruit.id}" aria-label="Print remedy">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="fruit-content">
+                    <h3 class="fruit-name"><i class="fas fa-seedling"></i> ${fruit.name}</h3>
+                    <div class="fruit-meta">
+                        <span class="category-badge">${fruit.category}</span>
+                        <div class="fruit-rating">
+                            <div class="stars">
+                                ${getStarRating(fruit.rating)}
+                            </div>
+                            <span>${fruit.rating}</span>
+                        </div>
+                    </div>
+                    <div class="fruit-benefits">
+                        ${benefitsList}
+                    </div>
+                    <div class="fruit-footer">
+                        <div class="fruit-stats">
+                            <span class="stat"><i class="fas fa-eye"></i> ${fruit.popularity}%</span>
+                            <span class="stat"><i class="fas fa-heart"></i> ${Math.floor(fruit.rating * 20)}</span>
+                        </div>
+                        <button class="action-btn view-details" data-id="${fruit.id}" aria-label="View details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            return fruitCard;
+        }
+
+        // Get star rating HTML
+        function getStarRating(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+
+            return stars;
+        }
+
+        // Initialize card animations
+        function initializeCardAnimations() {
+            const cards = document.querySelectorAll('.fruit-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => observer.observe(card));
+        }
+
+        // Sort fruits
+        function sortFruits(fruits, sortBy) {
+            const sorted = [...fruits];
+
+            switch (sortBy) {
+                case 'name':
+                    return sorted.sort((a, b) => a.name.localeCompare(b.name));
+                case 'name-desc':
+                    return sorted.sort((a, b) => b.name.localeCompare(a.name));
+                case 'popularity':
+                    return sorted.sort((a, b) => b.popularity - a.popularity);
+                case 'rating':
+                    return sorted.sort((a, b) => b.rating - a.rating);
+                case 'recent':
+                    return sorted.sort((a, b) => b.id - a.id);
+                default:
+                    return sorted;
+            }
+        }
+
+        // Update pagination
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            // Update button states
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+            // Update page numbers
+            pageNumbers.innerHTML = '';
+
+            // Show first page, current page, and last page
+            const pagesToShow = [];
+
+            if (totalPages <= 5) {
+                for (let i = 1; i <= totalPages; i++) {
+                    pagesToShow.push(i);
+                }
+            } else {
+                pagesToShow.push(1);
+
+                if (currentPage > 3) {
+                    pagesToShow.push('...');
+                }
+
+                for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                    if (!pagesToShow.includes(i)) {
+                        pagesToShow.push(i);
+                    }
+                }
+
+                if (currentPage < totalPages - 2) {
+                    pagesToShow.push('...');
+                }
+
+                pagesToShow.push(totalPages);
+            }
+
+            pagesToShow.forEach(page => {
+                const pageEl = document.createElement('span');
+                pageEl.className = `page-number ${page === currentPage ? 'active' : ''}`;
+                pageEl.textContent = page;
+
+                if (page !== '...') {
+                    pageEl.addEventListener('click', () => {
+                        currentPage = page;
+                        displayFruits(getFilteredFruits());
+                    });
+                } else {
+                    pageEl.style.pointerEvents = 'none';
+                }
+
+                pageNumbers.appendChild(pageEl);
+            });
+        }
+
+        // Update breadcrumb
+        function updateBreadcrumb() {
+            const activeFilter = document.querySelector('.filter-btn.active');
+            if (activeFilter) {
+                currentCategory.textContent = activeFilter.textContent;
+            }
+        }
+
+        // getFilteredFruits and sortFruits are now handled by the server
+
+        // Search function with debouncing
+        let searchTimeout;
+        async function searchFruits() {
+            currentSearchTerm = searchInput.value.toLowerCase().trim();
+            currentPage = 1;
+            await fetchFruits();
+            addToSearchHistory(currentSearchTerm);
+        }
+
+        // Search button event
+        searchBtn.addEventListener('click', searchFruits);
+
+        // Search input events
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(searchFruits, 500);
+
+            // Show suggestions
+            if (searchInput.value.trim()) {
+                showSearchSuggestions(searchInput.value.trim());
+            } else {
+                searchSuggestions.classList.remove('active');
+            }
+        });
+
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                searchFruits();
+            }
+        });
+
+        // Search suggestions
+        function showSearchSuggestions(term) {
+            const suggestions = new Set();
+
+            fruitsData.forEach(fruit => {
+                if (fruit.name.toLowerCase().includes(term)) {
+                    suggestions.add(fruit.name);
+                }
+
+                fruit.symptoms.forEach(symptom => {
+                    if (symptom.includes(term)) {
+                        suggestions.add(symptom);
+                    }
+                });
+
+                fruit.benefits.forEach(benefit => {
+                    const words = benefit.toLowerCase().split(' ');
+                    if (words.some(word => word.includes(term))) {
+                        suggestions.add(words.find(word => word.includes(term)));
+                    }
+                });
+            });
+
+            if (suggestions.size > 0) {
+                searchSuggestions.innerHTML = Array.from(suggestions).slice(0, 5).map(item =>
+                    `<div class="suggestion-item">${item}</div>`
+                ).join('');
+
+                searchSuggestions.classList.add('active');
+
+                // Add click handlers to suggestions
+                searchSuggestions.querySelectorAll('.suggestion-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        searchInput.value = item.textContent;
+                        searchFruits();
+                        searchSuggestions.classList.remove('active');
+                    });
+                });
+            } else {
+                searchSuggestions.classList.remove('active');
+            }
+        }
+
+        // Search history
+        function loadSearchHistory() {
+            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+
+            if (history.length > 0) {
+                searchHistoryEl.innerHTML = history.slice(0, 5).map(term =>
+                    `<button class="history-chip" data-term="${term}">
+                        <i class="fas fa-history"></i> ${term}
+                    </button>`
+                ).join('');
+
+                // Add click handlers
+                searchHistoryEl.querySelectorAll('.history-chip').forEach(chip => {
+                    chip.addEventListener('click', () => {
+                        searchInput.value = chip.dataset.term;
+                        searchFruits();
+                    });
+                });
+            }
+        }
+
+        function addToSearchHistory(term) {
+            if (!term) return;
+
+            let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+
+            // Remove if already exists
+            history = history.filter(t => t !== term);
+
+            // Add to beginning
+            history.unshift(term);
+
+            // Keep only last 10 items
+            if (history.length > 10) {
+                history = history.slice(0, 10);
+            }
+
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            loadSearchHistory();
+        }
+
+        // Filter by category
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                currentPage = 1;
+                await fetchFruits();
+                showToast(`Filtered by: ${btn.textContent}`, 'info');
+            });
+        });
+
+        // Sort by select
+        sortSelect.addEventListener('change', async () => {
+            currentSort = sortSelect.value;
+            await fetchFruits();
+            showToast(`Sorted by: ${sortSelect.options[sortSelect.selectedIndex].text}`, 'info');
+        });
+
+        // Pagination button events
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayFruits();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(fruitsData.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayFruits();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Contact Us button click handler
+        contactBtn.addEventListener('click', () => {
+            document.getElementById('contactSection').scrollIntoView({
+                behavior: 'smooth'
+            });
+            showToast('Scrolled to contact section', 'info');
+        });
+
+        // Video button click handler - shows login modal if not logged in
+        videoBtn.addEventListener('click', () => {
+            if (isUserLoggedIn()) {
+                window.location.href = 'video.html';
+            } else {
+                showLoginRequired('video');
+            }
+        });
+
+        // Treatment button click handler - shows login modal if not logged in
+        treatmentBtn.addEventListener('click', () => {
+            if (isUserLoggedIn()) {
+                window.location.href = 'treatment.html';
+            } else {
+                showLoginRequired('treatment');
+            }
+        });
+
+        // Show login required modal with custom message
+        function showLoginRequired(feature) {
+            let title, message;
+
+            if (feature === 'video') {
+                title = "Access Premium Video Content";
+                message = "To watch our full video collection and learn detailed fruit remedy preparations, please sign in to your account. Our video library includes:<br><br>• Step-by-step preparation guides<br>• Expert demonstrations<br>• Detailed explanations of fruit benefits<br>• Traditional remedy techniques<br><br>Create a free account to unlock all videos.";
+            } else if (feature === 'treatment') {
+                title = "Access Treatment Guides";
+                message = "To access our comprehensive treatment guides and detailed remedy instructions, please sign in to your account. Our treatment section includes:<br><br>• Complete treatment protocols<br>• Dosage guidelines<br>• Preparation methods<br>• Safety precautions<br><br>Create a free account to unlock all treatment guides.";
+            } else {
+                title = "Sign In Required";
+                message = "Please sign in to access this feature.";
+            }
+
+            document.querySelector('.modal-title').textContent = title;
+            document.querySelector('.modal-message').innerHTML = message;
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideLoginRequired() {
+            loginModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Modal event handlers
+        closeModal.addEventListener('click', hideLoginRequired);
+
+        goToLogin.addEventListener('click', () => {
+            hideLoginRequired();
+            window.location.href = 'login.html';
+        });
+
+        goToSignup.addEventListener('click', () => {
+            hideLoginRequired();
+            window.location.href = 'login.html';
+        });
+
+        // Close modal when clicking outside
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                hideLoginRequired();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+                hideLoginRequired();
+            }
+        });
+
+        // Newsletter form
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input[type="email"]').value;
+
+            // Simulate subscription
+            showToast('Thank you for subscribing to our newsletter!', 'success');
+            newsletterForm.reset();
+
+            // Save subscription
+            let subscriptions = JSON.parse(localStorage.getItem('newsletterSubscriptions') || '[]');
+            subscriptions.push({ email, date: new Date().toISOString() });
+            localStorage.setItem('newsletterSubscriptions', JSON.stringify(subscriptions));
+        });
+
+        // Fruit card interactions
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('.action-btn');
+
+            if (!target) return;
+
+            const fruitId = target.dataset.id;
+            const fruit = fruitsData.find(f => f.id == fruitId);
+
+            if (!fruit) return;
+
+            // Check if user is logged in for protected actions
+            if (target.classList.contains('favorite')) {
+                if (!isUserLoggedIn()) {
+                    showLoginPrompt();
+                    return;
+                }
+                toggleFavorite(fruitId, target);
+            } else if (target.classList.contains('share')) {
+                if (!isUserLoggedIn()) {
+                    showLoginPrompt();
+                    return;
+                }
+                shareFruit(fruit);
+            } else if (target.classList.contains('print')) {
+                if (!isUserLoggedIn()) {
+                    showLoginPrompt();
+                    return;
+                }
+                printFruit(fruit);
+            } else if (target.classList.contains('view-details')) {
+                if (!isUserLoggedIn()) {
+                    showLoginPrompt();
+                    return;
+                }
+                viewFruitDetails(fruit);
+            }
+        });
+
+        // Show login prompt modal
+        function showLoginPrompt() {
+            const existingModal = document.querySelector('.login-prompt-modal');
+            if (existingModal) existingModal.remove();
+
+            const modal = document.createElement('div');
+            modal.className = 'login-prompt-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            modal.innerHTML = `
+                <div style="
+                    background: var(--card-bg, #fff);
+                    padding: 2rem;
+                    border-radius: 16px;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                    position: relative;
+                ">
+                    <div style="font-size: 3rem; color: var(--primary-color, #4CAF50); margin-bottom: 1rem;">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3 style="margin-bottom: 0.5rem; color: var(--text-primary, #333);">Login Required</h3>
+                    <p style="color: var(--text-secondary, #666); margin-bottom: 1.5rem;">
+                        Please create an account or login to access this feature.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="login.html" style="
+                            background: var(--primary-color, #4CAF50);
+                            color: white;
+                            padding: 12px 24px;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            font-weight: 600;
+                            display: inline-block;
+                        ">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="login.html" style="
+                            background: transparent;
+                            color: var(--primary-color, #4CAF50);
+                            padding: 12px 24px;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            font-weight: 600;
+                            border: 2px solid var(--primary-color, #4CAF50);
+                            display: inline-block;
+                        ">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </a>
+                    </div>
+                    <button onclick="this.closest('.login-prompt-modal').remove()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                        color: var(--text-muted, #999);
+                    ">×</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            // Close on backdrop click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Toggle favorite
+        function toggleFavorite(fruitId, button) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const icon = button.querySelector('i');
+
+            if (favorites.includes(Number(fruitId))) {
+                favorites = favorites.filter(id => id !== Number(fruitId));
+                button.classList.remove('active');
+                showToast('Removed from favorites', 'info');
+            } else {
+                favorites.push(Number(fruitId));
+                button.classList.add('active');
+                showToast('Added to favorites', 'success');
+            }
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+
+            // Update user avatar if logged in
+            if (isUserLoggedIn()) {
+                updateUserInfo();
+            }
+        }
+
+        // Share fruit
+        function shareFruit(fruit) {
+            const shareData = {
+                title: `${fruit.name} - Natural Remedy`,
+                text: `Check out ${fruit.name} for natural healing. Benefits: ${fruit.benefits[0]}`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).then(() => {
+                    showToast('Shared successfully!', 'success');
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    fallbackShare(fruit);
+                });
+            } else {
+                fallbackShare(fruit);
+            }
+        }
+
+        function fallbackShare(fruit) {
+            const text = `Check out ${fruit.name} for natural healing: ${window.location.href}`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Link copied to clipboard!', 'success');
+            }).catch(err => {
+                console.log('Clipboard error:', err);
+                showToast('Failed to share', 'error');
+            });
+        }
+
+        // Print fruit
+        function printFruit(fruit) {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Print: ${fruit.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: #2E7D32; }
+                        .benefits { margin: 20px 0; }
+                        .benefit-item { margin: 10px 0; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${fruit.name}</h1>
+                    <p><strong>Category:</strong> ${fruit.category}</p>
+                    <div class="benefits">
+                        <h3>Benefits:</h3>
+                        ${fruit.benefits.map(benefit => `<div class="benefit-item">• ${benefit}</div>`).join('')}
+                    </div>
+                    <p><em>Printed from Tumenye Kwivura - Tumenye Kwivura. Ubugorozi</em></p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+            showToast('Print dialog opened', 'info');
+        }
+
+        // View fruit details
+        function viewFruitDetails(fruit) {
+            // In a real app, this would navigate to a details page
+            showToast(`Viewing details for ${fruit.name}`, 'info');
+
+            // For now, show a modal with details
+            const modal = document.createElement('div');
+            modal.className = 'login-modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="modal-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h2 class="modal-title">${fruit.name}</h2>
+                    <div class="modal-message" style="text-align: left;">
+                        <p><strong>Category:</strong> ${fruit.category}</p>
+                        <p><strong>Benefits:</strong></p>
+                        <ul>
+                            ${fruit.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                        </ul>
+                        <p><strong>Helps with:</strong> ${fruit.symptoms.join(', ')}</p>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        // Simple MD5 implementation for Gravatar
+        function md5(string) {
+            function k(n) { return Math.abs(Math.sin(n)) * 4294967296 | 0 }
+            var a = 1732584193, b = 4023233417, c = 2562383102, d = 271733878,
+                e = [], f, g, h, i, j = unescape(encodeURIComponent(string)),
+                l = j.length, m = [a, b, c, d], n, o;
+            for (f = 0; f < l; e[f >> 2] |= j.charCodeAt(f) << ((f % 4) << 3), f++);
+            for (f = 0; f <= ((l + 8) >> 6); e.push(0), f++);
+            e[((l + 8) >> 6) << 4 | 14] = l * 8;
+            for (f = 0; f < e.length; f += 16) {
+                n = m.slice();
+                for (g = 0; g < 64; g++) {
+                    o = f + g;
+                    if (g < 16) h = (m[1] & m[2]) | (~m[1] & m[3]), i = o;
+                    else if (g < 32) h = (m[3] & m[1]) | (~m[3] & m[2]), i = (5 * o + 1) % 16;
+                    else if (g < 48) h = m[1] ^ m[2] ^ m[3], i = (3 * o + 5) % 16;
+                    else h = m[2] ^ (m[1] | ~m[3]), i = (7 * o) % 16;
+                    h = (h + m[0] + (e[f + i] || 0) + k(g + 1) | 0);
+                    m = [m[3], (m[1] + ((h << (o = [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g % 4 + (g >> 4) * 4] || [7, 12, 17, 22, 5, 9, 14, 20, 4, 11, 16, 23, 6, 10, 15, 21][g])) | (h >>> (32 - o)))) | 0, m[1], m[2]];
+                }
+                for (g = 0; g < 4; m[g] = m[g] + n[g] | 0, g++);
+            }
+            for (f = 0, j = ""; f < 32; j += ((m[f >> 3] >> ((f % 8) * 4)) & 15).toString(16), f++);
+            return j;
+        }
+
+        // Update user info
+        function updateUserInfo() {
+            const user = JSON.parse(localStorage.getItem('user'));
+
+            if (user) {
+                const userAvatar = document.getElementById('userAvatar');
+                if (userAvatar) {
+                    if (user.profile_image) {
+                        userAvatar.innerHTML = `<img src="${user.profile_image}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                    } else if (user.email) {
+                        const hash = md5(user.email.trim().toLowerCase());
+                        const gravatarUrl = `https://www.gravatar.com/avatar/${hash}?d=mp&s=100`;
+                        userAvatar.innerHTML = `<img src="${gravatarUrl}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+                    } else {
+                        userAvatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                    }
+                }
+
+                // Update login button to profile
+                const loginBtn = document.querySelector('.header-btn[href="login.html"]');
+                if (loginBtn) {
+                    loginBtn.innerHTML = '<i class="fas fa-user"></i> Profile';
+                    loginBtn.href = 'profile.html';
+                }
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            // Display initial fruits
+            displayFruits();
+
+            // Load search history
+            loadSearchHistory();
+
+            // Update user info if logged in
+            updateUserInfo();
+
+            // Setup Notifications
+            setupNotifications();
+
+            // Show welcome message
+            setTimeout(() => {
+                if (!localStorage.getItem('welcomeShown')) {
+                    showToast('Welcome to Tumenye Kwivura! Discover natural remedies.', 'info');
+                    localStorage.setItem('welcomeShown', 'true');
+                }
+            }, 1000);
+
+            // Check for saved favorites
+            const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            if (favorites.length > 0) {
+                console.log(`You have ${favorites.length} favorite fruits`);
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Focus search on Ctrl/Cmd + K
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+
+            // Clear search on Escape
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                searchInput.value = '';
+                searchFruits();
+            }
+        });
+
+        // Lazy loading for images
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.style.opacity = '1';
+                    observer.unobserve(img);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Track user activity
+        let activityTimer = null;
+        document.addEventListener('mousemove', () => {
+            clearTimeout(activityTimer);
+            activityTimer = setTimeout(() => {
+                // User inactive for 5 minutes
+                console.log('User inactive');
+            }, 300000); // 5 minutes
+        });
+
+        // Service Worker registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="contact-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-label">Email</div>
+                        <a href="mailto:tumenyekwivura@gmail.com" class="contact-value">tumenyekwivura@gmail.com</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">(+250) 796352921</div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/250786853257" class="contact-value" target="_blank">(+250) 786853257</a>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-youtube"></i>
+                        <div class="contact-label">YouTube</div>
+                        <a href="https://www.youtube.com/@ivugururanubugorozi3484" class="contact-value" target="_blank">Visit us on YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Tumenye Kwivura</h3>
+                <p>Empowering you with knowledge about natural fruit-based remedies</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">&copy; 2023 Tumenye Kwivura. All information is for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
